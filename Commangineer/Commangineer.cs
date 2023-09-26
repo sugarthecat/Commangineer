@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.GUI_Types;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,6 +17,7 @@ namespace Commangineer
         private SpriteBatch _spriteBatch;
         private GUI currentGUI;
         private GUI mainMenuGUI;
+        private GUI titleScreenGUI;
         private MouseState previousMouseState;
         private bool settingsActive;
         private bool windowActive;
@@ -68,13 +70,15 @@ namespace Commangineer
         }
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
-            mainMenuGUI = new GUI();
+            titleScreenGUI = new TitleScreenGUI();
+            mainMenuGUI = new MainMenuGUI();
             currentGUI = mainMenuGUI;
+            LoadContent();
         }
         protected override void LoadContent()
         {
+            base.LoadContent();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Assets.Setup(Content);
             //BANNER_TXTR = Content.Load<Texture2D>("assets/banner");

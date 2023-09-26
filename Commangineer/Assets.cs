@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Commangineer
 {
@@ -9,17 +11,19 @@ namespace Commangineer
     /// </summary>
     public static class Assets
     {
-        public static Dictionary<string, Texture2D> textures;
-        public static Dictionary<string, Texture2D> buttons;
-        public static Dictionary<string, Font> fonts;
+        private static Dictionary<string, Texture2D> textures;
+        private static Dictionary<string, Texture2D> buttons;
+        private static Dictionary<string, Font> fonts;
         private static ContentManager content;
         public static void Setup(ContentManager contentManager)
         {
+            Debug.WriteLine("Textured.");
             content = contentManager;
             textures = new Dictionary<string, Texture2D>();
             buttons = new Dictionary<string, Texture2D>();
             fonts = new Dictionary<string, Font>();
             LoadTextures();
+            Debug.WriteLine("Textured.");
         }
         /// <summary>
         /// Loads 2d textures for the game, including fonts
@@ -27,6 +31,7 @@ namespace Commangineer
         public static void LoadTextures()
         {
             //textures.Add("banner", content.Load<Texture2D>("assets/gui/banner"));
+            textures.Add("background", content.Load<Texture2D>("assets/background"));
 
         }
         /// <summary>
@@ -53,6 +58,7 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetTexture2D(string name)
         {
+            Debug.WriteLine(textures.Values);
             return textures[name];
         }
         /// <summary>
