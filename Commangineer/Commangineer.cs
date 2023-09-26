@@ -24,23 +24,35 @@ namespace Commangineer
         public Commangineer()
         {
             instance = this;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize);
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = 1200;
+            _graphics.PreferredBackBufferWidth = 1200; 
             _graphics.PreferredBackBufferHeight = 900;
             //_graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             windowActive = false;
             previousMouseState = Mouse.GetState();
-            this.Activated += windowOpened;
-            this.Deactivated += windwoClosed;
+            this.Activated += WindowOpened;
+            this.Deactivated += WindowClosed;
         }
-        public void windowOpened(object sendet, EventArgs args)
+        private void OnResize(object sender, EventArgs e)
+        {
+            _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            _graphics.ApplyChanges();
+            if (currentGUI is ScalingGUI)
+            {
+                ((ScalingGUI)currentGUI).Rescale();
+            }
+        }
+        public void WindowOpened(object sendet, EventArgs args)
         {
             windowActive = true;
         }
 
-        public void windwoClosed(object sendet, EventArgs args)
+        public void WindowClosed(object sendet, EventArgs args)
         {
             windowActive = false;
         }
@@ -73,7 +85,7 @@ namespace Commangineer
             base.Initialize();
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
-            currentGUI = mainMenuGUI;
+            currentGUI = titleScreenGUI;
             LoadContent();
         }
         protected override void LoadContent()

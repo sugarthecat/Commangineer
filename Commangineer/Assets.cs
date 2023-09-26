@@ -32,6 +32,8 @@ namespace Commangineer
         {
             //textures.Add("banner", content.Load<Texture2D>("assets/gui/banner"));
             textures.Add("background", content.Load<Texture2D>("assets/background"));
+            textures.Add("banner", content.Load<Texture2D>("assets/banner"));
+            textures.Add("icon", content.Load<Texture2D>("assets/icon"));
 
         }
         /// <summary>
