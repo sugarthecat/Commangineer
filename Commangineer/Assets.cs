@@ -31,20 +31,19 @@ namespace Commangineer
         public static void LoadTextures()
         {
             //textures.Add("banner", content.Load<Texture2D>("assets/gui/banner"));
-            textures.Add("background", content.Load<Texture2D>("assets/background"));
-            textures.Add("banner", content.Load<Texture2D>("assets/banner"));
-            textures.Add("icon", content.Load<Texture2D>("assets/icon"));
-            textures.Add("smiley", content.Load<Texture2D>("assets/smiley"));
-            loadButton("generic");
-            loadButton("bigredbutton");
-
+            LoadTexture("background");
+            LoadTexture("banner");
+            LoadTexture("icon");
+            LoadTexture("smiley");
+            LoadButton("generic");
+            LoadButton("bigredbutton");
         }
         /// <summary>
         /// Gets a font object
         /// </summary>
         /// <param name="fontName">The name of the font to request</param>
         /// <returns>the requested Font object</returns>
-        public static Font getFont(string fontName)
+        public static Font GetFont(string fontName)
         {
             return fonts[fontName];
         }
@@ -52,9 +51,17 @@ namespace Commangineer
         /// Loads the assets for a button with the given name
         /// </summary>
         /// <param name="buttonName">the button's name</param>
-        public static void loadButton(string buttonName)
+        public static void LoadButton(string buttonName)
         {
             buttons.Add(buttonName, content.Load<Texture2D>("assets/buttons/" + buttonName));
+        }
+        /// <summary>
+        /// Loads the asset for a texture with the given name
+        /// </summary>
+        /// <param name="textureName">the asset's name</param>
+        public static void LoadTexture(string textureName)
+        {
+            buttons.Add(textureName, content.Load<Texture2D>("assets/" + textureName));
         }
         /// <summary>
         /// Gets a 2d texture

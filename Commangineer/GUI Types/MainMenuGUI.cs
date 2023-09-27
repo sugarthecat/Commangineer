@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Commangineer.GUI_Types
     {
         public MainMenuGUI() : base(600,400)
         {
-            AddGuiElement(new GUIElement(Assets.GetTexture2D("background"), new Microsoft.Xna.Framework.Rectangle(0, 0, 600, 200)));
+            AddGuiElement(new GUIElement(Assets.GetTexture2D("background"), new Rectangle(0, 0, 600, 200)));
         }
     }
 }
