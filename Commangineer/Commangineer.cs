@@ -87,7 +87,6 @@ namespace Commangineer
             if (newMenu == "level")
             {
                 currentGUI = levelGUI;
-                currentLevel = new Level(2);
             }
             if (currentGUI is ScalingGUI)
             {
@@ -100,6 +99,7 @@ namespace Commangineer
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
             levelGUI = new LevelGUI();
+            currentLevel = new Level(2);
             currentGUI = titleScreenGUI;
             LoadContent();
         }

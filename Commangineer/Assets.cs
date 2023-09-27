@@ -61,7 +61,7 @@ namespace Commangineer
         /// <param name="textureName">the asset's name</param>
         public static void LoadTexture(string textureName)
         {
-            buttons.Add(textureName, content.Load<Texture2D>("assets/" + textureName));
+            textures.Add(textureName, content.Load<Texture2D>("assets/" + textureName));
         }
         /// <summary>
         /// Gets a 2d texture
@@ -70,7 +70,6 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetTexture2D(string name)
         {
-            Debug.WriteLine(textures.Values);
             return textures[name];
         }
         /// <summary>
