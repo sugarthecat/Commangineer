@@ -52,11 +52,20 @@ namespace Commangineer
                 spriteBatch.Draw(texture, position, color);
             }
         }
+        /// <summary>
+        /// Moves the element by a certain offset
+        /// </summary>
+        /// <param name="x">The X translation amount, in pixels</param>
+        /// <param name="y">The Y translation amount, in pixels</param>
         public void Translate(int x, int y)
         {
             position.X += x;
             position.Y += y;
         }
+        /// <summary>
+        /// Scales the element by a given factor
+        /// </summary>
+        /// <param name="scaleFac">The factor to scale by</param>
         public void Scale(double scaleFac)
         {
             position.X = (int)Math.Floor(position.X * scaleFac);
@@ -64,16 +73,27 @@ namespace Commangineer
             position.Width = (int)Math.Floor(position.Width * scaleFac);
             position.Height = (int)Math.Floor(position.Height * scaleFac);
         }
+        /// <summary>
+        /// Horizontally scales the element by a given factor
+        /// </summary>
+        /// <param name="scaleFac">The scale factor</param>
         public void ScaleX(double scaleFac)
         {
             position.X = (int)Math.Floor(position.X * scaleFac);
             position.Width = (int)Math.Floor(position.Width * scaleFac);
         }
+        /// <summary>
+        /// Vertically scales the element by a given factor
+        /// </summary>
+        /// <param name="scaleFac">The scale factor</param>
         public void ScaleY(double scaleFac)
         {
             position.Y = (int)Math.Floor(position.Y * scaleFac);
             position.Height = (int)Math.Floor(position.Height * scaleFac);
         }
+        /// <summary>
+        /// Returns to the original X,Y,Width and Height before any transformations
+        /// </summary>
         public void Restore()
         {
             position.X = originalPosition.X;

@@ -24,11 +24,10 @@ namespace Commangineer
         public Commangineer()
         {
             instance = this;
-            Window.AllowUserResizing = true;
             Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize);
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = 1200; 
-            _graphics.PreferredBackBufferHeight = 900;
+            _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             //_graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -79,6 +78,14 @@ namespace Commangineer
             {
                 currentGUI = mainMenuGUI;
             }
+            if (newMenu == "titleScreen")
+            {
+                currentGUI = titleScreenGUI;
+            }
+            if (currentGUI is ScalingGUI)
+            {
+                ((ScalingGUI)currentGUI).Rescale();
+            }
         }
         protected override void Initialize()
         {
@@ -93,7 +100,6 @@ namespace Commangineer
             base.LoadContent();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Assets.Setup(Content);
-            //BANNER_TXTR = Content.Load<Texture2D>("assets/banner");
         }
 
         protected override void Update(GameTime gameTime)
@@ -104,11 +110,8 @@ namespace Commangineer
                 if (previousMouseState.LeftButton != ButtonState.Pressed && mouseState.LeftButton == ButtonState.Pressed)
                 {
                         currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
-                     
                 }
             }
-
-            // TODO: Add your update logic here
 
             previousMouseState = mouseState;
             base.Update(gameTime);

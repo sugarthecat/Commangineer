@@ -11,11 +11,22 @@ namespace Commangineer.GUI_Element_Types
 {
     public class Button : GUIElement
     {
-        public Button(string buttonName, Rectangle position) : base(Assets.GetTexture2D(buttonName+"-button"), position)
+        /// <summary>
+        /// Creates a button without a click action
+        /// </summary>
+        /// <param name="buttonName">The name of the asset to get for the button</param>
+        /// <param name="position">A rectangle representing the position of the button</param>
+        public Button(string buttonName, Rectangle position) : base(Assets.GetButtonTexure(buttonName), position)
         {
 
         }
-        public Button(string buttonName, Rectangle position, Action action) : base(Assets.GetTexture2D(buttonName + "-button"), position, action)
+        /// <summary>
+        /// Creates a button with an action on click
+        /// </summary>
+        /// <param name="buttonName">The name of the asset to get for the button</param>
+        /// <param name="position">A rectangle representing the position of the button</param>
+        /// <param name="action">The action to be performed on click</param>
+        public Button(string buttonName, Rectangle position, Action action) : base(Assets.GetButtonTexure(buttonName), position, action)
         {
 
         }

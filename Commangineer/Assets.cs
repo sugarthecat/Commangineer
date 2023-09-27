@@ -34,6 +34,7 @@ namespace Commangineer
             textures.Add("background", content.Load<Texture2D>("assets/background"));
             textures.Add("banner", content.Load<Texture2D>("assets/banner"));
             textures.Add("icon", content.Load<Texture2D>("assets/icon"));
+            loadButton("generic");
 
         }
         /// <summary>
@@ -51,7 +52,7 @@ namespace Commangineer
         /// <param name="buttonName">the button's name</param>
         public static void loadButton(string buttonName)
         {
-            buttons.Add(buttonName, content.Load<Texture2D>("assets/gui/" + buttonName + "-button"));
+            buttons.Add(buttonName, content.Load<Texture2D>("assets/buttons/" + buttonName));
         }
         /// <summary>
         /// Gets a 2d texture
