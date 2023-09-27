@@ -16,11 +16,13 @@ namespace Commangineer
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GUI currentGUI;
-        private GUI mainMenuGUI;
-        private GUI titleScreenGUI;
+        private MainMenuGUI mainMenuGUI;
+        private TitleScreenGUI titleScreenGUI;
+        private LevelGUI levelGUI;
         private MouseState previousMouseState;
         private bool settingsActive;
         private bool windowActive;
+        private Level currentLevel;
         public Commangineer()
         {
             instance = this;
@@ -82,6 +84,11 @@ namespace Commangineer
             {
                 currentGUI = titleScreenGUI;
             }
+            if (newMenu == "level")
+            {
+                currentGUI = levelGUI;
+                currentLevel = new Level(2);
+            }
             if (currentGUI is ScalingGUI)
             {
                 ((ScalingGUI)currentGUI).Rescale();
@@ -92,6 +99,7 @@ namespace Commangineer
             base.Initialize();
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
+            levelGUI = new LevelGUI();
             currentGUI = titleScreenGUI;
             LoadContent();
         }
@@ -112,7 +120,10 @@ namespace Commangineer
                         currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
                 }
             }
-
+            if(currentGUI == levelGUI)
+            {
+                currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds);
+            }
             previousMouseState = mouseState;
             base.Update(gameTime);
         }
@@ -121,9 +132,20 @@ namespace Commangineer
         {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
+            //draw GUI spritebatch
             currentGUI.Draw(_spriteBatch);
             _spriteBatch.End();
+            if(currentGUI == levelGUI)
+            {
+                _spriteBatch.Begin();
+                currentLevel.Draw(_spriteBatch);
+                _spriteBatch.End();
+            }
 
+            if (currentGUI is ScalingGUI)
+            {
+                ((ScalingGUI)currentGUI).Rescale();
+            }
             base.Draw(gameTime);
         }
     }
