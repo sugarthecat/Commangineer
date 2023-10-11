@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Commangineer
 {
-    internal interface TileOccupier
+    internal interface TileOccupier : TexturedObject
     {
         public void Draw(SpriteBatch spriteBatch);
         public void TakeDamage(int damage);

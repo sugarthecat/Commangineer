@@ -11,7 +11,7 @@ namespace Commangineer.GUI_Types
     {
         public MainMenuGUI() : base(600,400)
         {
-            AddGuiElement(new GUIElement(Assets.GetTexture2D("background"), new Rectangle(0, 0, 600, 200)));
+            AddGuiElement(new GUIElement(Assets.GetImage("background"), new Rectangle(0, 0, 600, 200)));
         }
     }
 }

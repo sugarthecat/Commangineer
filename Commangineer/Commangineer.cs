@@ -20,6 +20,7 @@ namespace Commangineer
         private TitleScreenGUI titleScreenGUI;
         private LevelGUI levelGUI;
         private MouseState previousMouseState;
+        private KeyboardState previousKeyboardState;
         private bool settingsActive;
         private bool windowActive;
         private Level currentLevel;
@@ -57,14 +58,17 @@ namespace Commangineer
         {
             windowActive = false;
         }
-
-        public int GetScreenWidth()
+        public static Level GetLevel()
         {
-            return _graphics.PreferredBackBufferWidth;
+            return instance.currentLevel;
         }
-        public int GetScreenHeight()
+        public static int GetScreenWidth()
         {
-            return _graphics.PreferredBackBufferHeight;
+            return instance._graphics.PreferredBackBufferWidth;
+        }
+        public static int GetScreenHeight()
+        {
+            return instance._graphics.PreferredBackBufferHeight;
         }
         public void ToggleSettings()
         {
@@ -96,11 +100,17 @@ namespace Commangineer
         protected override void Initialize()
         {
             base.Initialize();
+            //initialize UIs
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
             levelGUI = new LevelGUI();
-            currentLevel = new Level(2);
+            currentLevel = new Level(1);
             currentGUI = titleScreenGUI;
+            //initialize interface values
+            previousKeyboardState = Keyboard.GetState();
+            previousMouseState = Mouse.GetState();
+            //initialize camera
+            Camera.UpdateScale(0);
             LoadContent();
         }
         protected override void LoadContent()
@@ -113,6 +123,8 @@ namespace Commangineer
         protected override void Update(GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
+            KeyboardState keyboardState = Keyboard.GetState();
+            Keys[] pressedKeys = keyboardState.GetPressedKeys();
             if (windowActive)
             {
                 if (previousMouseState.LeftButton != ButtonState.Pressed && mouseState.LeftButton == ButtonState.Pressed)
@@ -122,9 +134,10 @@ namespace Commangineer
             }
             if(currentGUI == levelGUI)
             {
-                currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds);
+                currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds,keyboardState, previousKeyboardState,mouseState,previousMouseState);
             }
             previousMouseState = mouseState;
+            previousKeyboardState = keyboardState;
             base.Update(gameTime);
         }
 

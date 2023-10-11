@@ -22,8 +22,8 @@ namespace Commangineer.GUI_Types
         /// </summary>
         public void Rescale()
         {
-            double screenHeightRatio =   ((double)Commangineer.instance.GetScreenHeight())/((double)originalHeight);
-            double screenWidthRatio =   ((double)Commangineer.instance.GetScreenWidth())/((double)originalWidth) ;
+            double screenHeightRatio =   ((double)Commangineer.GetScreenHeight())/((double)originalHeight);
+            double screenWidthRatio =   ((double)Commangineer.GetScreenWidth())/((double)originalWidth) ;
             for (int i = 0;i< elements.Count;i++)
             {
                 elements[i].Restore();

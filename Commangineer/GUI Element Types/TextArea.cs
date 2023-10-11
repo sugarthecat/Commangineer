@@ -15,7 +15,7 @@ namespace Commangineer.GUI_Element_Types
     {
         private Font font;
         private string text;
-        public TextArea(Rectangle position, Font font, string text) : base(Assets.GetTexture2D("background"), position)
+        public TextArea(Rectangle position, Font font, string text) : base(Assets.GetImage("background"), position)
         {
             this.font = font;
             this.text = text;

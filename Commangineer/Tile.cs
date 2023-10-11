@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace Commangineer
 {
-    internal class Tile
+    internal class Tile: TexturedObject
     {
         Texture2D texture;
+        Point position;
         TileOccupier tileOccupier;
-        public Tile(Texture2D texture){
+        public Tile(Texture2D texture, Point position)
+        {
             tileOccupier = null;
             this.texture = texture;
+            this.position = position;
         }
         public bool HasTileOccupier
         {
@@ -23,9 +26,21 @@ namespace Commangineer
                 return tileOccupier != null;
             }
         }
-        public void Draw(SpriteBatch spriteBatch, Rectangle position)
+        public TileOccupier GetTileOccupier()
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            return tileOccupier;
+        }
+        public Texture2D GetTexture()
+        {
+            return texture;
+        }
+        public Point GetSize()
+        {
+            return new Point(1, 1);
+        }
+        public Point GetPosition()
+        {
+            return position;
         }
     }
 }
