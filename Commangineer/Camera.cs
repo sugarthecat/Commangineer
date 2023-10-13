@@ -99,13 +99,39 @@ namespace Commangineer
             double timeIncrement = (double)ms / 1000;
             UpdateAcceleration(keyboardState);
             int speedFactor = 3;
-            x += speedFactor*(xVelocity * timeIncrement + xAcceleration * 1 / 2 * timeIncrement * timeIncrement);
-            y += speedFactor*(yVelocity * timeIncrement + yAcceleration * 1 / 2 * timeIncrement * timeIncrement);
+            x += speedFactor * (xVelocity * timeIncrement + xAcceleration * 1 / 2 * timeIncrement * timeIncrement);
+            y += speedFactor * (yVelocity * timeIncrement + yAcceleration * 1 / 2 * timeIncrement * timeIncrement);
             xVelocity += xAcceleration;
             yVelocity += yAcceleration;
-            double CAMERA_SPEED_DECAY = 0.001;
+            double CAMERA_SPEED_DECAY = 0.001d;
             xVelocity *= Math.Pow(1 - CAMERA_SPEED_DECAY, ms);
             yVelocity *= Math.Pow(1 - CAMERA_SPEED_DECAY, ms);
+            double CAMERA_SPEED_DECREASE = 1d;
+            //decrease camera speed if keys not active
+            if (xAcceleration == 0)
+            {
+                if (xVelocity > 1)
+                {
+                    xVelocity -= CAMERA_SPEED_DECREASE;
+                }
+                if (xVelocity < -1)
+                {
+                    xVelocity += CAMERA_SPEED_DECREASE;
+                }
+            }
+            if (yAcceleration == 0)
+            {
+                if (yVelocity > 1)
+                {
+                    yVelocity -= CAMERA_SPEED_DECREASE;
+                }
+                if (yVelocity < -1)
+                {
+                    yVelocity += CAMERA_SPEED_DECREASE;
+                }
+            }
+            if (xVelocity < 1 && xVelocity > -1 && xAcceleration == 0) { xVelocity = 0; }
+            if (yVelocity < 1 && yVelocity > -1 && yAcceleration == 0) { yVelocity = 0; }
             if (x + Commangineer.GetScreenWidth() > (scaleFactor * Commangineer.GetLevel().GetTileWidth()))
             {
                 x = scaleFactor * Commangineer.GetLevel().GetTileWidth() - Commangineer.GetScreenWidth();
@@ -124,6 +150,8 @@ namespace Commangineer
                 y = 0;
                 yVelocity = 0;
             }
+            //Debug.WriteLine("xv: " + xVelocity);
+            //Debug.WriteLine("yv: " + yVelocity);
         }
 
         public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw, Rectangle drawPosition)

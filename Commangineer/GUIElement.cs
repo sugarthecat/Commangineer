@@ -13,9 +13,9 @@ namespace Commangineer
         protected Texture2D textureHover;
         protected Action activationAction;
         private Color color;
+
         public GUIElement(Texture2D baseTexture, Texture2D hoverTexture, Rectangle elementPosition, Action actionOnActivate)
         {
-
             position = elementPosition;
             originalPosition = elementPosition;
             texture = baseTexture;
@@ -23,27 +23,28 @@ namespace Commangineer
             activationAction = actionOnActivate;
             color = Color.White;
         }
+
         public GUIElement(Texture2D baseTexture, Rectangle elementPosition) : this(baseTexture, baseTexture, elementPosition)
         {
-
         }
+
         public GUIElement(Texture2D baseTexture, Rectangle elementPosition, Color color) : this(baseTexture, baseTexture, elementPosition)
         {
             this.color = color;
         }
+
         public GUIElement(Texture2D baseTexture, Texture2D hoverTexture, Rectangle elementPosition) : this(baseTexture, baseTexture, elementPosition, delegate { })
         {
-
         }
-        public GUIElement(Texture2D baseTexture, Rectangle elementPosition, Action actionOnActivate): this(baseTexture, baseTexture, elementPosition, actionOnActivate)
+
+        public GUIElement(Texture2D baseTexture, Rectangle elementPosition, Action actionOnActivate) : this(baseTexture, baseTexture, elementPosition, actionOnActivate)
         {
-
         }
-        
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             MouseState mouseState = Mouse.GetState();
-            if (position.Contains(mouseState.X,mouseState.Y))
+            if (position.Contains(mouseState.X, mouseState.Y))
             {
                 spriteBatch.Draw(textureHover, position, color);
             }
@@ -52,6 +53,7 @@ namespace Commangineer
                 spriteBatch.Draw(texture, position, color);
             }
         }
+
         /// <summary>
         /// Moves the element by a certain offset
         /// </summary>
@@ -62,6 +64,7 @@ namespace Commangineer
             position.X += x;
             position.Y += y;
         }
+
         /// <summary>
         /// Scales the element by a given factor
         /// </summary>
@@ -73,6 +76,7 @@ namespace Commangineer
             position.Width = (int)Math.Floor(position.Width * scaleFac);
             position.Height = (int)Math.Floor(position.Height * scaleFac);
         }
+
         /// <summary>
         /// Horizontally scales the element by a given factor
         /// </summary>
@@ -82,6 +86,7 @@ namespace Commangineer
             position.X = (int)Math.Floor(position.X * scaleFac);
             position.Width = (int)Math.Floor(position.Width * scaleFac);
         }
+
         /// <summary>
         /// Vertically scales the element by a given factor
         /// </summary>
@@ -91,6 +96,7 @@ namespace Commangineer
             position.Y = (int)Math.Floor(position.Y * scaleFac);
             position.Height = (int)Math.Floor(position.Height * scaleFac);
         }
+
         /// <summary>
         /// Returns to the original X,Y,Width and Height before any transformations
         /// </summary>
@@ -101,7 +107,9 @@ namespace Commangineer
             position.Height = originalPosition.Height;
             position.Width = originalPosition.Width;
         }
-        public bool HandleClick(Point mousePoint) {
+
+        public bool HandleClick(Point mousePoint)
+        {
             if (position.Contains(mousePoint))
             {
                 activationAction();

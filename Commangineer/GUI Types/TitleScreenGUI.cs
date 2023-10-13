@@ -8,7 +8,7 @@ namespace Commangineer.GUI_Types
     /// </summary>
     internal class TitleScreenGUI : ScalingGUI
     {
-        public TitleScreenGUI() : base(600,400)
+        public TitleScreenGUI() : base(600, 400)
         {
             AddGuiElement(new GUIElement(Assets.GetImage("background"), new Rectangle(0, 0, 600, 400)));
             AddGuiElement(new GUIElement(Assets.GetImage("banner"), new Rectangle(100, 50, 400, 150)));

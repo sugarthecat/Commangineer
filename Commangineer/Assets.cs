@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -16,6 +15,7 @@ namespace Commangineer
         private static Dictionary<string, Texture2D> images;
         private static Dictionary<string, Font> fonts;
         private static ContentManager content;
+
         public static void Setup(ContentManager contentManager)
         {
             Debug.WriteLine("Textured.");
@@ -27,6 +27,7 @@ namespace Commangineer
             LoadTextures();
             Debug.WriteLine("Textured.");
         }
+
         /// <summary>
         /// Loads 2d textures for the game, including fonts
         /// </summary>
@@ -43,9 +44,12 @@ namespace Commangineer
             LoadTexture("grassTemp");
             LoadTexture("stoneTemp");
             LoadTexture("grassOverlay");
+            LoadTexture("leaves");
+            LoadTexture("wood");
             LoadButton("generic");
             LoadButton("bigredbutton");
         }
+
         /// <summary>
         /// Gets a font object
         /// </summary>
@@ -55,6 +59,7 @@ namespace Commangineer
         {
             return fonts[fontName];
         }
+
         /// <summary>
         /// Loads the assets for a button with the given name
         /// </summary>
@@ -63,6 +68,7 @@ namespace Commangineer
         {
             buttons.Add(buttonName, content.Load<Texture2D>("assets/buttons/" + buttonName));
         }
+
         /// <summary>
         /// Loads the image with the given name
         /// </summary>
@@ -71,6 +77,7 @@ namespace Commangineer
         {
             images.Add(buttonName, content.Load<Texture2D>("assets/" + buttonName));
         }
+
         /// <summary>
         /// Loads the asset for a texture with the given name
         /// </summary>
@@ -79,6 +86,7 @@ namespace Commangineer
         {
             textures.Add(textureName, content.Load<Texture2D>("assets/textures/" + textureName));
         }
+
         /// <summary>
         /// Gets a 2d texture
         /// </summary>
@@ -88,6 +96,7 @@ namespace Commangineer
         {
             return textures[name];
         }
+
         /// <summary>
         /// Gets a 2d image
         /// </summary>
@@ -97,6 +106,7 @@ namespace Commangineer
         {
             return images[name];
         }
+
         /// <summary>
         /// Gets a 2d button texture
         /// </summary>
@@ -106,6 +116,7 @@ namespace Commangineer
         {
             return buttons[name];
         }
+
         public static void LoadShaders(ContentManager content)
         {
             /*

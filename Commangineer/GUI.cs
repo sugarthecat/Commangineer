@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer
 {
@@ -14,10 +10,12 @@ namespace Commangineer
     public class GUI
     {
         protected List<GUIElement> elements;
+
         public GUI()
         {
             elements = new List<GUIElement>();
         }
+
         /// <summary>
         /// Adds a GUIElement to the GUI
         /// </summary>
@@ -26,6 +24,7 @@ namespace Commangineer
         {
             elements.Add(element);
         }
+
         /// <summary>
         /// Removes a GUIElement from the GUI
         /// </summary>
@@ -34,8 +33,9 @@ namespace Commangineer
         {
             elements.Remove(element);
         }
+
         /// <summary>
-        /// Gets a GUIElement at index 
+        /// Gets a GUIElement at index
         /// </summary>
         /// <param name="index">The index to get the GUIElement from</param>
         /// <returns>The GUIElement</returns>
@@ -43,6 +43,7 @@ namespace Commangineer
         {
             return elements[index];
         }
+
         /// <summary>
         /// Clears out the GUIElements in the GUI
         /// </summary>
@@ -50,6 +51,7 @@ namespace Commangineer
         {
             elements.Clear();
         }
+
         /// <summary>
         /// Draws all elements within the GUI
         /// </summary>
@@ -61,6 +63,7 @@ namespace Commangineer
                 elements[i].Draw(spriteBatch);
             }
         }
+
         /// <summary>
         /// Handles a click at a given point
         /// </summary>

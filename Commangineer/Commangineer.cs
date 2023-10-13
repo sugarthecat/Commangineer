@@ -1,12 +1,8 @@
 ﻿using Commangineer.GUI_Types;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace Commangineer
 {
@@ -24,6 +20,7 @@ namespace Commangineer
         private bool settingsActive;
         private bool windowActive;
         private Level currentLevel;
+
         public Commangineer()
         {
             instance = this;
@@ -39,6 +36,7 @@ namespace Commangineer
             this.Activated += WindowOpened;
             this.Deactivated += WindowClosed;
         }
+
         private void OnResize(object sender, EventArgs e)
         {
             _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
@@ -49,6 +47,7 @@ namespace Commangineer
                 ((ScalingGUI)currentGUI).Rescale();
             }
         }
+
         public void WindowOpened(object sendet, EventArgs args)
         {
             windowActive = true;
@@ -58,26 +57,32 @@ namespace Commangineer
         {
             windowActive = false;
         }
+
         public static Level GetLevel()
         {
             return instance.currentLevel;
         }
+
         public static int GetScreenWidth()
         {
             return instance._graphics.PreferredBackBufferWidth;
         }
+
         public static int GetScreenHeight()
         {
             return instance._graphics.PreferredBackBufferHeight;
         }
+
         public void ToggleSettings()
         {
             settingsActive = !settingsActive;
         }
+
         public void ToggleFullscreen()
         {
             _graphics.ToggleFullScreen();
         }
+
         public void NavigateToMenu(string newMenu)
         {
             if (newMenu == "mainMenu")
@@ -97,6 +102,7 @@ namespace Commangineer
                 ((ScalingGUI)currentGUI).Rescale();
             }
         }
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -113,6 +119,7 @@ namespace Commangineer
             Camera.UpdateScale(0);
             LoadContent();
         }
+
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -129,12 +136,12 @@ namespace Commangineer
             {
                 if (previousMouseState.LeftButton != ButtonState.Pressed && mouseState.LeftButton == ButtonState.Pressed)
                 {
-                        currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                    currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
                 }
             }
-            if(currentGUI == levelGUI)
+            if (currentGUI == levelGUI)
             {
-                currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds,keyboardState, previousKeyboardState,mouseState,previousMouseState);
+                currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
             }
             previousMouseState = mouseState;
             previousKeyboardState = keyboardState;
@@ -148,7 +155,7 @@ namespace Commangineer
             //draw GUI spritebatch
             currentGUI.Draw(_spriteBatch);
             _spriteBatch.End();
-            if(currentGUI == levelGUI)
+            if (currentGUI == levelGUI)
             {
                 _spriteBatch.Begin();
                 currentLevel.Draw(_spriteBatch);
