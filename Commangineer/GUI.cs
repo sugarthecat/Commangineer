@@ -87,7 +87,7 @@ namespace Commangineer
         }
 
         /// <summary>
-        /// Reads a JSON file containing objects to draw and converts it to a list
+        /// Reads a JSON file containing objects to draw and converts it to a JsonNode
         /// </summary>        
         public JsonNode ReadAsync(string fileName)
         {
@@ -105,13 +105,19 @@ namespace Commangineer
             return res;
         }
 
-        public Action GetAction(string t, string v)
+        /// <summary>
+        /// Returns a Action dependent on the parameters
+        /// </summary>
+        /// <param name="actionName"></param> The name of the Action
+        /// <param name="actionValue"></param> A variable value for a Action to use
+        /// <returns></returns>
+        public Action GetAction(string actionName, string actionValue)
         {
             Action res = null;
-            switch (t)
+            switch (actionName)
             {
                 case "NavigateToMenu":
-                    res = delegate { Commangineer.instance.NavigateToMenu(v); };
+                    res = delegate { Commangineer.instance.NavigateToMenu(actionValue); };
                     break;
                 case " ":
                     break;
@@ -119,6 +125,10 @@ namespace Commangineer
             return res;
         }
 
+        /// <summary>
+        /// Loads in all elements from a file to the screen
+        /// </summary>
+        /// <param name="fileName"></param> The name of the json file containing the elements
         public void LoadElements(string fileName)
         {
             JsonNode data = ReadAsync(fileName);
