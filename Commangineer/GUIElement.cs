@@ -2,6 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Commangineer
 {
@@ -39,7 +45,7 @@ namespace Commangineer
         {
 
         }
-        
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             MouseState mouseState = Mouse.GetState();

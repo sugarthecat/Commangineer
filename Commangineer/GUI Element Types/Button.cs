@@ -28,7 +28,7 @@ namespace Commangineer.GUI_Element_Types
         /// <param name="action">The action to be performed on click</param>
         public Button(string buttonName, Rectangle position, Action action) : base(Assets.GetButtonTexure(buttonName), position, action)
         {
-
+            
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

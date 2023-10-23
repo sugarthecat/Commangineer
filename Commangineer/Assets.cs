@@ -30,6 +30,9 @@ namespace Commangineer
         /// </summary>
         public static void LoadTextures()
         {
+            //
+            // NEEDS TO BE REWORKED TO LOAD AUTO
+            //
             //textures.Add("banner", content.Load<Texture2D>("assets/gui/banner"));
             LoadTexture("background");
             LoadTexture("banner");
