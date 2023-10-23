@@ -133,6 +133,9 @@
 /processorParam:TextureFormat=Color
 /build:assets/icon.png
 
+#begin assets/levels/level1.json
+/copy:assets/levels/level1.json
+
 #begin assets/smiley.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -241,6 +244,18 @@
 /processorParam:TextureFormat=Color
 /build:assets/textures/leaves.png
 
+#begin assets/textures/leaves.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/leaves.png
+
 #begin assets/textures/oddstone.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -312,6 +327,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/textures/stoneTemp.png
+
+#begin assets/textures/wood.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/wood.png
 
 #begin assets/textures/wood.png
 /importer:TextureImporter

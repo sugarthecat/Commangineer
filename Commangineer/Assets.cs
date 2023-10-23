@@ -33,7 +33,7 @@ namespace Commangineer
         /// </summary>
         public static void LoadTextures()
         {
-            //textures.Add("banner", content.Load<Texture2D>("assets/gui/banner"));
+            //textures.Add("banner", content.wwwwwLoad<Texture2D>("assets/gui/banner"));
             LoadImage("background");
             LoadImage("banner");
             LoadImage("icon");

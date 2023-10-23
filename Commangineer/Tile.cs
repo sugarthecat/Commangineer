@@ -12,12 +12,12 @@ namespace Commangineer
         private FloorAuuki AuukiTile;
         protected float transmissionChance;
 
-        public Tile(Texture2D texture, Point position)
+        public Tile(Texture2D texture, Point position, float transmissionChance)
         {
             AuukiTile = null;
             this.texture = texture;
             this.position = position;
-            transmissionChance = 0.05f;
+            this.transmissionChance = transmissionChance;
         }
 
         public bool HasAuuki

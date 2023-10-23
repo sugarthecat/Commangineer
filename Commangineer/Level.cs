@@ -25,19 +25,19 @@ namespace Commangineer
                     int genNumber = generationRandom.Next(4);
                     if (genNumber == 0)
                     {
-                        tiles[i, j] = new Tile(Assets.GetTexture("dirtystone"), point);
+                        tiles[i, j] = new Tile(Assets.GetTexture("dirtystone"), point,0.02f);
                     }
                     else if (genNumber == 1)
                     {
-                        tiles[i, j] = new Tile(Assets.GetTexture("stone"), point);
+                        tiles[i, j] = new Tile(Assets.GetTexture("stone"), point, 0.02f);
                     }
                     else if (genNumber == 2)
                     {
-                        tiles[i, j] = new Tile(Assets.GetTexture("oddstone"), point);
+                        tiles[i, j] = new Tile(Assets.GetTexture("oddstone"), point, 0.02f);
                     }
                     else if (genNumber == 3)
                     {
-                        tiles[i, j] = new Tile(Assets.GetTexture("stoneTemp"), point);
+                        tiles[i, j] = new Tile(Assets.GetTexture("stoneTemp"), point, 0.02f);
                     }
                     if (generationRandom.Next(1000) == 1)
                     {
