@@ -21,6 +21,7 @@ namespace Commangineer
     public class GUI
     {
         protected List<GUIElement> elements;
+        protected List<GUI> subGUIs;
         public GUI()
         {
             elements = new List<GUIElement>();
@@ -57,6 +58,23 @@ namespace Commangineer
         {
             elements.Clear();
         }
+        /// <summary>
+        /// Adds a subGUI to subGUIs
+        /// </summary>
+        /// <param name="newGUI"></param>The new subGui to add
+        public void AddSubGUI(GUI newGUI)
+        {
+            subGUIs.Add(newGUI);
+        }
+        /// <summary>
+        /// Removes a subGUI from subGUIs
+        /// </summary>
+        /// <param name="oldGUI"></param>The GUI to remove
+        public void RemoveSubGUI(GUI oldGUI)
+        {
+            subGUIs.Remove(oldGUI);
+        }
+        public GUI GetSubGUI
         /// <summary>
         /// Draws all elements within the GUI
         /// </summary>
@@ -134,11 +152,11 @@ namespace Commangineer
             JsonNode data = ReadAsync(fileName);
             if (data != null)
             {
-                foreach (KeyValuePair<string, JsonNode> kvp in (JsonObject)data["objects"])
+                foreach (KeyValuePair<string, JsonNode> keyValuePair in (JsonObject)data["objects"])
                 {
                     try
                     {
-                        JsonObject properties = kvp.Value.AsObject();
+                        JsonObject properties = keyValuePair.Value.AsObject();
                         if (properties["type"].ToString() == "GUIElement")
                         {
                             JsonArray position = properties["position"].AsArray();

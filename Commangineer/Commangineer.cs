@@ -19,6 +19,7 @@ namespace Commangineer
         private MainMenuGUI mainMenuGUI;
         private TitleScreenGUI titleScreenGUI;
         private LevelGUI levelGUI;
+        private DialogueGUI dialogueGUI;
         private MouseState previousMouseState;
         private bool settingsActive;
         private bool windowActive;
@@ -87,6 +88,11 @@ namespace Commangineer
             if (newMenu == "level")
             {
                 currentGUI = levelGUI;
+            }
+            if (newMenu == "dialogue")
+            {
+                // add onto current gui somehow, maybe add a function to gui to allow loading additional elements? no we need a subgui property for GUIs thats also a gui and then have the draw function check for the subgui as well no wait subgui should be a array of guis so that we can load multiple if needed, actually no a list since we dont know how many
+                //currentGUI.AddSubGUI(dialogueGUI);
             }
             if (currentGUI is ScalingGUI)
             {
