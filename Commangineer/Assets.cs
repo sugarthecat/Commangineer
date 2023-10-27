@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace Commangineer
 {
@@ -10,24 +12,37 @@ namespace Commangineer
     /// </summary>
     public static class Assets
     {
-        private static Dictionary<string, Texture2D> textures;
+        private static Dictionary<string, List<Texture2D>> textures;
         private static Dictionary<string, Texture2D> buttons;
         private static Dictionary<string, Texture2D> images;
         private static Dictionary<string, Font> fonts;
         private static ContentManager content;
-
+        private static Random accessRandom;
+        /// <summary>
+        /// Initializes and loadsthe assets for the game
+        /// </summary>
+        /// <param name="contentManager">the XNA content manager</param>
         public static void Setup(ContentManager contentManager)
         {
             Debug.WriteLine("Textured.");
             content = contentManager;
-            textures = new Dictionary<string, Texture2D>();
+            accessRandom = new Random();
+            textures = new Dictionary<string, List<Texture2D>>();
             images = new Dictionary<string, Texture2D>();
             buttons = new Dictionary<string, Texture2D>();
             fonts = new Dictionary<string, Font>();
             LoadTextures();
+            LoadLevels();
             Debug.WriteLine("Textured.");
         }
 
+        /// <summary>
+        /// Loads the levels for the game
+        /// </summary>
+        public static void LoadLevels()
+        {
+
+        }
         /// <summary>
         /// Loads 2d textures for the game, including fonts
         /// </summary>
@@ -38,14 +53,26 @@ namespace Commangineer
             LoadImage("banner");
             LoadImage("icon");
             LoadImage("smiley");
-            LoadTexture("dirtystone");
-            LoadTexture("oddstone");
-            LoadTexture("stone");
-            LoadTexture("grassTemp");
-            LoadTexture("stoneTemp");
-            LoadTexture("grassOverlay");
-            LoadTexture("leaves");
-            LoadTexture("wood");
+            LoadTexture("stone", "stone1");
+            LoadTexture("stone", "stone2");
+            LoadTexture("stone", "stone3");
+            LoadTexture("stone", "stone4");
+            LoadTexture("grass","grassTemp");
+            LoadTexture("weeds","grassOverlay");
+            LoadTexture("leaves","leaves");
+            LoadTexture("wood", "wood");
+            LoadTexture("dirt", "dirt1");
+            LoadTexture("dirt", "dirt2");
+            LoadTexture("dirt", "dirt3");
+            LoadTexture("dirt", "dirt4");
+            LoadTexture("water", "water1");
+            LoadTexture("water", "water2");
+            LoadTexture("water", "water3");
+            LoadTexture("deepwater", "deepwater4");
+            LoadTexture("deepwater", "deepwater1");
+            LoadTexture("deepwater", "deepwater2");
+            LoadTexture("deepwater", "deepwater3");
+            LoadTexture("deepwater", "deepwater4");
             LoadButton("generic");
             LoadButton("bigredbutton");
         }
@@ -82,11 +109,15 @@ namespace Commangineer
         /// Loads the asset for a texture with the given name
         /// </summary>
         /// <param name="textureName">the asset's name</param>
-        public static void LoadTexture(string textureName)
+        /// <param name="fileName">the asset's name, in the file directory</param>
+        public static void LoadTexture(string textureName, string fileName)
         {
-            textures.Add(textureName, content.Load<Texture2D>("assets/textures/" + textureName));
+            if (!textures.ContainsKey(textureName))
+            {
+                textures[textureName] = new List<Texture2D>();
+            }
+            textures[textureName].Add(content.Load<Texture2D>("assets/textures/" + fileName));
         }
-
         /// <summary>
         /// Gets a 2d texture
         /// </summary>
@@ -94,7 +125,7 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetTexture(string name)
         {
-            return textures[name];
+            return textures[name][accessRandom.Next(textures[name].Count)];
         }
 
         /// <summary>

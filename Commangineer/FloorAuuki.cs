@@ -89,9 +89,17 @@ namespace Commangineer
             if(timeGrown > stages[currentStageIndex].GetStageLength() && currentStageIndex < stages.Length-1)
             {
                 currentStageIndex++;
+                timeGrown -= stages[currentStageIndex].GetStageLength();
                 SetStage();
-                timeGrown = 0;
             }
+        }
+        /// <summary>
+        /// Age up the Floor Auuki
+        /// </summary>
+        /// <param name="minutes">The amount of minutes to age the auuki</param>
+        public void Age(int minutes)
+        {
+            timeGrown = minutes * 60;
         }
     }
 }
