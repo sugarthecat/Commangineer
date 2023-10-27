@@ -23,17 +23,22 @@ namespace Commangineer.Units
         /// </summary>
         /// <param name="w">weapon to add to slot</param>
         /// <returns>true if weapon successfully added else false</returns>
-        public bool addWeapon(Weapon w)
+        public bool AddWeapon(Weapon w)
         {
             if (w.GetTurretSize() == size && weapon == null)
             {
-                weapon = w;
+                weapon = new Weapon(w);
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+
+        public void Update(double time)
+        {
+            weapon.Update(time);
         }
     }
 }

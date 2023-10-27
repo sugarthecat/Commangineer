@@ -20,5 +20,25 @@ namespace Commangineer.Units
             this.workability = workability;
             this.weight = weight;
         }
+
+        public string GetName()
+        {
+            return name;
+        }
+
+        public int GetStrength()
+        {
+            return strength;
+        }
+
+        public int GetWorkability()
+        {
+            return workability;
+        }
+
+        public int GetWeight()
+        {
+            return weight;
+        }
     }
 }
