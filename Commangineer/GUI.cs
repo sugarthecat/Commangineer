@@ -1,4 +1,5 @@
 ﻿using Commangineer.GUI_Element_Types;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -151,25 +152,25 @@ namespace Commangineer
                                 {
                                     c = Color.White;
                                 }
-                                AddGuiElement(new GUIElement(Assets.GetTexture2D(properties["name"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]), 
                                     c));
                             }
                             else if (properties.ContainsKey("hoverTexture"))
                             {
-                                AddGuiElement(new GUIElement(Assets.GetTexture2D(properties["name"].ToString()),
-                                    Assets.GetTexture2D(properties["hoverTexture"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
+                                    Assets.GetTexture(properties["hoverTexture"].ToString()),
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
                                     GetAction(properties["actionName"].ToString(), properties["actionValue"].ToString())));
                             }
                             else if (properties.ContainsKey("actionOnActivate"))
                             {
-                                AddGuiElement(new GUIElement(Assets.GetTexture2D(properties["name"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                             }
                             else
                             {
-                                AddGuiElement(new GUIElement(Assets.GetTexture2D(properties["name"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                             }
                         }
