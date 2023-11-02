@@ -1,4 +1,5 @@
 ﻿using Commangineer.GUI_Element_Types;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -170,11 +171,13 @@ namespace Commangineer
                             else if (properties.ContainsKey("actionOnActivate"))
                             {
                                 AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                             }
                             else
                             {
                                 AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                             }
                         }
