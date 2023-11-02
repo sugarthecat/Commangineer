@@ -1,7 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Floor_Auuki_types;
+using Commangineer.Tile_Types;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
@@ -15,35 +22,73 @@ namespace Commangineer
         /// <param name="level">The specific level to initialize (Level 1, 2, etc)</param>
         public Level(int level)
         {
-            tiles = new Tile[100, 100];
-            Random generationRandom = new Random();
-            for (int i = 0; i < 100; i++)
+            JsonObject levelJSON = null;
+            try
             {
-                for (int j = 0; j < 100; j++)
+                Random levelLoadRandom = new Random();
+                string sources = Assembly.GetExecutingAssembly().Location + "/../Content";
+                Debug.WriteLine(sources);
+                string text = String.Join("", File.ReadAllLines(sources + "/levels/"  + "level1.json").Select(x => x.Trim()).ToArray());
+                levelJSON = (JsonObject)JsonObject.Parse(text);
+                int width = (int)levelJSON["width"];
+                int height = (int)levelJSON["height"];
+                string tileMapString = (string)levelJSON["tileMap"];
+                string auukiMapString = (string)levelJSON["floorAuukiMap"];
+                tiles = new Tile[width, height];
+                for (int i = 0; i < width; i++)
                 {
-                    Point point = new Point(i, j);
-                    int genNumber = generationRandom.Next(4);
-                    if (genNumber == 0)
+                    for (int j = 0; j < height; j++)
                     {
-                        tiles[i, j] = new Tile(Assets.GetTexture("dirtystone"), point,0.02f);
-                    }
-                    else if (genNumber == 1)
-                    {
-                        tiles[i, j] = new Tile(Assets.GetTexture("stone"), point, 0.02f);
-                    }
-                    else if (genNumber == 2)
-                    {
-                        tiles[i, j] = new Tile(Assets.GetTexture("oddstone"), point, 0.02f);
-                    }
-                    else if (genNumber == 3)
-                    {
-                        tiles[i, j] = new Tile(Assets.GetTexture("stoneTemp"), point, 0.02f);
-                    }
-                    if (generationRandom.Next(1000) == 1)
-                    {
-                        tiles[i, j].InfectWithAuuki();
+                        Point tilePoint = new Point(i, j);
+                        switch (tileMapString[i * width + j])
+                        {
+                            case '0':
+                                tiles[i, j] = new DirtTile(tilePoint);
+                                break;
+                            case '1':
+                                tiles[i, j] = new StoneTile(tilePoint);
+                                break;
+                            case '2':
+                                tiles[i, j] = new WaterTile(tilePoint);
+                                break;
+                            case '3':
+                                tiles[i, j] = new DeepWaterTile(tilePoint);
+                                break;
+                            default:
+                                tiles[i, j] = new DirtTile(tilePoint);
+                                break;
+                        }
+                        switch (auukiMapString[i * width + j])
+                        {
+                            case '1':
+                                tiles[i, j].InfectWithAuuki();
+                                break;
+                            case '2':
+                                tiles[i, j].InfectWithAuuki();
+                                tiles[i, j].GetAuuki().Age(1);
+                                break;
+                            case '3':
+                                tiles[i, j].InfectWithAuuki();
+                                tiles[i, j].GetAuuki().Age(5);
+                                break;
+                            case '4':
+                                tiles[i, j].InfectWithAuuki();
+                                tiles[i, j].GetAuuki().Age(10);
+                                break;
+                            case '5':
+                                tiles[i, j].InfectWithAuuki();
+                                tiles[i, j].GetAuuki().Age(30);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                //TODO log exceptions
+                Commangineer.ExitGame();
             }
         }
 

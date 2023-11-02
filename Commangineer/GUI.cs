@@ -2,6 +2,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -101,7 +102,8 @@ namespace Commangineer
             JsonNode res = null;
             try
             {
-                string sources = Assembly.GetExecutingAssembly().Location + "/../../../../Content";
+                string sources = Assembly.GetExecutingAssembly().Location +"/../Content";
+                Debug.WriteLine(sources);
                 string text = String.Join("", File.ReadAllLines(sources + "/scenes/" + fileName + "/default.json").Select(x => x.Trim()).ToArray());
                 res = JsonObject.Parse(text);
             }
@@ -125,7 +127,10 @@ namespace Commangineer
             }
             return res;
         }
-
+        /// <summary>
+        /// Loads GUI Elements from a given file
+        /// </summary>
+        /// <param name="fileName"></param>
         public void LoadElements(string fileName)
         {
             JsonNode data = ReadAsync(fileName);
@@ -152,25 +157,27 @@ namespace Commangineer
                                 {
                                     c = Color.White;
                                 }
-                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]), 
                                     c));
                             }
                             else if (properties.ContainsKey("hoverTexture"))
                             {
-                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
-                                    Assets.GetTexture(properties["hoverTexture"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+                                    Assets.GetImage(properties["hoverTexture"].ToString()),
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
                                     GetAction(properties["actionName"].ToString(), properties["actionValue"].ToString())));
                             }
                             else if (properties.ContainsKey("actionOnActivate"))
                             {
-                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                             }
                             else
                             {
-                                AddGuiElement(new GUIElement(Assets.GetTexture(properties["name"].ToString()),
+                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+
                                     new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                             }
                         }

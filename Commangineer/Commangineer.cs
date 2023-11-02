@@ -126,7 +126,10 @@ namespace Commangineer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Assets.Setup(Content);
         }
-
+        public static void ExitGame()
+        {
+            instance.Exit();
+        }
         protected override void Update(GameTime gameTime)
         {
             MouseState mouseState = Mouse.GetState();
