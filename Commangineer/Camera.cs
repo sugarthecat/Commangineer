@@ -99,13 +99,47 @@ namespace Commangineer
             double timeIncrement = (double)ms / 1000;
             UpdateAcceleration(keyboardState);
             int speedFactor = 3;
-            x += speedFactor*(xVelocity * timeIncrement + xAcceleration * 1 / 2 * timeIncrement * timeIncrement);
-            y += speedFactor*(yVelocity * timeIncrement + yAcceleration * 1 / 2 * timeIncrement * timeIncrement);
+            //move camera, according to kinematics
+            x += speedFactor * (xVelocity * timeIncrement + xAcceleration * timeIncrement * timeIncrement);
+            y += speedFactor * (yVelocity * timeIncrement + yAcceleration * timeIncrement * timeIncrement);
             xVelocity += xAcceleration;
             yVelocity += yAcceleration;
-            double CAMERA_SPEED_DECAY = 0.001;
+            //exponentially decay camera speed - Gives a dynamic "slow down"
+            double CAMERA_SPEED_DECAY = 0.001d;
             xVelocity *= Math.Pow(1 - CAMERA_SPEED_DECAY, ms);
             yVelocity *= Math.Pow(1 - CAMERA_SPEED_DECAY, ms);
+            double CAMERA_SPEED_DECREASE = 1d;
+            //decrease camera speed if not accelerating
+            if (xAcceleration == 0)
+            {
+                if (xVelocity > CAMERA_SPEED_DECREASE)
+                {
+                    xVelocity -= CAMERA_SPEED_DECREASE;
+                }
+                if (xVelocity < -CAMERA_SPEED_DECREASE)
+                {
+                    xVelocity += CAMERA_SPEED_DECREASE;
+                }
+            }
+            if (yAcceleration == 0)
+            {
+                if (yVelocity > CAMERA_SPEED_DECREASE)
+                {
+                    yVelocity -= CAMERA_SPEED_DECREASE;
+                }
+                if (yVelocity < -CAMERA_SPEED_DECREASE)
+                {
+                    yVelocity += CAMERA_SPEED_DECREASE;
+                }
+            }
+            //If camera speed is close enough to 0, set it to 0
+            if (xVelocity <= CAMERA_SPEED_DECREASE && xVelocity >= -CAMERA_SPEED_DECREASE && xAcceleration == 0) { 
+                xVelocity = 0; 
+            }
+            if (yVelocity <= CAMERA_SPEED_DECREASE && yVelocity >= -CAMERA_SPEED_DECREASE && yAcceleration == 0) {
+                yVelocity = 0; 
+            }
+            //If 
             if (x + Commangineer.GetScreenWidth() > (scaleFactor * Commangineer.GetLevel().GetTileWidth()))
             {
                 x = scaleFactor * Commangineer.GetLevel().GetTileWidth() - Commangineer.GetScreenWidth();
@@ -124,6 +158,8 @@ namespace Commangineer
                 y = 0;
                 yVelocity = 0;
             }
+            //Debug.WriteLine("xv: " + xVelocity);
+            //Debug.WriteLine("yv: " + yVelocity);
         }
 
         public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw, Rectangle drawPosition)

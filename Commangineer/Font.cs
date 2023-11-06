@@ -1,14 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer
 {
@@ -20,6 +13,7 @@ namespace Commangineer
         public Dictionary<string, Texture2D> characterTextures;
         private string supportedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         private Texture2D defaultCharacter;
+
         public Font(string addr, ContentManager content)
         {
             defaultCharacter = content.Load<Texture2D>(addr + "/default");
@@ -36,18 +30,17 @@ namespace Commangineer
                 }
             }
         }
+
         public void DrawText(SpriteBatch spriteBatch, string textToDisplay, Rectangle textArea)
         {
-
             int width = textArea.Width;
             int height = textArea.Height;
             int xOffset = 0;
             int yOffset = 0;
 
-
-            int theoreticNewWidth = (int)(64d * textToDisplay.Length*height/100d);
-            int theoreticNewHeight = (int)(100d*width/textToDisplay.Length/64d);
-            if (theoreticNewWidth<width)
+            int theoreticNewWidth = (int)(64d * textToDisplay.Length * height / 100d);
+            int theoreticNewHeight = (int)(100d * width / textToDisplay.Length / 64d);
+            if (theoreticNewWidth < width)
             {
                 width = theoreticNewWidth;
                 xOffset = (textArea.Width - width) / 2;
@@ -59,7 +52,6 @@ namespace Commangineer
             }
             Rectangle displayArea = new Rectangle(textArea.X + xOffset, textArea.Y + yOffset, width, height);
 
-            
             for (int i = 0; i < textToDisplay.Length; i++)
             {
                 if (characterTextures.ContainsKey(textToDisplay[i] + ""))

@@ -1,0 +1,26 @@
+{
+	"objects": {
+		"background": {
+			"name": "background",
+			"type": "GUIElement",
+			"position": [0, 0],
+			"size": [600, 400]
+		},
+		"generic": {
+			"name": "generic",
+			"type": "Button",
+			"position": [100, 300],
+			"size": [50, 50],
+			"actionName": "NavigateToMenu",
+			"actionValue": "mainMenu"
+		},
+		"bigredbutton": {
+			"name": "bigredbutton",
+			"type": "Button",
+			"position": [450, 300],
+			"size": [50, 50],
+			"actionName": "NavigateToMenu",
+			"actionValue": "level"
+		}
+	}
+}

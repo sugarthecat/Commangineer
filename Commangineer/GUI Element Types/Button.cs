@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Commangineer.GUI_Element_Types
 {
@@ -18,8 +14,8 @@ namespace Commangineer.GUI_Element_Types
         /// <param name="position">A rectangle representing the position of the button</param>
         public Button(string buttonName, Rectangle position) : base(Assets.GetButtonTexure(buttonName), position)
         {
-
         }
+
         /// <summary>
         /// Creates a button with an action on click
         /// </summary>
@@ -35,11 +31,11 @@ namespace Commangineer.GUI_Element_Types
             MouseState mouseState = Mouse.GetState();
             if (position.Contains(mouseState.X, mouseState.Y))
             {
-                spriteBatch.Draw(texture, position, new Rectangle(0,0, texture.Width / 2, texture.Height), Color.White);
+                spriteBatch.Draw(texture, position, new Rectangle(0, 0, texture.Width / 2, texture.Height), Color.White);
             }
             else
             {
-                spriteBatch.Draw(texture, position, new Rectangle(texture.Width/2,0, texture.Width / 2, texture.Height), Color.White);
+                spriteBatch.Draw(texture, position, new Rectangle(texture.Width / 2, 0, texture.Width / 2, texture.Height), Color.White);
             }
         }
     }
