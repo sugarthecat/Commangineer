@@ -25,6 +25,7 @@ namespace Commangineer
         public GUI()
         {
             elements = new List<GUIElement>();
+            subGUIs = new List<GUI>();
         }
         /// <summary>
         /// Adds a GUIElement to the GUI
@@ -74,7 +75,22 @@ namespace Commangineer
         {
             subGUIs.Remove(oldGUI);
         }
-        public GUI GetSubGUI
+        /// <summary>
+        /// Gets a sub gui at the given index
+        /// </summary>
+        /// <param name="index"></param>The index of the subgui
+        /// <returns></returns>
+        public GUI GetSubGUI(int index)
+        {
+            return subGUIs[index];
+        }
+        /// <summary>
+        /// Clears out the GUIs in subGUIs
+        /// </summary>
+        public void RemoveAllSubGuis()
+        {
+            subGUIs.Clear();
+        }
         /// <summary>
         /// Draws all elements within the GUI
         /// </summary>
@@ -84,6 +100,10 @@ namespace Commangineer
             for (int i = 0; i < elements.Count; i++)
             {
                 elements[i].Draw(spriteBatch);
+            }
+            for (int i = 0; i < subGUIs.Count; i++)
+            {
+                subGUIs[i].Draw(spriteBatch);
             }
         }
         /// <summary>
@@ -164,7 +184,7 @@ namespace Commangineer
                             if (properties.ContainsKey("color"))
                             {
                                 Color c;
-                                var prop = typeof(Color).GetProperty("");
+                                var prop = typeof(Color).GetProperty(properties["color"].ToString());
                                 if (prop != null)
                                 {
                                     c = (Color)prop.GetValue(null, null);

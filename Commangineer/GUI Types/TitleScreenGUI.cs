@@ -17,6 +17,7 @@ namespace Commangineer.GUI_Types
         public TitleScreenGUI() : base(600,400)
         {
             LoadElements("TitleScreenGUI");
+            AddSubGUI(new DialogueGUI());
         }
     }
 }
