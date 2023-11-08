@@ -1,5 +1,4 @@
-﻿using Commangineer.Floor_Auuki_types;
-using Commangineer.Tile_Types;
+﻿using Commangineer.Tile_Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -28,7 +27,7 @@ namespace Commangineer
                 Random levelLoadRandom = new Random();
                 string sources = Assembly.GetExecutingAssembly().Location + "/../Content";
                 Debug.WriteLine(sources);
-                string text = String.Join("", File.ReadAllLines(sources + "/levels/"  + "level1.json").Select(x => x.Trim()).ToArray());
+                string text = String.Join("", File.ReadAllLines(sources + "/levels/level" + level.ToString() + ".json").Select(x => x.Trim()).ToArray());
                 levelJSON = (JsonObject)JsonObject.Parse(text);
                 int width = (int)levelJSON["width"];
                 int height = (int)levelJSON["height"];
@@ -45,15 +44,19 @@ namespace Commangineer
                             case '0':
                                 tiles[i, j] = new DirtTile(tilePoint);
                                 break;
+
                             case '1':
                                 tiles[i, j] = new StoneTile(tilePoint);
                                 break;
+
                             case '2':
                                 tiles[i, j] = new WaterTile(tilePoint);
                                 break;
+
                             case '3':
                                 tiles[i, j] = new DeepWaterTile(tilePoint);
                                 break;
+
                             default:
                                 tiles[i, j] = new DirtTile(tilePoint);
                                 break;
@@ -63,22 +66,27 @@ namespace Commangineer
                             case '1':
                                 tiles[i, j].InfectWithAuuki();
                                 break;
+
                             case '2':
                                 tiles[i, j].InfectWithAuuki();
                                 tiles[i, j].GetAuuki().Age(1);
                                 break;
+
                             case '3':
                                 tiles[i, j].InfectWithAuuki();
                                 tiles[i, j].GetAuuki().Age(5);
                                 break;
+
                             case '4':
                                 tiles[i, j].InfectWithAuuki();
                                 tiles[i, j].GetAuuki().Age(10);
                                 break;
+
                             case '5':
                                 tiles[i, j].InfectWithAuuki();
                                 tiles[i, j].GetAuuki().Age(30);
                                 break;
+
                             default:
                                 break;
                         }
@@ -147,20 +155,22 @@ namespace Commangineer
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
         }
+
         /// <summary>
         /// Updates the tiles in the world
         /// </summary>
         /// <param name="deltaTime">The time since the last frame</param>
         private void UpdateTiles(float deltaTime)
         {
-            for(int i = 0; i < tiles.GetLength(0); i++)
+            for (int i = 0; i < tiles.GetLength(0); i++)
             {
-                for(int j = 0; j < tiles.GetLength(1); j++)
+                for (int j = 0; j < tiles.GetLength(1); j++)
                 {
                     tiles[i, j].Update(deltaTime);
                 }
             }
         }
+
         /// <summary>
         /// Grows the Auuki on the floor
         /// </summary>
@@ -185,9 +195,8 @@ namespace Commangineer
                                 {
                                     if (!(tiles[i + xOffset, j + yOffset].HasAuuki || interactedWithTile[i + xOffset, j + yOffset]))
                                     {
-                                      tiles[i + xOffset, j + yOffset].AttemptInfectWithAuuki(deltaTime);
-                                     interactedWithTile[i + xOffset, j + yOffset] = true;
-                                        
+                                        tiles[i + xOffset, j + yOffset].AttemptInfectWithAuuki(deltaTime);
+                                        interactedWithTile[i + xOffset, j + yOffset] = true;
                                     }
                                 }
                             }

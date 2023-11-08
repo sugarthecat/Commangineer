@@ -10,6 +10,7 @@ namespace Commangineer
         private Texture2D texture;
         private Point position;
         private FloorAuuki AuukiTile;
+        private Structure occupyingStructure;
         protected float transmissionChance;
 
         public Tile(Texture2D texture, Point position, float transmissionChance)

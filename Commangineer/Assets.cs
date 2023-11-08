@@ -68,6 +68,8 @@ namespace Commangineer
             LoadTexture("water", "water1");
             LoadTexture("water", "water2");
             LoadTexture("water", "water3");
+            LoadTexture("water", "water4");
+            LoadTexture("tree", "tree1");
             LoadTexture("deepwater", "deepwater4");
             LoadTexture("deepwater", "deepwater1");
             LoadTexture("deepwater", "deepwater2");
