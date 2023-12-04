@@ -35,10 +35,6 @@ namespace Commangineer
         /// </summary>
         public static void LoadTextures()
         {
-            //
-            // NEEDS TO BE REWORKED TO LOAD AUTO
-            //
-
             JsonNode res = null;
             try
             {
