@@ -1,8 +1,13 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Commangineer.GUI_Element_Types;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
@@ -33,13 +38,36 @@ namespace Commangineer
             //
             // NEEDS TO BE REWORKED TO LOAD AUTO
             //
-            //textures.Add("banner", content.Load<Texture2D>("assets/gui/banner"));
-            LoadTexture("background");
-            LoadTexture("banner");
-            LoadTexture("icon");
-            LoadTexture("smiley");
-            LoadButton("generic");
-            LoadButton("bigredbutton");
+
+            JsonNode res = null;
+            try
+            {
+                string sources = Assembly.GetExecutingAssembly().Location + "/../../../../Content";
+                string text = String.Join("", File.ReadAllLines(sources + "/assets/assetlist.json").Select(x => x.Trim()).ToArray());
+                res = JsonObject.Parse(text);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error loading file " + ex.Message);
+            }
+            if (res != null)
+            {
+                try
+                {
+                    foreach (string s in res["textures"].AsArray())
+                    {
+                        LoadTexture(s);
+                    }
+                    foreach (string s in res["buttons"].AsArray())
+                    {
+                        LoadButton(s);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error reading JSON object from file: " + ex.Message);
+                }
+            }
         }
         /// <summary>
         /// Gets a font object

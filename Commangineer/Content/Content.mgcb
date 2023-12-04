@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/background.png
 
-#begin assets/background.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/background.png
-
 #begin assets/banner.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -49,7 +37,7 @@
 /processorParam:TextureFormat=Color
 /build:assets/banner.png
 
-#begin assets/banner.png
+#begin assets/basicFrame.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -59,7 +47,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/banner.png
+/build:assets/basicFrame.png
 
 #begin assets/buttons/bigredbutton.png
 /importer:TextureImporter
@@ -85,18 +73,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/buttons/generic.png
 
-#begin assets/buttons/generic.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/generic.png
-
 #begin assets/icon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -109,7 +85,7 @@
 /processorParam:TextureFormat=Color
 /build:assets/icon.png
 
-#begin assets/icon.png
+#begin assets/kirby.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -119,9 +95,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/icon.png
+/build:assets/kirby.png
 
-#begin assets/smiley.png
+#begin assets/mario.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -131,7 +107,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/smiley.png
+/build:assets/mario.png
 
 #begin assets/smiley.png
 /importer:TextureImporter

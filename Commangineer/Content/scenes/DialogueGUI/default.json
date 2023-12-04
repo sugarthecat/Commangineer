@@ -1,11 +1,23 @@
 {
 	"objects": {
-		"smiley": {
-			"name": "smiley",
+		"basicFrame": {
+			"name": "basicFrame",
 			"type": "GUIElement",
-			"position": [0, 0],
-			"size": [500, 500],
-			"color": "Red"
+			"position": [100, 300],
+			"size": [600, 150]
+		},
+		"mario": {
+			"name": "mario",
+			"type": "GUIElement",
+			"position": [50, 280],
+			"size": [125, 175]
+		},
+		"kirby": {
+			"name": "kirby",
+			"type": "GUIElement",
+			"position": [650, 300],
+			"size": [125, 125],
+			"color": "Gray"
 		}
 	}
 }

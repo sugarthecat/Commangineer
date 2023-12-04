@@ -16,7 +16,8 @@ namespace Commangineer.GUI_Types
     {
         public DialogueGUI() : base(600, 400)
         {
-            LoadElements("DialogueGUI");
+            //LoadElements("DialogueGUI");
+            // Load elements depending on current scene
         }
     }
 }
