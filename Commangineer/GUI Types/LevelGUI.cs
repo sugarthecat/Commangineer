@@ -17,7 +17,6 @@ namespace Commangineer.GUI_Types
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            
             base.Draw(spriteBatch);
         }
 

@@ -10,6 +10,9 @@ using System.Runtime.CompilerServices;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// The main handler for the game used in conjunction with all other classes
+    /// </summary>
     public class Commangineer : Game
     {
         public static Commangineer instance;

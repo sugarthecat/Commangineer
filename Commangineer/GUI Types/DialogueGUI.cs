@@ -19,7 +19,7 @@ namespace Commangineer.GUI_Types
             //LoadElements("DialogueGUI");
             // Load elements depending on current scene
 
-            Log.logText("test");
+            //Log.logText("test");
         }
     }
 }
