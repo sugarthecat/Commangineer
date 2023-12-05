@@ -1,8 +1,10 @@
-﻿using Commangineer.Tile_Types;
+﻿using Commangineer.AuukiStructures;
+using Commangineer.Tile_Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -33,6 +35,7 @@ namespace Commangineer
                 int height = (int)levelJSON["height"];
                 string tileMapString = (string)levelJSON["tileMap"];
                 string auukiMapString = (string)levelJSON["floorAuukiMap"];
+                
                 tiles = new Tile[width, height];
                 for (int i = 0; i < width; i++)
                 {
@@ -91,6 +94,33 @@ namespace Commangineer
                                 break;
                         }
                     }
+                }
+                JsonArray structures = levelJSON["structures"].AsArray();
+                for(int i = 0; i<structures.Count; i++)
+                {
+                    JsonNode structure = structures[i];
+                    int xPos = (int)structure["x"];
+                    int yPos = (int)structure["y"];
+                    Point position = new Point(xPos, yPos);
+                    int type = (int)structure["type"];
+                    AuukiStructure outputStructure = null;
+                    if(type == 1)
+                    {
+                        outputStructure = new Bush(position);
+                    }
+                    else if(type == 2)
+                    {
+                        outputStructure = new Tree(position);
+                    }
+                    else if(type == 3)
+                    {
+                        outputStructure = new BigTree(position);
+                    }
+                    if(outputStructure == null)
+                    {
+                        throw new InvalidDataException();
+                    }
+                    tiles[xPos, yPos].SetAuukiStructure(outputStructure);
                 }
             }
             catch (Exception ex)

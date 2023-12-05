@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Floor_Auuki_types;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace Commangineer.Tile_Types
         public DeepWaterTile(Point point) : base(Assets.GetTexture("deepwater"), point, 0f)
         {
 
+        }
+        public override void InfectWithAuuki()
+        {
         }
     }
 }

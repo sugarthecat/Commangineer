@@ -2,7 +2,7 @@
 
 namespace Commangineer.Floor_Auuki_types
 {
-    internal class WoodlandFloorAuuki : FloorAuuki
+    internal class WoodlandFloorAuuki : AuukiFloor
     {
         public WoodlandFloorAuuki(Point position)
             : base(

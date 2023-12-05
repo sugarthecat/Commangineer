@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Commangineer.AuukiStructures
 {
-    internal class Tree : AuukiStructure
+    internal class BigTree : AuukiStructure
     {
-        public Tree(Point spawnPosition) : base(spawnPosition,new Point(2,2),Assets.GetTexture("tree"),3,120)
+        public BigTree(Point spawnPosition) : base(spawnPosition,new Point(3,3),Assets.GetTexture("tree"),3,300)
         {
 
         }

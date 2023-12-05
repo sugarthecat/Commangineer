@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer
 {
-    internal class FloorAuuki : TexturedObject
+    internal class AuukiFloor : TexturedObject
     {
         //default values
         private FloorAuukiStage[] stages;
@@ -21,13 +21,17 @@ namespace Commangineer
         /// <param name="texture"></param>
         /// <param name="position"></param>
         /// <param name="maxHealth"></param>
-        public FloorAuuki(FloorAuukiStage[] stages, Point position)
+        public AuukiFloor(FloorAuukiStage[] stages, Point position)
         {
             size = new Point(1, 1);
             currentStageIndex = 0;
             this.position = position;
             this.stages = stages;
             SetStage();
+        }
+        public int GetTier()
+        {
+            return currentStageIndex;
         }
         private void SetStage()
         {

@@ -9,8 +9,8 @@ namespace Commangineer
     {
         private Texture2D texture;
         private Point position;
-        private FloorAuuki AuukiTile;
-        private Structure occupyingStructure;
+        protected AuukiFloor AuukiTile;
+        private AuukiStructure OccupyingAuukiStructure;
         protected float transmissionChance;
 
         public Tile(Texture2D texture, Point position, float transmissionChance)
@@ -33,15 +33,22 @@ namespace Commangineer
         ///
         /// </summary>
         /// <returns></returns>
-        public FloorAuuki GetAuuki()
+        public AuukiFloor GetAuuki()
         {
             return AuukiTile;
         }
-
+        public void SetAuukiStructure(AuukiStructure structure)
+        {
+            OccupyingAuukiStructure = structure;
+        }
+        public AuukiStructure GetAuukiStructure()
+        {
+            return OccupyingAuukiStructure;
+        }
         /// <summary>
         /// Infects the tile with Auuki according to its type
         /// </summary>
-        public void InfectWithAuuki()
+        public virtual void InfectWithAuuki()
         {
             AuukiTile = new WoodlandFloorAuuki(position);
         }

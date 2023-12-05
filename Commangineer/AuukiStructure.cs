@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Commangineer
 {
-    internal class AuukiStructure : Structure, TexturedObject
+    internal class AuukiStructure : TexturedObject
     {
         private Rectangle bounds;
         private Texture2D texture;
-        protected AuukiStructure(Point position, Point size, Texture2D texture) { 
+        protected AuukiStructure(Point position, Point size, Texture2D texture, int minFloorTier, int respawnTime) { 
             bounds = new Rectangle(position, size);
             this.texture = texture;
         }
