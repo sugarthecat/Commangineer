@@ -21,7 +21,7 @@ namespace Commangineer
             this.transmissionChance = transmissionChance;
         }
 
-        public bool HasAuuki
+        public bool HasAuukiTile
         {
             get
             {
@@ -29,14 +29,23 @@ namespace Commangineer
             }
         }
 
+        public bool HasAuukiStructure
+        {
+            get
+            {
+                return OccupyingAuukiStructure != null;
+            }
+        }
+
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public AuukiFloor GetAuuki()
+        public AuukiFloor GetAuukiTile()
         {
             return AuukiTile;
         }
+
         public void SetAuukiStructure(AuukiStructure structure)
         {
             OccupyingAuukiStructure = structure;
@@ -99,7 +108,7 @@ namespace Commangineer
         /// <param name="deltaTime">the seconds passed since the last update</param>
         public void Update(float deltaTime)
         {
-            if (HasAuuki)
+            if (HasAuukiTile)
             {
                 AuukiTile.Update(deltaTime);
             }

@@ -72,22 +72,22 @@ namespace Commangineer
 
                             case '2':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuuki().Age(1);
+                                tiles[i, j].GetAuukiTile ().Age(1);
                                 break;
 
                             case '3':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuuki().Age(5);
+                                tiles[i, j].GetAuukiTile().Age(5);
                                 break;
 
                             case '4':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuuki().Age(10);
+                                tiles[i, j].GetAuukiTile().Age(10);
                                 break;
 
                             case '5':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuuki().Age(30);
+                                tiles[i, j].GetAuukiTile().Age(30);
                                 break;
 
                             default:
@@ -155,18 +155,36 @@ namespace Commangineer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Assets.GetImage("background"), new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight()), Color.White);
+            DrawTiles(spriteBatch);
+            DrawStructures(spriteBatch);
+            //TODO add draw function
+        }
+        private void DrawTiles(SpriteBatch spriteBatch)
+        {
             for (int i = 0; i < tiles.GetLength(0); i++)
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
                     Camera.Draw(spriteBatch, tiles[i, j]);
-                    if (tiles[i, j].HasAuuki)
+                    if (tiles[i, j].HasAuukiTile)
                     {
-                        Camera.Draw(spriteBatch, tiles[i, j].GetAuuki());
+                        Camera.Draw(spriteBatch, tiles[i, j].GetAuukiTile());
                     }
                 }
             }
-            //TODO add draw function
+        }
+        private void DrawStructures(SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < tiles.GetLength(0); i++)
+            {
+                for (int j = 0; j < tiles.GetLength(1); j++)
+                {
+                    if (tiles[i, j].HasAuukiStructure)
+                    {
+                        Camera.Draw(spriteBatch, tiles[i, j].GetAuukiStructure());
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -213,8 +231,9 @@ namespace Commangineer
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
                 {
-                    if (!interactedWithTile[i, j] && tiles[i, j].HasAuuki)
+                    if (!interactedWithTile[i, j] && tiles[i, j].HasAuukiTile)
                     {
+                        //for a square from (i-1,j-1) - (i+1,j+1), attempt to infect tiles with Auuki
                         for (int xOffset = -1; xOffset <= 1; xOffset++)
                         {
                             for (int yOffset = -1; yOffset <= 1; yOffset++)
@@ -223,7 +242,7 @@ namespace Commangineer
                                      && xOffset + i >= 0 && xOffset + i < tiles.GetLength(0)
                                      && yOffset + j >= 0 && yOffset + j < tiles.GetLength(1))
                                 {
-                                    if (!(tiles[i + xOffset, j + yOffset].HasAuuki || interactedWithTile[i + xOffset, j + yOffset]))
+                                    if (!(tiles[i + xOffset, j + yOffset].HasAuukiTile || interactedWithTile[i + xOffset, j + yOffset]))
                                     {
                                         tiles[i + xOffset, j + yOffset].AttemptInfectWithAuuki(deltaTime);
                                         interactedWithTile[i + xOffset, j + yOffset] = true;

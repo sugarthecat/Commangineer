@@ -70,11 +70,16 @@ namespace Commangineer
             LoadTexture("water", "water3");
             LoadTexture("water", "water4");
             LoadTexture("tree", "tree1");
-            LoadTexture("deepwater", "deepwater4");
             LoadTexture("deepwater", "deepwater1");
             LoadTexture("deepwater", "deepwater2");
             LoadTexture("deepwater", "deepwater3");
             LoadTexture("deepwater", "deepwater4");
+            LoadTexture("algae", "algae1");
+            LoadTexture("algae", "algae2");
+            LoadTexture("algae", "algae3");
+            LoadTexture("algae", "algae4");
+            LoadTexture("lilypads", "lilypads1");
+            LoadTexture("lilypads", "lilypads2");
             LoadButton("generic");
             LoadButton("bigredbutton");
         }
