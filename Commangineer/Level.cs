@@ -16,7 +16,7 @@ namespace Commangineer
     public class Level
     {
         private Tile[,] tiles;
-
+        private AuukiStructure[] auukiStructures;
         /// <summary>
         /// Initializes the level
         /// </summary>
@@ -96,6 +96,8 @@ namespace Commangineer
                     }
                 }
                 JsonArray structures = levelJSON["structures"].AsArray();
+                auukiStructures = new AuukiStructure[structures.Count];
+                //Loop through and create an array for all structures
                 for(int i = 0; i<structures.Count; i++)
                 {
                     JsonNode structure = structures[i];
@@ -116,15 +118,24 @@ namespace Commangineer
                     {
                         outputStructure = new BigTree(position);
                     }
-                    if(outputStructure == null)
+                    else
                     {
-                        throw new InvalidDataException();
+                        //invalid structure. mark as invalid and continue, logging innacuracy.
+                        continue;
                     }
-                    tiles[xPos, yPos].SetAuukiStructure(outputStructure);
+                    auukiStructures[i] = outputStructure;
+                    for(int x = 0; x<outputStructure.Size.X && x + xPos< tiles.GetLength(0); x++)
+                    {
+                        for (int y = 0; y < outputStructure.Size.Y && y + yPos < tiles.GetLength(1); y++)
+                        {
+                            outputStructure.AddTile(tiles[xPos + x, yPos + y]);
+                        }
+                    }
                 }
             }
-            catch (Exception ex)
+            catch (InvalidDataException ex)
             {
+                Debug.WriteLine(ex.Message);
                 //TODO log exceptions
                 Commangineer.ExitGame();
             }
@@ -175,15 +186,9 @@ namespace Commangineer
         }
         private void DrawStructures(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < tiles.GetLength(0); i++)
+            for(int i = 0; i<auukiStructures.Length; i++)
             {
-                for (int j = 0; j < tiles.GetLength(1); j++)
-                {
-                    if (tiles[i, j].HasAuukiStructure)
-                    {
-                        Camera.Draw(spriteBatch, tiles[i, j].GetAuukiStructure());
-                    }
-                }
+                Camera.Draw(spriteBatch,auukiStructures[i]);
             }
         }
 

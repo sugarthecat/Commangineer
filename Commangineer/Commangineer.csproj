@@ -11,12 +11,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="AuukiFloorStage" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AuukiFloorStage" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />

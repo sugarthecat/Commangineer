@@ -11,18 +11,38 @@ namespace Commangineer
     internal class AuukiStructure : TexturedObject
     {
         private Rectangle bounds;
+        private Point position;
+        private Point size;
         private Texture2D texture;
+        private Tile[] tilesUnder;
         protected AuukiStructure(Point position, Point size, Texture2D texture, int minFloorTier, int respawnTime) { 
-            bounds = new Rectangle(position, size);
+            this.position = position;
+            this.size = size;
             this.texture = texture;
+            tilesUnder = new Tile[size.X * size.Y];
         }
-        public Point GetSize()
+
+        /// <summary>
+        /// Mark a certain tile as underneath the structure. Done on setup by the level.
+        /// </summary>
+        /// <param name="newTile"></param>
+        public void AddTile(Tile newTile)
         {
-            return new Point(bounds.Width, bounds.Height);
+            tilesUnder[0] = newTile;
         }
-        public Point GetPosition()
+        public Point Size
         {
-            return new Point(bounds.X, bounds.Y);
+            get
+            {
+                return size;
+            }
+        }
+        public Point Position
+        {
+            get
+            {
+                return position;
+            }
         }
         public Texture2D GetTexture()
         {
