@@ -1,31 +1,103 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Floor_Auuki_types;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer
 {
-    internal class Tile
-    {
-        Texture2D texture;
-        TileOccupier tileOccupier;
-        public Tile(Texture2D texture){
-            tileOccupier = null;
+    internal class Tile : TexturedObject
+    { 
+        private Texture2D texture;
+        private Point position;
+        protected AuukiFloor AuukiTile;
+        private AuukiStructure OccupyingAuukiStructure;
+        protected float transmissionChance;
+
+        public Tile(Texture2D texture, Point position, float transmissionChance)
+        {
+            AuukiTile = null;
             this.texture = texture;
+            this.position = position;
+            this.transmissionChance = transmissionChance;
         }
-        public bool HasTileOccupier
+
+        public bool HasAuukiTile
         {
             get
             {
-                return tileOccupier != null;
+                return AuukiTile != null;
             }
         }
-        public void Draw(SpriteBatch spriteBatch, Rectangle position)
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public AuukiFloor GetAuukiTile()
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            return AuukiTile;
+        }
+
+        /// <summary>
+        /// Infects the tile with Auuki according to its type
+        /// </summary>
+        public virtual void InfectWithAuuki()
+        {
+            AuukiTile = new WoodlandFloorAuuki(position);
+        }
+
+        /// <summary>
+        /// Attempts to get infected with Auuki
+        /// </summary>
+        /// <param name="deltaTime">The the length of time it's been attemptedly infected</param>
+        public void AttemptInfectWithAuuki(float deltaTime)
+        {
+            Random infectionChance = new Random();
+            if(Math.Pow(1 - transmissionChance, deltaTime) < infectionChance.NextDouble())
+            {
+                InfectWithAuuki();
+            }
+        }
+
+        /// <summary>
+        /// Gets the texture for the tile
+        /// </summary>
+        /// <returns>the tile's texture</returns>
+        public Texture2D GetTexture()
+        {
+            return texture;
+        }
+        /// <summary>
+        /// The size of tile. Always 1,1
+        /// </summary>
+        public Point Size
+        {
+            get
+            {
+                return new Point(1,1);
+            }
+        }
+        /// <summary>
+        /// The position of the tile
+        /// </summary>
+        public Point Position
+        {
+            get
+            {
+                return position;
+            }
+        }
+
+        /// <summary>
+        /// Updates any time-based stats of the tile
+        /// </summary>
+        /// <param name="deltaTime">the seconds passed since the last update</param>
+        public void Update(float deltaTime)
+        {
+            if (HasAuukiTile)
+            {
+                AuukiTile.Update(deltaTime);
+            }
         }
     }
 }

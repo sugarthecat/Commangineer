@@ -11,10 +11,10 @@ namespace Commangineer.GUI_Types
 {
     /// <summary>
     /// The GUI object for the title screen
-    /// </summary>`
+    /// </summary>
     internal class TitleScreenGUI : ScalingGUI
     {
-        public TitleScreenGUI() : base(600,400)
+        public TitleScreenGUI() : base(600, 400)
         {
             LoadElements("TitleScreenGUI");
             AddSubGUI(new DialogueGUI());

@@ -19,23 +19,40 @@ namespace Commangineer
     /// </summary>
     public static class Assets
     {
-        private static Dictionary<string, Texture2D> textures;
+        private static Dictionary<string, List<Texture2D>> textures;
         private static Dictionary<string, Texture2D> buttons;
+        private static Dictionary<string, Texture2D> images;
         private static Dictionary<string, Font> fonts;
         private static Dictionary<string, SoundEffect> sounds;
         private static Dictionary<string, Song> music;
         private static ContentManager content;
+        private static Random accessRandom;
+        /// <summary>
+        /// Initializes and loadsthe assets for the game
+        /// </summary>
+        /// <param name="contentManager">the XNA content manager</param>
         public static void Setup(ContentManager contentManager)
         {
             Debug.WriteLine("Textured.");
             content = contentManager;
-            textures = new Dictionary<string, Texture2D>();
+            accessRandom = new Random();
+            textures = new Dictionary<string, List<Texture2D>>();
+            images = new Dictionary<string, Texture2D>();
             buttons = new Dictionary<string, Texture2D>();
             sounds = new Dictionary<string, SoundEffect>();
             music = new Dictionary<string, Song>();
             fonts = new Dictionary<string, Font>();
             LoadTextures();
+            LoadLevels();
             Debug.WriteLine("Textured.");
+        }
+
+        /// <summary>
+        /// Loads the levels for the game
+        /// </summary>
+        public static void LoadLevels()
+        {
+
         }
         /// <summary>
         /// Loads 2d textures for the game, including fonts
@@ -72,6 +89,7 @@ namespace Commangineer
                 }
             }
         }
+
         /// <summary>
         /// Gets a font object
         /// </summary>
@@ -81,6 +99,7 @@ namespace Commangineer
         {
             return fonts[fontName];
         }
+
         /// <summary>
         /// Loads the assets for a button with the given name
         /// </summary>
@@ -89,23 +108,49 @@ namespace Commangineer
         {
             buttons.Add(buttonName, content.Load<Texture2D>("assets/buttons/" + buttonName));
         }
+
+        /// <summary>
+        /// Loads the image with the given name
+        /// </summary>
+        /// <param name="buttonName">the image's name</param>
+        public static void LoadImage(string buttonName)
+        {
+            images.Add(buttonName, content.Load<Texture2D>("assets/" + buttonName));
+        }
+
         /// <summary>
         /// Loads the asset for a texture with the given name
         /// </summary>
         /// <param name="textureName">the asset's name</param>
-        public static void LoadTexture(string textureName)
+        /// <param name="fileName">the asset's name, in the file directory</param>
+        public static void LoadTexture(string textureName, string fileName)
         {
-            textures.Add(textureName, content.Load<Texture2D>("assets/" + textureName));
+            if (!textures.ContainsKey(textureName))
+            {
+                textures[textureName] = new List<Texture2D>();
+            }
+            textures[textureName].Add(content.Load<Texture2D>("assets/textures/" + fileName));
         }
         /// <summary>
         /// Gets a 2d texture
         /// </summary>
         /// <param name="name">the requested 2d texture's name</param>
         /// <returns>The requested 2d texture</returns>
-        public static Texture2D GetTexture2D(string name)
+        public static Texture2D GetTexture(string name)
         {
-            return textures[name];
+            return textures[name][accessRandom.Next(textures[name].Count)];
         }
+
+        /// <summary>
+        /// Gets a 2d image
+        /// </summary>
+        /// <param name="name">the requested 2d texture's name</param>
+        /// <returns>The requested 2d texture</returns>
+        public static Texture2D GetImage(string name)
+        {
+            return images[name];
+        }
+
         /// <summary>
         /// Gets a 2d button texture
         /// </summary>
@@ -115,6 +160,7 @@ namespace Commangineer
         {
             return buttons[name];
         }
+
         public static void LoadShaders(ContentManager content)
         {
             /*
