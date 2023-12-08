@@ -80,6 +80,9 @@ namespace Commangineer
             LoadTexture("algae", "algae4");
             LoadTexture("lilypads", "lilypads1");
             LoadTexture("lilypads", "lilypads2");
+            LoadTexture("mountain", "mountain1");
+            LoadTexture("mountain", "mountain2");
+            LoadTexture("mountain", "mountain3");
             LoadButton("generic");
             LoadButton("bigredbutton");
         }

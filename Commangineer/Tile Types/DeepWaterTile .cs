@@ -16,6 +16,7 @@ namespace Commangineer.Tile_Types
         }
         public override void InfectWithAuuki()
         {
+            //removes functionality, DeepWater can't be infected.
         }
     }
 }

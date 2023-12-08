@@ -207,6 +207,7 @@ namespace Commangineer
             Camera.UpdateMovement(keyboardState, ms);
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
+            UpdateAuukiStructures(deltaTime);
         }
 
         /// <summary>
@@ -221,6 +222,17 @@ namespace Commangineer
                 {
                     tiles[i, j].Update(deltaTime);
                 }
+            }
+        }
+        /// <summary>
+        /// Updates the auuki structures in the world
+        /// </summary>
+        /// <param name="deltaTime">The time since the last frame</param>
+        private void UpdateAuukiStructures(float deltaTime)
+        {
+            for (int i = 0; i < auukiStructures.Length; i++)
+            {
+                auukiStructures[i].Update(deltaTime);
             }
         }
 

@@ -67,7 +67,9 @@ namespace Commangineer
         {
             return texture;
         }
-
+        /// <summary>
+        /// The size of tile. Always 1,1
+        /// </summary>
         public Point Size
         {
             get
@@ -75,6 +77,9 @@ namespace Commangineer
                 return new Point(1,1);
             }
         }
+        /// <summary>
+        /// The position of the tile
+        /// </summary>
         public Point Position
         {
             get
