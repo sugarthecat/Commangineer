@@ -1,9 +1,16 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Commangineer.GUI_Element_Types;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
+using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
@@ -16,6 +23,8 @@ namespace Commangineer
         private static Dictionary<string, Texture2D> buttons;
         private static Dictionary<string, Texture2D> images;
         private static Dictionary<string, Font> fonts;
+        private static Dictionary<string, SoundEffect> sounds;
+        private static Dictionary<string, Song> music;
         private static ContentManager content;
         private static Random accessRandom;
         /// <summary>
@@ -30,6 +39,8 @@ namespace Commangineer
             textures = new Dictionary<string, List<Texture2D>>();
             images = new Dictionary<string, Texture2D>();
             buttons = new Dictionary<string, Texture2D>();
+            sounds = new Dictionary<string, SoundEffect>();
+            music = new Dictionary<string, Song>();
             fonts = new Dictionary<string, Font>();
             LoadTextures();
             LoadLevels();
@@ -48,43 +59,35 @@ namespace Commangineer
         /// </summary>
         public static void LoadTextures()
         {
-            //textures.Add("banner", content.wwwwwLoad<Texture2D>("assets/gui/banner"));
-            LoadImage("background");
-            LoadImage("banner");
-            LoadImage("icon");
-            LoadImage("smiley");
-            LoadTexture("stone", "stone1");
-            LoadTexture("stone", "stone2");
-            LoadTexture("stone", "stone3");
-            LoadTexture("stone", "stone4");
-            LoadTexture("grass","grassTemp");
-            LoadTexture("weeds","grassOverlay");
-            LoadTexture("leaves","leaves");
-            LoadTexture("wood", "wood");
-            LoadTexture("dirt", "dirt1");
-            LoadTexture("dirt", "dirt2");
-            LoadTexture("dirt", "dirt3");
-            LoadTexture("dirt", "dirt4");
-            LoadTexture("water", "water1");
-            LoadTexture("water", "water2");
-            LoadTexture("water", "water3");
-            LoadTexture("water", "water4");
-            LoadTexture("tree", "tree1");
-            LoadTexture("deepwater", "deepwater1");
-            LoadTexture("deepwater", "deepwater2");
-            LoadTexture("deepwater", "deepwater3");
-            LoadTexture("deepwater", "deepwater4");
-            LoadTexture("algae", "algae1");
-            LoadTexture("algae", "algae2");
-            LoadTexture("algae", "algae3");
-            LoadTexture("algae", "algae4");
-            LoadTexture("lilypads", "lilypads1");
-            LoadTexture("lilypads", "lilypads2");
-            LoadTexture("mountain", "mountain1");
-            LoadTexture("mountain", "mountain2");
-            LoadTexture("mountain", "mountain3");
-            LoadButton("generic");
-            LoadButton("bigredbutton");
+            JsonNode res = null;
+            try
+            {
+                string sources = Assembly.GetExecutingAssembly().Location + "/../../../../Content";
+                string text = String.Join("", File.ReadAllLines(sources + "/assets/assetlist.json").Select(x => x.Trim()).ToArray());
+                res = JsonObject.Parse(text);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error loading file " + ex.Message);
+            }
+            if (res != null)
+            {
+                try
+                {
+                    foreach (string s in res["textures"].AsArray())
+                    {
+                        LoadTexture(s);
+                    }
+                    foreach (string s in res["buttons"].AsArray())
+                    {
+                        LoadButton(s);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error reading JSON object from file: " + ex.Message);
+                }
+            }
         }
 
         /// <summary>
@@ -163,6 +166,22 @@ namespace Commangineer
             /*
              * empty
             */
+        }
+        public static void LoadSound(string name)
+        {
+            sounds.Add(name, content.Load<SoundEffect>("audio/Sounds/" + name));
+        }
+        public static SoundEffect GetSound(string name)
+        {
+            return sounds[name];
+        }
+        public static void LoadMusic(string name)
+        {
+            music.Add(name, content.Load<Song>("audio/Music/" + name));
+        }
+        public static Song GetMusic(string name)
+        {
+            return music[name];
         }
     }
 }

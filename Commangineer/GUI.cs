@@ -21,10 +21,11 @@ namespace Commangineer
     public class GUI
     {
         protected List<GUIElement> elements;
-
+        protected List<GUI> subGUIs;
         public GUI()
         {
             elements = new List<GUIElement>();
+            subGUIs = new List<GUI>();
         }
 
         /// <summary>
@@ -64,6 +65,38 @@ namespace Commangineer
         }
 
         /// <summary>
+        /// Adds a subGUI to subGUIs
+        /// </summary>
+        /// <param name="newGUI"></param>The new subGui to add
+        public void AddSubGUI(GUI newGUI)
+        {
+            subGUIs.Add(newGUI);
+        }
+        /// <summary>
+        /// Removes a subGUI from subGUIs
+        /// </summary>
+        /// <param name="oldGUI"></param>The GUI to remove
+        public void RemoveSubGUI(GUI oldGUI)
+        {
+            subGUIs.Remove(oldGUI);
+        }
+        /// <summary>
+        /// Gets a sub gui at the given index
+        /// </summary>
+        /// <param name="index"></param>The index of the subgui
+        /// <returns></returns>
+        public GUI GetSubGUI(int index)
+        {
+            return subGUIs[index];
+        }
+        /// <summary>
+        /// Clears out the GUIs in subGUIs
+        /// </summary>
+        public void RemoveAllSubGuis()
+        {
+            subGUIs.Clear();
+        }
+        /// <summary>
         /// Draws all elements within the GUI
         /// </summary>
         /// <param name="spriteBatch"></param>
@@ -72,6 +105,10 @@ namespace Commangineer
             for (int i = 0; i < elements.Count; i++)
             {
                 elements[i].Draw(spriteBatch);
+            }
+            for (int i = 0; i < subGUIs.Count; i++)
+            {
+                subGUIs[i].Draw(spriteBatch);
             }
         }
 
@@ -94,7 +131,7 @@ namespace Commangineer
         }
 
         /// <summary>
-        /// Reads a JSON file containing objects to draw and converts it to a list
+        /// Reads a JSON file containing objects to draw and converts it to a JsonNode
         /// </summary>        
         public JsonNode ReadAsync(string fileName)
         {
@@ -113,13 +150,19 @@ namespace Commangineer
             return res;
         }
 
-        public Action GetAction(string t, string v)
+        /// <summary>
+        /// Returns a Action dependent on the parameters
+        /// </summary>
+        /// <param name="actionName"></param> The name of the Action
+        /// <param name="actionValue"></param> A variable value for a Action to use
+        /// <returns></returns>
+        public Action GetAction(string actionName, string actionValue)
         {
             Action res = null;
-            switch (t)
+            switch (actionName)
             {
                 case "NavigateToMenu":
-                    res = delegate { Commangineer.instance.NavigateToMenu(v); };
+                    res = delegate { Commangineer.instance.NavigateToMenu(actionValue); };
                     break;
                 case " ":
                     break;
@@ -127,19 +170,19 @@ namespace Commangineer
             return res;
         }
         /// <summary>
-        /// Loads GUI Elements from a given file
+        /// Loads in all elements from a file to the screen
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="fileName"></param> The name of the json file containing the elements
         public void LoadElements(string fileName)
         {
             JsonNode data = ReadAsync(fileName);
             if (data != null)
             {
-                foreach (KeyValuePair<string, JsonNode> kvp in (JsonObject)data["objects"])
+                foreach (KeyValuePair<string, JsonNode> keyValuePair in (JsonObject)data["objects"])
                 {
                     try
                     {
-                        JsonObject properties = kvp.Value.AsObject();
+                        JsonObject properties = keyValuePair.Value.AsObject();
                         if (properties["type"].ToString() == "GUIElement")
                         {
                             JsonArray position = properties["position"].AsArray();
@@ -147,7 +190,7 @@ namespace Commangineer
                             if (properties.ContainsKey("color"))
                             {
                                 Color c;
-                                var prop = typeof(Color).GetProperty("");
+                                var prop = typeof(Color).GetProperty(properties["color"].ToString());
                                 if (prop != null)
                                 {
                                     c = (Color)prop.GetValue(null, null);
