@@ -1,4 +1,6 @@
 ﻿using Commangineer.GUI_Element_Types;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text.Json.Nodes;
 
 namespace Commangineer
@@ -19,6 +22,8 @@ namespace Commangineer
         private static Dictionary<string, Texture2D> textures;
         private static Dictionary<string, Texture2D> buttons;
         private static Dictionary<string, Font> fonts;
+        private static Dictionary<string, SoundEffect> sounds;
+        private static Dictionary<string, Song> music;
         private static ContentManager content;
         public static void Setup(ContentManager contentManager)
         {
@@ -26,6 +31,8 @@ namespace Commangineer
             content = contentManager;
             textures = new Dictionary<string, Texture2D>();
             buttons = new Dictionary<string, Texture2D>();
+            sounds = new Dictionary<string, SoundEffect>();
+            music = new Dictionary<string, Song>();
             fonts = new Dictionary<string, Font>();
             LoadTextures();
             Debug.WriteLine("Textured.");
@@ -113,6 +120,22 @@ namespace Commangineer
             /*
              * empty
             */
+        }
+        public static void LoadSound(string name)
+        {
+            sounds.Add(name, content.Load<SoundEffect>("audio/Sounds/" + name));
+        }
+        public static SoundEffect GetSound(string name)
+        {
+            return sounds[name];
+        }
+        public static void LoadMusic(string name)
+        {
+            music.Add(name, content.Load<Song>("audio/Music/" + name));
+        }
+        public static Song GetMusic(string name)
+        {
+            return music[name];
         }
     }
 }

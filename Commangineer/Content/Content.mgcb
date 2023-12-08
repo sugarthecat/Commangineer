@@ -121,3 +121,15 @@
 /processorParam:TextureFormat=Color
 /build:assets/smiley.png
 
+#begin audio/Music/maintheme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/maintheme.mp3
+
+#begin audio/Sounds/test.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Sounds/test.wav
+
