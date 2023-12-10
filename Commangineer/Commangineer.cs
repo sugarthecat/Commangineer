@@ -115,6 +115,7 @@ namespace Commangineer
         protected override void Initialize()
         {
             base.Initialize();
+            Log.LogText("Game Initialized: " + DateTime.Now.ToString());
             //initialize UIs
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
@@ -159,7 +160,6 @@ namespace Commangineer
             previousKeyboardState = keyboardState;
             base.Update(gameTime);
         }
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);

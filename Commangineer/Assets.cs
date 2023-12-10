@@ -62,7 +62,8 @@ namespace Commangineer
             JsonNode res = null;
             try
             {
-                string sources = Assembly.GetExecutingAssembly().Location + "/../../../../Content";
+                LoadImage("default");
+                string sources = Assembly.GetExecutingAssembly().Location + "/../Content";
                 string text = String.Join("", File.ReadAllLines(sources + "/assets/assetlist.json").Select(x => x.Trim()).ToArray());
                 res = JsonObject.Parse(text);
             }
@@ -74,19 +75,27 @@ namespace Commangineer
             {
                 try
                 {
-                    foreach (string s in res["textures"].AsArray())
+                    foreach (JsonNode node in res["textures"].AsArray())
                     {
-                        LoadTexture(s);
+                        LoadTexture((string)node[0], (string)node[1]);
+                    }
+                    foreach (string s in res["images"].AsArray())
+                    {
+                        LoadImage(s);
                     }
                     foreach (string s in res["buttons"].AsArray())
                     {
                         LoadButton(s);
                     }
+                }catch (StackOverflowException e)
+                {
+
                 }
+                /*
                 catch (Exception ex)
                 {
                     Debug.WriteLine("Error reading JSON object from file: " + ex.Message);
-                }
+                }*/
             }
         }
 
@@ -112,10 +121,10 @@ namespace Commangineer
         /// <summary>
         /// Loads the image with the given name
         /// </summary>
-        /// <param name="buttonName">the image's name</param>
-        public static void LoadImage(string buttonName)
+        /// <param name="imageName">the image's name</param>
+        public static void LoadImage(string imageName)
         {
-            images.Add(buttonName, content.Load<Texture2D>("assets/" + buttonName));
+            images.Add(imageName, content.Load<Texture2D>("assets/" + imageName));
         }
 
         /// <summary>
@@ -138,7 +147,9 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetTexture(string name)
         {
+            
             return textures[name][accessRandom.Next(textures[name].Count)];
+            
         }
 
         /// <summary>
@@ -148,7 +159,14 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetImage(string name)
         {
-            return images[name];
+            try
+            {
+                return images[name];
+            }
+            catch (KeyNotFoundException e)
+            {
+                return images["default"];
+            }
         }
 
         /// <summary>

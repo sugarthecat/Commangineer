@@ -7,11 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace Commangineer
 {
@@ -22,6 +18,7 @@ namespace Commangineer
     {
         protected List<GUIElement> elements;
         protected List<GUI> subGUIs;
+
         public GUI()
         {
             elements = new List<GUIElement>();
@@ -72,6 +69,7 @@ namespace Commangineer
         {
             subGUIs.Add(newGUI);
         }
+
         /// <summary>
         /// Removes a subGUI from subGUIs
         /// </summary>
@@ -80,6 +78,7 @@ namespace Commangineer
         {
             subGUIs.Remove(oldGUI);
         }
+
         /// <summary>
         /// Gets a sub gui at the given index
         /// </summary>
@@ -89,6 +88,7 @@ namespace Commangineer
         {
             return subGUIs[index];
         }
+
         /// <summary>
         /// Clears out the GUIs in subGUIs
         /// </summary>
@@ -96,6 +96,7 @@ namespace Commangineer
         {
             subGUIs.Clear();
         }
+
         /// <summary>
         /// Draws all elements within the GUI
         /// </summary>
@@ -132,13 +133,13 @@ namespace Commangineer
 
         /// <summary>
         /// Reads a JSON file containing objects to draw and converts it to a JsonNode
-        /// </summary>        
+        /// </summary>
         public JsonNode ReadAsync(string fileName)
         {
             JsonNode res = null;
             try
             {
-                string sources = Assembly.GetExecutingAssembly().Location +"/../Content";
+                string sources = Assembly.GetExecutingAssembly().Location + "/../Content";
                 Debug.WriteLine(sources);
                 string text = String.Join("", File.ReadAllLines(sources + "/scenes/" + fileName + "/default.json").Select(x => x.Trim()).ToArray());
                 res = JsonObject.Parse(text);
@@ -164,11 +165,13 @@ namespace Commangineer
                 case "NavigateToMenu":
                     res = delegate { Commangineer.instance.NavigateToMenu(actionValue); };
                     break;
+
                 case " ":
                     break;
             }
             return res;
         }
+
         /// <summary>
         /// Loads in all elements from a file to the screen
         /// </summary>
@@ -183,65 +186,65 @@ namespace Commangineer
                     try
                     {
                         JsonObject properties = keyValuePair.Value.AsObject();
-                        if (properties["type"].ToString() == "GUIElement")
+                        JsonArray position = properties["position"].AsArray();
+                        JsonArray size = properties["size"].AsArray();
+                        switch (properties["type"].ToString())
                         {
-                            JsonArray position = properties["position"].AsArray();
-                            JsonArray size = properties["size"].AsArray();
-                            if (properties.ContainsKey("color"))
-                            {
-                                Color c;
-                                var prop = typeof(Color).GetProperty(properties["color"].ToString());
-                                if (prop != null)
+                            case "GUIElement":
+
+                                if (properties.ContainsKey("color"))
                                 {
-                                    c = (Color)prop.GetValue(null, null);
+                                    Color c;
+                                    var prop = typeof(Color).GetProperty(properties["color"].ToString());
+                                    if (prop != null)
+                                    {
+                                        c = (Color)prop.GetValue(null, null);
+                                    }
+                                    else
+                                    {
+                                        c = Color.White;
+                                    }
+                                    AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+                                        new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
+                                        c));
+                                }
+                                else if (properties.ContainsKey("hoverTexture"))
+                                {
+                                    AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+                                        Assets.GetImage(properties["hoverTexture"].ToString()),
+                                        new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
+                                        GetAction(properties["actionName"].ToString(), properties["actionValue"].ToString())));
+                                }
+                                else if (properties.ContainsKey("actionOnActivate"))
+                                {
+                                    AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+                                        new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                                 }
                                 else
                                 {
-                                    c = Color.White;
+                                    AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
+                                        new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
                                 }
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]), 
-                                    c));
-                            }
-                            else if (properties.ContainsKey("hoverTexture"))
-                            {
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-                                    Assets.GetImage(properties["hoverTexture"].ToString()),
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
-                                    GetAction(properties["actionName"].ToString(), properties["actionValue"].ToString())));
-                            }
-                            else if (properties.ContainsKey("actionOnActivate"))
-                            {
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
-                            }
-                            else
-                            {
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
-                            }
-                        }
-                        else if (properties["type"].ToString() == "Button")
-                        {
+                                break;
+                            case "Button":
 
-                            JsonArray position = properties["position"].AsArray();
-                            JsonArray size = properties["size"].AsArray();
-                            if (properties.ContainsKey("actionName"))
-                            {
-                                AddGuiElement(new Button(properties["name"].ToString(),
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
-                                    GetAction(properties["actionName"].ToString(), properties["actionValue"].ToString())));
-                            }
-                            else
-                            {
-                                AddGuiElement(new Button(properties["name"].ToString(),
-                                new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
-                            }
+                                if (properties.ContainsKey("actionName"))
+                                {
+                                    AddGuiElement(new Button(properties["name"].ToString(),
+                                        new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
+                                        GetAction(properties["actionName"].ToString(), properties["actionValue"].ToString())));
+                                }
+                                else
+                                {
+                                    AddGuiElement(new Button(properties["name"].ToString(),
+                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
+                                }
+                                break;
                         }
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine("Error reading JSON object from file: " + ex.Message);
+                        Log.LogText("Error reading JSON object from file: " + ex.Message);
                     }
                 }
             }

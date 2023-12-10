@@ -60,6 +60,10 @@ namespace Commangineer
                                 tiles[i, j] = new DeepWaterTile(tilePoint);
                                 break;
 
+                            case '4':
+                                tiles[i, j] = new MountainTile(tilePoint);
+                                break;
+
                             default:
                                 tiles[i, j] = new DirtTile(tilePoint);
                                 break;
@@ -132,10 +136,11 @@ namespace Commangineer
                         }
                     }
                 }
+                Log.LogText("Loaded level " + level + " succesfully.");
             }
-            catch (InvalidDataException ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log.LogText("Error Loading Level: " + ex.Message);
                 //TODO log exceptions
                 Commangineer.ExitGame();
             }
@@ -168,8 +173,11 @@ namespace Commangineer
             spriteBatch.Draw(Assets.GetImage("background"), new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight()), Color.White);
             DrawTiles(spriteBatch);
             DrawStructures(spriteBatch);
-            //TODO add draw function
         }
+        /// <summary>
+        /// Draws the tiles within the level
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch to draw with</param>
         private void DrawTiles(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < tiles.GetLength(0); i++)

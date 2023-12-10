@@ -13,23 +13,31 @@ namespace Commangineer
     /// </summary>
     public static class Log
     {
-        private static string outLocation = Assembly.GetExecutingAssembly().Location + "/../../../../Content/logs"; // The location of the folder containing logs
-
+        private static string outLocation = Assembly.GetExecutingAssembly().Location + "/../Content/logs"; // The location of the folder containing logs
+        private static string logName = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day  + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + ".txt";
         /// <summary>
         /// Creates a empty log file
         /// </summary>
-        private static void createOutput()
+        private static void CreateOutput()
         {
-            File.WriteAllText(outLocation + "/log.txt", String.Empty);
+            if (Directory.Exists(outLocation))
+            {
+                File.WriteAllText(outLocation + "/" + logName, String.Empty);
+            }
+            else
+            {
+                Directory.CreateDirectory(outLocation);
+                CreateOutput();
+            }
         }
 
         /// <summary>
         /// Adds text to a log file
         /// </summary>
         /// <param name="msg"></param> The text to be added
-        private static void appendOutput(string msg)
+        private static void AppendOutput(string msg)
         {
-            using (StreamWriter sw = File.AppendText(outLocation + "/log.txt"))
+            using (StreamWriter sw = File.AppendText(outLocation+ "/" + logName))
             {
                 sw.WriteLine(msg);
             }
@@ -39,13 +47,13 @@ namespace Commangineer
         /// A standard method to be called by other classes which adds text to a log file
         /// </summary>
         /// <param name="msg"></param>
-        public static void logText(string msg)
+        public static void LogText(string msg)
         {
             if (!File.Exists(outLocation + "/log.txt"))
             {
-                createOutput();
+                CreateOutput();
             }
-            appendOutput(msg);
+            AppendOutput(msg);
         }
     }
 }
