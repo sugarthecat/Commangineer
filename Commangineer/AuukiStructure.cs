@@ -17,6 +17,7 @@ namespace Commangineer
         private int floorTier;
         private int respawnTime = 0;
         private float respawnProgress;
+        private bool alive = false;
         protected AuukiStructure(Point position, Point size, Texture2D texture, int minFloorTier, int respawnTime) { 
             this.position = position;
             this.size = size;
@@ -25,7 +26,18 @@ namespace Commangineer
         }
         public void Update(float deltaTime)
         {
+            if (!alive)
+            {
 
+            }
+            else
+            {
+                
+            }
+        }
+        public bool Alive
+        {
+            get { return alive; }
         }
         /// <summary>
         /// Mark a certain tile as underneath the structure. Done on setup by the level.

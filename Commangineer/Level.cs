@@ -35,7 +35,7 @@ namespace Commangineer
                 int height = (int)levelJSON["height"];
                 string tileMapString = (string)levelJSON["tileMap"];
                 string auukiMapString = (string)levelJSON["floorAuukiMap"];
-                
+                auukiStructures = new AuukiStructure[0];
                 tiles = new Tile[width, height];
                 for (int i = 0; i < width; i++)
                 {
@@ -110,22 +110,21 @@ namespace Commangineer
                     Point position = new Point(xPos, yPos);
                     int type = (int)structure["type"];
                     AuukiStructure outputStructure = null;
-                    if(type == 1)
-                    {
+                    switch (type) {
+                        case 1:
                         outputStructure = new Bush(position);
-                    }
-                    else if(type == 2)
-                    {
+                            break;
+                        case 2:
                         outputStructure = new Tree(position);
-                    }
-                    else if(type == 3)
-                    {
+                            break;
+                        case 3:
                         outputStructure = new BigTree(position);
-                    }
-                    else
-                    {
-                        //invalid structure. mark as invalid and continue, logging innacuracy.
-                        continue;
+                            break;
+                        default:
+                            Log.LogText("Undefined Type at index" + i);
+                            outputStructure = new Bush(position);
+                            //invalid structure. mark as invalid and continue, logging innacuracy.
+                            break;
                     }
                     auukiStructures[i] = outputStructure;
                     for(int x = 0; x<outputStructure.Size.X && x + xPos< tiles.GetLength(0); x++)
@@ -196,7 +195,10 @@ namespace Commangineer
         {
             for(int i = 0; i<auukiStructures.Length; i++)
             {
-                Camera.Draw(spriteBatch,auukiStructures[i]);
+                if (auukiStructures[i].Alive)
+                {
+                    Camera.Draw(spriteBatch, auukiStructures[i]);
+                }
             }
         }
 
