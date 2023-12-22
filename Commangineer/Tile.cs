@@ -11,6 +11,7 @@ namespace Commangineer
         private Point position;
         private FloorAuuki AuukiTile;
         protected float transmissionChance;
+        bool isPath;
 
         public Tile(Texture2D texture, Point position, float transmissionChance)
         {
@@ -83,6 +84,11 @@ namespace Commangineer
         public Point GetPosition()
         {
             return position;
+        }
+
+        public bool getIsPath()
+        {
+            return isPath;
         }
 
         /// <summary>
