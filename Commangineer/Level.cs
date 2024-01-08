@@ -18,19 +18,22 @@ namespace Commangineer
     {
         private Tile[,] tiles;
         private AuukiStructure[] auukiStructures;
-        private List<AuukiCreature> AuukiCreatures;
+        private List<AuukiCreature> auukiCreatures;
+        private MovingSquare debugSquare;
         /// <summary>
         /// Initializes the level
         /// </summary>
         /// <param name="level">The specific level to initialize (Level 1, 2, etc)</param>
         public Level(int level)
         {
+            debugSquare = new MovingSquare();
+            auukiCreatures = new List<AuukiCreature>();
             JsonObject levelJSON = null;
             try
             {
                 Random levelLoadRandom = new Random();
                 string sources = Assembly.GetExecutingAssembly().Location + "/../Content";
-                Debug.WriteLine(sources);
+                //Debug.WriteLine(sources);
                 string text = String.Join("", File.ReadAllLines(sources + "/levels/level" + level.ToString() + ".json").Select(x => x.Trim()).ToArray());
                 levelJSON = (JsonObject)JsonObject.Parse(text);
                 int width = (int)levelJSON["width"];
@@ -176,10 +179,6 @@ namespace Commangineer
         {
             return tiles.GetLength(1);
         }
-        public void SpawnAnimal(AuukiCreature auukiCreature)
-        {
-
-        }
         /// <summary>
         /// Render the level
         /// </summary>
@@ -188,7 +187,9 @@ namespace Commangineer
         {
             spriteBatch.Draw(Assets.GetImage("background"), new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight()), Color.White);
             DrawTiles(spriteBatch);
+            DrawCreatures(spriteBatch);
             DrawStructures(spriteBatch);
+            Camera.Draw(spriteBatch,debugSquare);
         }
         /// <summary>
         /// Draws the tiles within the level
@@ -218,7 +219,13 @@ namespace Commangineer
                 }
             }
         }
-
+        private void DrawCreatures(SpriteBatch spriteBatch)
+        {
+            for(int i = 0; i<auukiCreatures.Count; i++)
+            {
+                Camera.Draw(spriteBatch, auukiCreatures[i]);
+            }
+        }
         /// <summary>
         /// Updates the level
         /// </summary>
@@ -231,9 +238,26 @@ namespace Commangineer
             {
                 Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
             }
-            Camera.UpdateMovement(keyboardState, ms);
+            Camera.UpdateMovement(keyboardState, ms); 
+            if (keyboardState.IsKeyDown(Keys.Left))
+            {
+                debugSquare.moveX(-deltaTime);
+            }
+            if (keyboardState.IsKeyDown(Keys.Right))
+            {
+                debugSquare.moveX(deltaTime);
+            }
+            if (keyboardState.IsKeyDown(Keys.Up))
+            {
+                debugSquare.moveY(-deltaTime);
+            }
+            if (keyboardState.IsKeyDown(Keys.Down))
+            {
+                debugSquare.moveY(deltaTime);
+            }
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
+            UpdateAuukiCreatures(deltaTime);
             UpdateAuukiStructures(deltaTime);
         }
 
@@ -260,6 +284,21 @@ namespace Commangineer
             for (int i = 0; i < auukiStructures.Length; i++)
             {
                 auukiStructures[i].Update(deltaTime);
+                if (auukiStructures[i] is Spawner && auukiStructures[i].Alive && ((Spawner)auukiStructures[i]).CanSpawnAnimal)
+                {
+                    auukiCreatures.Add(((Spawner)auukiStructures[i]).Animal);
+                }
+            }
+        }
+        /// <summary>
+        /// Updates the auuki creatures in the world
+        /// </summary>
+        /// <param name="deltaTime">The time since the last frame</param>
+        private void UpdateAuukiCreatures(float deltaTime)
+        {
+            for (int i = 0; i < auukiCreatures.Count; i++)
+            {
+                auukiCreatures[i].Update(deltaTime);
             }
         }
 

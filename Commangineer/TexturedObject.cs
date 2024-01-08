@@ -7,8 +7,8 @@ namespace Commangineer
     {
         public Texture2D GetTexture();
 
-        public Point Size { get; }
+        public Vector2 Size { get; }
 
-        public Point Position { get; }
+        public Vector2 Position { get; }
     }
 }

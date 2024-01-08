@@ -72,17 +72,27 @@ namespace Commangineer
         /// <summary>
         /// The size of tile. Always 1,1
         /// </summary>
-        public Point Size
+        public Vector2 Size
         {
             get
             {
-                return new Point(1,1);
+                return new Vector2(1,1);
             }
         }
         /// <summary>
-        /// The position of the tile
+        /// The position of the tile, in vector format
         /// </summary>
-        public Point Position
+        public Vector2 Position
+        {
+            get
+            {
+                return new Vector2(position.X, position.Y);
+            }
+        }
+        /// <summary>
+        /// The position of the tile, in point format
+        /// </summary>
+        public Point PointPosition
         {
             get
             {

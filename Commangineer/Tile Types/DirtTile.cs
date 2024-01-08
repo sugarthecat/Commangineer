@@ -16,7 +16,7 @@ namespace Commangineer.Tile_Types
         }
         public override void InfectWithAuuki()
         {
-            AuukiTile = new WoodlandFloorAuuki(Position);
+            AuukiTile = new WoodlandFloorAuuki(PointPosition);
         }
 
         //infectWithAuuki 

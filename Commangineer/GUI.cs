@@ -140,13 +140,13 @@ namespace Commangineer
             try
             {
                 string sources = Assembly.GetExecutingAssembly().Location + "/../Content";
-                Debug.WriteLine(sources);
+                Log.LogText(sources);
                 string text = String.Join("", File.ReadAllLines(sources + "/scenes/" + fileName + "/default.json").Select(x => x.Trim()).ToArray());
                 res = JsonObject.Parse(text);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error loading file " + ex.Message);
+                Log.LogText("Error loading file " + ex.Message);
             }
             return res;
         }

@@ -77,18 +77,18 @@ namespace Commangineer
             Camera.Draw(spriteBatch, this);
         }
 
-        public Point Size
+        public Vector2 Size
         {
             get
             {
-                return size;
+                return new Vector2(size.X, size.Y);
             }
         }
-        public Point Position
+        public Vector2 Position
         {
             get
             {
-                return position;
+                return new Vector2(position.X, position.Y);
             }
         }
         public Texture2D GetTexture()

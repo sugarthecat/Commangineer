@@ -37,9 +37,21 @@ namespace Commangineer.AuukiStructures
                 return CreateNewAnimal();
             }
         }
+        protected Vector2 SpawnPosition{
+            get
+            {
+                return new Vector2(Position.X + Size.X / 2f, Position.Y + Size.Y / 2f);
+            }
+        }
+        protected void ClearSpawnProgress()
+        {
+
+            animalSpawnProgress = 0;
+        }
         protected virtual AuukiCreature CreateNewAnimal()
         {
-            return new AuukiCreature();
+            ClearSpawnProgress();
+            return new AuukiCreature(SpawnPosition);
         }
     }
 }

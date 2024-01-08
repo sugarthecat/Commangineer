@@ -181,8 +181,8 @@ namespace Commangineer
             Rectangle destinationRectangle = new Rectangle(
                 (int)Math.Floor(toDraw.Position.X * scaleFactor - x),
                 (int)Math.Floor(toDraw.Position.Y * scaleFactor - y),
-               scaleFactor * toDraw.Size.X,
-                scaleFactor * toDraw.Size.Y);
+               (int)(scaleFactor * toDraw.Size.X),
+                (int)(scaleFactor * toDraw.Size.Y));
             Rectangle screenView = new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight());
             if (screenView.Intersects(destinationRectangle))
             {

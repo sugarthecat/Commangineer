@@ -1,15 +1,12 @@
-﻿using Commangineer.GUI_Element_Types;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
 using System.Text.Json.Nodes;
 
 namespace Commangineer
@@ -27,13 +24,13 @@ namespace Commangineer
         private static Dictionary<string, Song> music;
         private static ContentManager content;
         private static Random accessRandom;
+
         /// <summary>
         /// Initializes and loadsthe assets for the game
         /// </summary>
         /// <param name="contentManager">the XNA content manager</param>
         public static void Setup(ContentManager contentManager)
         {
-            Debug.WriteLine("Textured.");
             content = contentManager;
             accessRandom = new Random();
             textures = new Dictionary<string, List<Texture2D>>();
@@ -44,7 +41,7 @@ namespace Commangineer
             fonts = new Dictionary<string, Font>();
             LoadTextures();
             LoadLevels();
-            Debug.WriteLine("Textured.");
+            Log.LogText("Textures loaded");
         }
 
         /// <summary>
@@ -52,8 +49,8 @@ namespace Commangineer
         /// </summary>
         public static void LoadLevels()
         {
-
         }
+
         /// <summary>
         /// Loads 2d textures for the game, including fonts
         /// </summary>
@@ -69,7 +66,7 @@ namespace Commangineer
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error loading file " + ex.Message);
+                Log.LogText("Error loading file " + ex.Message);
             }
             if (res != null)
             {
@@ -87,15 +84,11 @@ namespace Commangineer
                     {
                         LoadButton(s);
                     }
-                }catch (StackOverflowException e)
-                {
-
                 }
-                /*
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Error reading JSON object from file: " + ex.Message);
-                }*/
+                    Log.LogText("Error reading JSON object from file: " + ex.Message);
+                }
             }
         }
 
@@ -140,6 +133,7 @@ namespace Commangineer
             }
             textures[textureName].Add(content.Load<Texture2D>("assets/textures/" + fileName));
         }
+
         /// <summary>
         /// Gets a 2d texture
         /// </summary>
@@ -147,15 +141,15 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetTexture(string name)
         {
-            try
+            if (textures.ContainsKey(name))
             {
                 return textures[name][accessRandom.Next(textures[name].Count)];
             }
-            catch (KeyNotFoundException e)
+            else
             {
+                Log.LogText("Texture grab error: " + name);
                 return images["default"];
             }
-            
         }
 
         /// <summary>
@@ -165,12 +159,13 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetImage(string name)
         {
-            try
+            if (images.ContainsKey(name))
             {
                 return images[name];
             }
-            catch (KeyNotFoundException e)
+            else
             {
+                Log.LogText("Texture grab error: " + name);
                 return images["default"];
             }
         }
@@ -182,12 +177,13 @@ namespace Commangineer
         /// <returns>The requested 2d button texture</returns>
         public static Texture2D GetButtonTexure(string name)
         {
-            try
+            if (buttons.ContainsKey(name))
             {
                 return buttons[name];
             }
-            catch (KeyNotFoundException e)
+            else
             {
+                Log.LogText("Texture grab error: " + name);
                 return images["default"];
             }
         }
@@ -198,18 +194,22 @@ namespace Commangineer
              * empty
             */
         }
+
         public static void LoadSound(string name)
         {
             sounds.Add(name, content.Load<SoundEffect>("audio/Sounds/" + name));
         }
+
         public static SoundEffect GetSound(string name)
         {
             return sounds[name];
         }
+
         public static void LoadMusic(string name)
         {
             music.Add(name, content.Load<Song>("audio/Music/" + name));
         }
+
         public static Song GetMusic(string name)
         {
             return music[name];

@@ -15,7 +15,8 @@ namespace Commangineer.AuukiStructures.Spawners
         }
         protected override AuukiCreature CreateNewAnimal()
         {
-            return new AuukiCreature();
+            ClearSpawnProgress();
+            return new AuukiCreature(SpawnPosition);
         }
     }
 }
