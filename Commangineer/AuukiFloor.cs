@@ -29,9 +29,12 @@ namespace Commangineer
             this.stages = stages;
             SetStage();
         }
-        public int GetTier()
+        public int Tier
         {
-            return currentStageIndex;
+            get
+            {
+                return currentStageIndex;
+            }
         }
         private void SetStage()
         {

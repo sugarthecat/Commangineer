@@ -147,8 +147,14 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetTexture(string name)
         {
-            
-            return textures[name][accessRandom.Next(textures[name].Count)];
+            try
+            {
+                return textures[name][accessRandom.Next(textures[name].Count)];
+            }
+            catch (KeyNotFoundException e)
+            {
+                return images["default"];
+            }
             
         }
 
@@ -176,7 +182,14 @@ namespace Commangineer
         /// <returns>The requested 2d button texture</returns>
         public static Texture2D GetButtonTexure(string name)
         {
-            return buttons[name];
+            try
+            {
+                return buttons[name];
+            }
+            catch (KeyNotFoundException e)
+            {
+                return images["default"];
+            }
         }
 
         public static void LoadShaders(ContentManager content)

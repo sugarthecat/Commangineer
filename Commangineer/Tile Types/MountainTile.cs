@@ -14,9 +14,5 @@ namespace Commangineer.Tile_Types
         {
 
         }
-        public override void InfectWithAuuki()
-        {
-            //removes functionality, Mountain can't be infected.
-        }
     }
 }

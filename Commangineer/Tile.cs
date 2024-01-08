@@ -33,9 +33,12 @@ namespace Commangineer
         ///
         /// </summary>
         /// <returns></returns>
-        public AuukiFloor GetAuukiTile()
+        public AuukiFloor Auuki
         {
-            return AuukiTile;
+            get
+            {
+                return AuukiTile;
+            }
         }
 
         /// <summary>
@@ -43,7 +46,6 @@ namespace Commangineer
         /// </summary>
         public virtual void InfectWithAuuki()
         {
-            AuukiTile = new WoodlandFloorAuuki(position);
         }
 
         /// <summary>

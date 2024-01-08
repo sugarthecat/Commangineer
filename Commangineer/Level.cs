@@ -1,4 +1,5 @@
 ﻿using Commangineer.AuukiStructures;
+using Commangineer.AuukiStructures.Spawners;
 using Commangineer.Tile_Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,6 +18,7 @@ namespace Commangineer
     {
         private Tile[,] tiles;
         private AuukiStructure[] auukiStructures;
+        private List<AuukiCreature> AuukiCreatures;
         /// <summary>
         /// Initializes the level
         /// </summary>
@@ -76,22 +78,22 @@ namespace Commangineer
 
                             case '2':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuukiTile ().Age(1);
+                                tiles[i, j].Auuki.Age(1);
                                 break;
 
                             case '3':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuukiTile().Age(5);
+                                tiles[i, j].Auuki.Age(5);
                                 break;
 
                             case '4':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuukiTile().Age(10);
+                                tiles[i, j].Auuki.Age(10);
                                 break;
 
                             case '5':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].GetAuukiTile().Age(30);
+                                tiles[i, j].Auuki.Age(30);
                                 break;
 
                             default:
@@ -118,7 +120,19 @@ namespace Commangineer
                         outputStructure = new Tree(position);
                             break;
                         case 3:
-                        outputStructure = new BigTree(position);
+                            outputStructure = new BigTree(position);
+                            break;
+                        case 5:
+                            outputStructure = new RatSpawner(position);
+                            break;
+                        case 6:
+                            outputStructure = new DeerSpawner(position);
+                            break;
+                        case 7:
+                            outputStructure = new FoxSpawner(position);
+                            break;
+                        case 8:
+                            outputStructure = new BearSpawner(position);
                             break;
                         default:
                             Log.LogText("Undefined Type at index" + i);
@@ -162,7 +176,10 @@ namespace Commangineer
         {
             return tiles.GetLength(1);
         }
+        public void SpawnAnimal(AuukiCreature auukiCreature)
+        {
 
+        }
         /// <summary>
         /// Render the level
         /// </summary>
@@ -186,7 +203,7 @@ namespace Commangineer
                     Camera.Draw(spriteBatch, tiles[i, j]);
                     if (tiles[i, j].HasAuukiTile)
                     {
-                        Camera.Draw(spriteBatch, tiles[i, j].GetAuukiTile());
+                        Camera.Draw(spriteBatch, tiles[i, j].Auuki);
                     }
                 }
             }
