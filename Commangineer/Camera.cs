@@ -158,24 +158,29 @@ namespace Commangineer
                 y = 0;
                 yVelocity = 0;
             }
-            //Debug.WriteLine("xv: " + xVelocity);
-            //Debug.WriteLine("yv: " + yVelocity);
         }
 
-        public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw, Rectangle drawPosition)
+        public static void Draw(SpriteBatch spriteBatch, RotatableTexturedObject toDraw)
         {
             Rectangle destinationRectangle = new Rectangle(
-                (int)Math.Floor(drawPosition.X * scaleFactor - x),
-                (int)Math.Floor(drawPosition.Y * scaleFactor - y),
-                scaleFactor,
-                scaleFactor);
+                (int)Math.Floor(toDraw.Position.X * scaleFactor - x),
+                (int)Math.Floor(toDraw.Position.Y * scaleFactor - y),
+               (int)(scaleFactor * toDraw.Size.X),
+                (int)(scaleFactor * toDraw.Size.Y));
+
+            Rectangle visualRectangle = new Rectangle(
+                (int)Math.Floor((toDraw.Position.X + toDraw.Size.X/2f) * scaleFactor - x),
+                (int)Math.Floor((toDraw.Position.Y + toDraw.Size.Y/2f) * scaleFactor - y),
+               (int)(scaleFactor * toDraw.Size.X),
+                (int)(scaleFactor * toDraw.Size.Y));
+
+            Texture2D texture = toDraw.GetTexture();
             Rectangle screenView = new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight());
             if (screenView.Intersects(destinationRectangle))
             {
-                spriteBatch.Draw(toDraw.GetTexture(), destinationRectangle, Color.White);
+                spriteBatch.Draw(texture, visualRectangle, null, Color.White, toDraw.Angle, new Vector2(texture.Width/2f, texture.Height/2f), SpriteEffects.None, 0f);     
             }
         }
-
         public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw)
         {
             Rectangle destinationRectangle = new Rectangle(

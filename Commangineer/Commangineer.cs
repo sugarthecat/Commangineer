@@ -130,6 +130,11 @@ namespace Commangineer
             LoadContent();
         }
 
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            base.OnExiting(sender, args);
+        }
+
         protected override void LoadContent()
         {
             base.LoadContent();

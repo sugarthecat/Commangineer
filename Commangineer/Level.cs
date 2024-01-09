@@ -17,9 +17,11 @@ namespace Commangineer
     public class Level
     {
         private Tile[,] tiles;
+        private GameAction[] gameActions;
         private AuukiStructure[] auukiStructures;
         private List<AuukiCreature> auukiCreatures;
         private MovingSquare debugSquare;
+        private float gameTime = 0f;
         /// <summary>
         /// Initializes the level
         /// </summary>
@@ -152,6 +154,27 @@ namespace Commangineer
                         }
                     }
                 }
+                //Load actions
+                JsonArray actions = levelJSON["actions"].AsArray();
+                for (int i = 0; i < actions.Count; i++)
+                {
+                    switch (gameActions[i].GameValue)
+                    {
+                        case GameValue.GameTime:
+                            gameActions[i].Update((int)gameTime);
+                            break;
+                        case GameValue.PlayerUnitCount:
+                            gameActions[i].Update(0);
+                            break;
+                        case GameValue.AuukiUnitCount:
+                            gameActions[i].Update(auukiCreatures.Count);
+                            break;
+                    }
+                    if (gameActions[i].Active)
+                    {
+                        gameActions[i].Deactivate();
+                    }
+                }
                 Log.LogText("Loaded level " + level + " succesfully.");
             }
             catch (Exception ex)
@@ -234,6 +257,7 @@ namespace Commangineer
         public void Update(int ms, KeyboardState keyboardState, KeyboardState previousKeyboardState, MouseState mouseState, MouseState previousMouseState)
         {
             float deltaTime = ms / 1000f;
+            gameTime += deltaTime;
             if (mouseState.ScrollWheelValue != previousMouseState.ScrollWheelValue)
             {
                 Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
@@ -260,7 +284,13 @@ namespace Commangineer
             UpdateAuukiCreatures(deltaTime);
             UpdateAuukiStructures(deltaTime);
         }
-
+        private void UpdateActions()
+        {
+            for(int i = 0; i < actions.Length; i++)
+            {
+                
+            }
+        }
         /// <summary>
         /// Updates the tiles in the world
         /// </summary>
@@ -286,7 +316,6 @@ namespace Commangineer
                 auukiStructures[i].Update(deltaTime);
                 if (auukiStructures[i] is Spawner && auukiStructures[i].Alive && ((Spawner)auukiStructures[i]).CanSpawnAnimal)
                 {
-                    Debug.WriteLine("Spwned animal");
                     auukiCreatures.Add(((Spawner)auukiStructures[i]).Animal);
                 }
             }

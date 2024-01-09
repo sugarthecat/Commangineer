@@ -28,7 +28,8 @@
 		[ "lilypads", "lilypads2" ],
 		[ "mountain", "mountain3" ],
 		[ "mountain", "mountain2" ],
-		[ "mountain", "mountain3" ]
+		[ "mountain", "mountain3" ],
+		[ "rat", "rat" ]
 	],
 	"images": [
 		"smiley",

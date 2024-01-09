@@ -23,10 +23,7 @@ namespace Commangineer
 
         public virtual void Update(float deltaTime)
         {
-            if (alive)
-            {
-            }
-            else
+            if (!alive)
             {
                 //if all supporting plants are alive, regrow.
                 bool allTilesQualify = true;

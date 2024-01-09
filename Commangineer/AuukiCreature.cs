@@ -9,29 +9,49 @@ using System.Threading.Tasks;
 
 namespace Commangineer
 {
-    public class AuukiCreature : TexturedObject
+    public class AuukiCreature : RotatableTexturedObject
     {
+        protected float speed = 1f;
+        protected float direction = 0f;
         Vector2 position;
+        Texture2D texture;
         Vector2 size;
-        public AuukiCreature(Vector2 position, Vector2 size)
+        public AuukiCreature(Vector2 position, Vector2 size, Texture2D texture)
         {
             this.position = new Vector2(position.X-size.X/2,position.Y-size.Y/2);
             this.size = size;
+            this.texture = texture;
         }
         public AuukiCreature(Vector2 position)
         {
-            this.position = position;
+            this.position = new Vector2(position.X - 0.5f, position.Y - 0.5f);
             this.size = new Vector2(1f,1f);
+            texture = Assets.GetTexture("default");
         }
 
         public void Update(float deltaTime)
         {
-            this.position.X += deltaTime;
-            this.position.Y += deltaTime;
+            this.position.X += speed*deltaTime*(float)Math.Cos(direction);
+            this.position.Y += speed*deltaTime*(float)Math.Sin(direction);
+            direction += deltaTime * 0.3f;
         }
         public Texture2D GetTexture()
         {
-            return Assets.GetTexture("default");
+            return texture;
+        }
+        public float Angle
+        {
+            get
+            {
+                return direction;
+            }
+        }
+        public Vector2 RotationOrigin
+        {
+            get
+            {
+                return new Vector2(size.X/2f,size.Y/2f);
+            }
         }
         public Vector2 Size
         {
