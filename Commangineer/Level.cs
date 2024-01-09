@@ -286,7 +286,7 @@ namespace Commangineer
         }
         private void UpdateActions()
         {
-            for(int i = 0; i < actions.Length; i++)
+            for(int i = 0; i < gameActions.Length; i++)
             {
                 
             }

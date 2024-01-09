@@ -228,32 +228,6 @@ namespace Commangineer
                                 }
                                 break;
                             case "Button":
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]), 
-                                    c));
-                            }
-                            else if (properties.ContainsKey("hoverTexture"))
-                            {
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-                                    Assets.GetImage(properties["hoverTexture"].ToString()),
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1]),
-                                    GetAction(properties["actionName"].ToString(), properties["actionValue"].ToString())));
-                            }
-                            else if (properties.ContainsKey("actionOnActivate"))
-                            {
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
-                            }
-                            else
-                            {
-                                AddGuiElement(new GUIElement(Assets.GetImage(properties["name"].ToString()),
-
-                                    new Rectangle((int)position[0], (int)position[1], (int)size[0], (int)size[1])));
-                            }
-                        }
-                        else if (properties["type"].ToString() == "Button")
-                        {
 
                                 if (properties.ContainsKey("actionName"))
                                 {
