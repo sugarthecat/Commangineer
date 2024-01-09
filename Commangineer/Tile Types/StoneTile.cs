@@ -9,7 +9,7 @@ namespace Commangineer.Tile_Types
 {
     internal class StoneTile : Tile
     {
-        public StoneTile(Point point) : base(Assets.GetTexture("stone"), point, 0.01f)
+        public StoneTile(Point point) : base(Assets.GetTexture("stone"), point, 0.002f)
         {
 
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Floor_Auuki_types;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,11 @@ namespace Commangineer.Tile_Types
         {
 
         }
+        public override void InfectWithAuuki()
+        {
+            AuukiTile = new WoodlandFloorAuuki(PointPosition);
+        }
+
+        //infectWithAuuki 
     }
 }

@@ -6,10 +6,11 @@ using System;
 namespace Commangineer
 {
     internal class Tile : TexturedObject
-    {
+    { 
         private Texture2D texture;
         private Point position;
-        private FloorAuuki AuukiTile;
+        protected AuukiFloor AuukiTile;
+        private AuukiStructure OccupyingAuukiStructure;
         protected float transmissionChance;
 
         public Tile(Texture2D texture, Point position, float transmissionChance)
@@ -20,7 +21,7 @@ namespace Commangineer
             this.transmissionChance = transmissionChance;
         }
 
-        public bool HasAuuki
+        public bool HasAuukiTile
         {
             get
             {
@@ -32,17 +33,19 @@ namespace Commangineer
         ///
         /// </summary>
         /// <returns></returns>
-        public FloorAuuki GetAuuki()
+        public AuukiFloor Auuki
         {
-            return AuukiTile;
+            get
+            {
+                return AuukiTile;
+            }
         }
 
         /// <summary>
         /// Infects the tile with Auuki according to its type
         /// </summary>
-        public void InfectWithAuuki()
+        public virtual void InfectWithAuuki()
         {
-            AuukiTile = new WoodlandFloorAuuki(position);
         }
 
         /// <summary>
@@ -66,23 +69,35 @@ namespace Commangineer
         {
             return texture;
         }
-
         /// <summary>
-        /// Gets the size of the tile
+        /// The size of tile. Always 1,1
         /// </summary>
-        /// <returns>The size of the tile, as a point. always (1,1).</returns>
-        public Point GetSize()
+        public Vector2 Size
         {
-            return new Point(1, 1);
+            get
+            {
+                return new Vector2(1,1);
+            }
         }
-
         /// <summary>
-        /// Gets the position of the tile
+        /// The position of the tile, in vector format
         /// </summary>
-        /// <returns>The position of the tile, as a point</returns>
-        public Point GetPosition()
+        public Vector2 Position
         {
-            return position;
+            get
+            {
+                return new Vector2(position.X, position.Y);
+            }
+        }
+        /// <summary>
+        /// The position of the tile, in point format
+        /// </summary>
+        public Point PointPosition
+        {
+            get
+            {
+                return position;
+            }
         }
 
         /// <summary>
@@ -91,7 +106,7 @@ namespace Commangineer
         /// <param name="deltaTime">the seconds passed since the last update</param>
         public void Update(float deltaTime)
         {
-            if (HasAuuki)
+            if (HasAuukiTile)
             {
                 AuukiTile.Update(deltaTime);
             }

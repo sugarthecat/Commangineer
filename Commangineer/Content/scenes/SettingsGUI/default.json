@@ -1,0 +1,38 @@
+{
+	"objects": {
+		"background": {
+			"name": "background",
+			"type": "GUIElement",
+			"position": [0, 0],
+			"size": [600, 400]
+		},
+		"banner": {
+			"name": "banner",
+			"type": "GUIElement",
+			"position": [100, 50],
+			"size": [400, 150]
+		},
+		"icon": {
+			"name": "icon",
+			"type": "GUIElement",
+			"position": [250, 250],
+			"size": [100, 100]
+		},
+		"generic": {
+			"name": "generic",
+			"type": "Button",
+			"position": [100, 300],
+			"size": [50, 50],
+			"actionName": "NavigateToMenu",
+			"actionValue": "mainMenu"
+		},
+		"bigredbutton": {
+			"name": "bigredbutton",
+			"type": "Button",
+			"position": [450, 300],
+			"size": [50, 50],
+			"actionName": "NavigateToMenu",
+			"actionValue": "level"
+		}
+	}
+}
