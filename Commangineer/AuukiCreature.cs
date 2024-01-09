@@ -12,10 +12,18 @@ namespace Commangineer
     public class AuukiCreature : TexturedObject
     {
         Vector2 position;
+        Vector2 size;
+        public AuukiCreature(Vector2 position, Vector2 size)
+        {
+            this.position = new Vector2(position.X-size.X/2,position.Y-size.Y/2);
+            this.size = size;
+        }
         public AuukiCreature(Vector2 position)
         {
             this.position = position;
+            this.size = new Vector2(1f,1f);
         }
+
         public void Update(float deltaTime)
         {
             this.position.X += deltaTime;
@@ -27,10 +35,9 @@ namespace Commangineer
         }
         public Vector2 Size
         {
-
             get
             {
-                return new Vector2(1f, 1f);
+                return size;
             }
         }
         public Vector2 Position

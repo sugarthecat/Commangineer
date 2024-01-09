@@ -21,7 +21,7 @@ namespace Commangineer
             tilesUnder = new Tile[size.X * size.Y];
         }
 
-        public void Update(float deltaTime)
+        public virtual void Update(float deltaTime)
         {
             if (alive)
             {

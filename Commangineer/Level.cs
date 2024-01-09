@@ -286,6 +286,7 @@ namespace Commangineer
                 auukiStructures[i].Update(deltaTime);
                 if (auukiStructures[i] is Spawner && auukiStructures[i].Alive && ((Spawner)auukiStructures[i]).CanSpawnAnimal)
                 {
+                    Debug.WriteLine("Spwned animal");
                     auukiCreatures.Add(((Spawner)auukiStructures[i]).Animal);
                 }
             }

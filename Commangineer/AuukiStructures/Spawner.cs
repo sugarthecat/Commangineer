@@ -13,9 +13,9 @@ namespace Commangineer.AuukiStructures
         float animalSpawnProgress = 0;
         public Spawner(Point spawnPosition, Point size, int minFloorTier, float animalSpawnTime) : base(spawnPosition, size, Assets.GetTexture("default"), minFloorTier)
         {
-
+            this.animalSpawnTime = animalSpawnTime;
         }
-        public new void Update(float deltaTime)
+        public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
             if (animalSpawnProgress <= animalSpawnTime)

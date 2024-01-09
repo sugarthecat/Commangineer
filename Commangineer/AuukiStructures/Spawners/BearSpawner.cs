@@ -9,7 +9,7 @@ namespace Commangineer.AuukiStructures.Spawners
 {
     internal class BearSpawner : Spawner
     {
-        public BearSpawner(Point spawnPosition) : base(spawnPosition, new Point(4, 4), 3, 300)
+        public BearSpawner(Point spawnPosition) : base(spawnPosition, new Point(4, 4), 2, 300)
         {
 
         }
