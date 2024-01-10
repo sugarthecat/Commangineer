@@ -11,6 +11,8 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text.Json.Nodes;
+using System.Diagnostics.Tracing;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Commangineer
 {
@@ -42,7 +44,7 @@ namespace Commangineer
             sounds = new Dictionary<string, SoundEffect>();
             music = new Dictionary<string, Song>();
             fonts = new Dictionary<string, Font>();
-            LoadTextures();
+            LoadAssets();
             LoadLevels();
             Debug.WriteLine("Textured.");
         }
@@ -55,9 +57,9 @@ namespace Commangineer
 
         }
         /// <summary>
-        /// Loads 2d textures for the game, including fonts
+        /// Loads 2d textures for the game, including fonts, along with audio
         /// </summary>
-        public static void LoadTextures()
+        public static void LoadAssets()
         {
             JsonNode res = null;
             try
@@ -68,24 +70,40 @@ namespace Commangineer
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error loading file " + ex.Message);
+                Log.logText("Error loading file " + ex.Message);
             }
             if (res != null)
             {
                 try
                 {
-                    foreach (string s in res["textures"].AsArray())
+                    foreach (string s in res["images"].AsArray())
                     {
-                        LoadTexture(s);
+                        LoadImage(s);
+                    }
+                    foreach (JsonNode node in res["textures"].AsArray())
+                    {
+                        LoadTexture((string)node[0], (string)node[1]);
                     }
                     foreach (string s in res["buttons"].AsArray())
                     {
                         LoadButton(s);
                     }
+                    foreach (string s in res["sounds"].AsArray())
+                    {
+                            LoadSound(s);
+                    }
+                    foreach (string s in res["music"].AsArray())
+                    {
+                            LoadMusic(s);
+                    }
+                    foreach (string s in res["fonts"].AsArray())
+                    {
+                        LoadFont(s);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Error reading JSON object from file: " + ex.Message);
+                    Log.logText("Error reading JSON object from file: " + ex.Message);
                 }
             }
         }
@@ -100,6 +118,15 @@ namespace Commangineer
             return fonts[fontName];
         }
 
+        /// <summary>
+        /// Loads the assets for a font with the given name
+        /// </summary>
+        /// <param name="fontName"></param>The font's name
+        public static void LoadFont(string fontName)
+        {
+            string dest = "assets/fonts/" + fontName;
+            fonts.Add(fontName, new Font(dest, content));
+        }
         /// <summary>
         /// Loads the assets for a button with the given name
         /// </summary>

@@ -1,0 +1,27 @@
+{
+	"objects": {
+		"smiley": {
+			"name": "smiley",
+			"type": "GUIElement",
+			"position": [ 0, 0 ],
+			"size": [ 100, 100 ],
+			"color": "Red"
+		},
+		"okBtn": {
+			"name": "okBtn",
+			"type": "Button",
+			"position": [ 450, 300 ],
+			"size": [ 100, 50 ],
+			"actionName": "EmailCrash",
+			"actionValue": ""
+		},
+		"quitBtn": {
+			"name": "quitBtn",
+			"type": "Button",
+			"position": [ 50, 300 ],
+			"size": [ 100, 50 ],
+			"actionName": "Quit",
+			"actionValue": ""
+		}
+	}
+}

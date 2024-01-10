@@ -145,7 +145,7 @@ namespace Commangineer
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error loading file " + ex.Message);
+                Log.logText("Error loading file " + ex.Message);
             }
             return res;
         }
@@ -163,6 +163,12 @@ namespace Commangineer
             {
                 case "NavigateToMenu":
                     res = delegate { Commangineer.instance.NavigateToMenu(actionValue); };
+                    break;
+                case "EmailCrash":
+                    res = delegate { Commangineer.instance.EmailCrash(); };
+                    break;
+                case "Quit":
+                    res = delegate { Commangineer.instance.Exit(); };
                     break;
                 case " ":
                     break;
@@ -241,7 +247,7 @@ namespace Commangineer
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine("Error reading JSON object from file: " + ex.Message);
+                        Log.logText("Error reading JSON object from file: " + ex.Message);
                     }
                 }
             }

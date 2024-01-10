@@ -3,6 +3,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace Commangineer
 {
@@ -23,8 +30,9 @@ namespace Commangineer
         private KeyboardState previousKeyboardState;
         private bool settingsActive;
         private bool windowActive;
+        private bool spriteBatchBegun;
         private Level currentLevel;
-
+        private string lastError;
         public Commangineer()
         {
             instance = this;
@@ -36,6 +44,7 @@ namespace Commangineer
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             windowActive = false;
+            spriteBatchBegun = false;
             previousMouseState = Mouse.GetState();
             this.Activated += WindowOpened;
             this.Deactivated += WindowClosed;
@@ -139,46 +148,116 @@ namespace Commangineer
         {
             instance.Exit();
         }
-        protected override void Update(GameTime gameTime)
+        private void OpenUrl(string url)
         {
-            MouseState mouseState = Mouse.GetState();
-            KeyboardState keyboardState = Keyboard.GetState();
-            Keys[] pressedKeys = keyboardState.GetPressedKeys();
-            if (windowActive)
+            try
             {
-                if (previousMouseState.LeftButton != ButtonState.Pressed && mouseState.LeftButton == ButtonState.Pressed)
+                Process.Start(url);
+            }
+            catch
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                    url = url.Replace("&", "^&");
+                    Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw;
                 }
             }
-            if (currentGUI == levelGUI)
+        }
+        protected override void Update(GameTime gameTime)
+        {
+            try
             {
-                currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
+                MouseState mouseState = Mouse.GetState();
+                KeyboardState keyboardState = Keyboard.GetState();
+                Keys[] pressedKeys = keyboardState.GetPressedKeys();
+                if (windowActive)
+                {
+                   if(previousMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed)
+                   {
+
+                        currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                   }
+                }
+                if (currentGUI == levelGUI)
+                {
+                    currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
+                }
+                previousMouseState = mouseState;
+                previousKeyboardState = keyboardState;
+                base.Update(gameTime);
             }
-            previousMouseState = mouseState;
-            previousKeyboardState = keyboardState;
-            base.Update(gameTime);
+            catch (Exception exc)
+            {
+                RaiseError("A exception has occured while trying to update the game " + exc.Message, exc.StackTrace);
+            }
+        }
+
+        public void EmailCrash()
+        {
+            OpenUrl("mailto:tnickerson2024@jpkeefehs.org?subject=Commangineer%20Crash%20Report&body=" + lastError);
+            Exit();
+        }
+
+        private void RaiseError(string msg, string trace)
+        {
+            string informationString = DateTime.Now.ToString("MM/dd/yyyy h:mm tt") + " " + msg + " at " + trace;
+            lastError = informationString;
+            Log.logText(informationString);
+            currentGUI = new ErrorGUI(msg, informationString);
+        }
+
+        private void ToggleSpriteBatch()
+        {
+            spriteBatchBegun = !spriteBatchBegun;
+            if (spriteBatchBegun)
+            {
+                _spriteBatch.Begin();
+            }
+            else
+            {
+                _spriteBatch.End();
+            }
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-            _spriteBatch.Begin();
-            //draw GUI spritebatch
-            currentGUI.Draw(_spriteBatch);
-            _spriteBatch.End();
-            if (currentGUI == levelGUI)
+            try
             {
-                _spriteBatch.Begin();
-                currentLevel.Draw(_spriteBatch);
-                _spriteBatch.End();
-            }
+                GraphicsDevice.Clear(Color.Black);
+                ToggleSpriteBatch();
+                //draw GUI spritebatch
+                currentGUI.Draw(_spriteBatch);
+                ToggleSpriteBatch();
+                if (currentGUI == levelGUI)
+                {
+                    ToggleSpriteBatch();
+                    currentLevel.Draw(_spriteBatch);
+                    ToggleSpriteBatch();
+                }
 
-            if (currentGUI is ScalingGUI)
-            {
-                ((ScalingGUI)currentGUI).Rescale();
+                if (currentGUI is ScalingGUI)
+                {
+                    ((ScalingGUI)currentGUI).Rescale();
+                }
+                base.Draw(gameTime);
             }
-            base.Draw(gameTime);
+            catch (Exception exc)
+            {
+                if (spriteBatchBegun) { _spriteBatch.End(); }
+                RaiseError("A exception has occured while trying to draw to the screen: " + exc.Message, exc.StackTrace);
+            }
         }
     }
 }

@@ -1,15 +1,59 @@
 {
-	"textures": [
+	"images": [
 		"smiley",
 		"background",
 		"banner",
 		"icon",
 		"basicFrame",
 		"mario",
-		"kirby"
+		"kirby",
+		"errorMsg"
+	],
+	"textures": [
+		[ "dirt", "dirt1" ],
+		[ "dirt", "dirt2" ],
+		[ "dirt", "dirt3" ],
+		[ "dirt", "dirt4" ],
+		[ "stone", "stone1" ],
+		[ "stone", "stone2" ],
+		[ "stone", "stone3" ],
+		[ "stone", "stone4" ],
+		[ "deepwater", "deepwater1" ],
+		[ "deepwater", "deepwater2" ],
+		[ "deepwater", "deepwater3" ],
+		[ "deepwater", "deepwater4" ],
+		[ "weeds", "grassOverlay" ],
+		[ "grass", "grassTemp" ],
+		[ "leaves", "leaves" ],
+		[ "tree", "tree1" ],
+		[ "water", "water1" ],
+		[ "water", "water2" ],
+		[ "water", "water3" ],
+		[ "water", "water4" ],
+		[ "algae", "algae1" ],
+		[ "algae", "algae2" ],
+		[ "algae", "algae3" ],
+		[ "algae", "algae4" ],
+		[ "lilypads", "lilypads1" ],
+		[ "lilypads", "lilypads2" ],
+		[ "mountain", "mountain3" ],
+		[ "mountain", "mountain2" ],
+		[ "mountain", "mountain3" ],
+		[ "rat", "rat" ]
 	],
 	"buttons": [
 		"generic",
-		"bigredbutton"
+		"bigredbutton",
+		"quitBtn",
+		"okBtn"
+	],
+	"sounds": [
+		"test"
+	],
+	"music": [
+		"maintheme"
+	],
+	"fonts": [
+		"pixel"
 	]
 }
