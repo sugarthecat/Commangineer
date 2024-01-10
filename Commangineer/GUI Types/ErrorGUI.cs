@@ -20,7 +20,6 @@ namespace Commangineer.GUI_Types
     {
         public ErrorGUI(string msg, string info) : base(600, 400)
         {
-            //AddGuiElement(new GUIElement(Assets.GetTexture2D("albanianvirus"), new Rectangle(0, 0, 600, 200)));
             LoadElements("ErrorGUI");
             int charsPerLine = 50;
             int lineSize = 100 / (msg.Length / charsPerLine+1);
