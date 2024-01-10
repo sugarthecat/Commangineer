@@ -1,0 +1,21 @@
+{
+	"textures": [
+		"smiley",
+		"background",
+		"banner",
+		"icon",
+		"basicFrame",
+		"mario",
+		"kirby"
+	],
+	"buttons": [
+		"generic",
+		"bigredbutton"
+	],
+	"sounds": [
+		"test"
+	],
+	"music": [
+		"maintheme"
+	]
+}

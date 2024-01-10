@@ -14,23 +14,50 @@ namespace Commangineer
     public class Sound
     {
         private SoundEffect effect;
+        private Vector2 position;
+        private SoundEffectInstance instance;
 
         public Sound(String name)
         {
-            Assets.LoadSound(name);
-            effect = Assets.GetSound(name);
+            createSound(name, Vector2.Zero);
         }
 
-        public void Play()
+        public Sound(String name, Vector2 emitterPosition)
         {
-            SoundEffectInstance sfi = effect.CreateInstance();
-            Vector2 listener = new Vector2(0,0);
-            Vector2 emitter = new Vector2(0,0);
-            Double nv = (45 / (Math.Sqrt(Math.Pow(listener.X - emitter.X, 2) + Math.Pow(listener.Y - emitter.Y, 2))));
+            createSound(name, emitterPosition);
+        }
+
+        private void createSound(String name, Vector2 emitterPosition)
+        {
+            effect = Assets.GetSound(name);
+            position = emitterPosition;
+            instance = null;
+        }
+
+        public void MoveTo(Vector2 newPosition)
+        {
+            position = newPosition;
+        }
+        
+        public void Play() { Play(Vector2.Zero); }
+        public void Play(Vector2 listenerPosition)
+        {
+            if (instance != null) { Stop(); }
+            instance = effect.CreateInstance();
+            Double nv = (45 / (Math.Sqrt(Math.Pow(listenerPosition.X - position.X, 2) + Math.Pow(listenerPosition.Y - position.Y, 2))));
             if (nv > 1) { nv = 1; }
-            sfi.Volume = (float)(nv);
-            Debug.WriteLine(sfi.Volume);
-            sfi.Play();
+            instance.Volume = (float)(nv);
+            instance.Play();
+        }
+        
+        public void Stop()
+        {
+            instance.Stop();
+        }
+
+        public SoundState GetState()
+        {
+            return instance.State;
         }
     }
 }

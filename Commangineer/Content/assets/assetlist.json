@@ -1,4 +1,14 @@
 {
+	"images": [
+		"smiley",
+		"background",
+		"banner",
+		"icon",
+		"basicFrame",
+		"mario",
+		"kirby",
+		"errorMsg"
+	],
 	"textures": [
 		[ "dirt", "dirt1" ],
 		[ "dirt", "dirt2" ],
@@ -31,17 +41,19 @@
 		[ "mountain", "mountain3" ],
 		[ "rat", "rat" ]
 	],
-	"images": [
-		"smiley",
-		"background",
-		"banner",
-		"icon",
-		"basicFrame",
-		"mario",
-		"kirby"
-	],
 	"buttons": [
 		"generic",
-		"bigredbutton"
+		"bigredbutton",
+		"quitBtn",
+		"okBtn"
+	],
+	"sounds": [
+		"test"
+	],
+	"music": [
+		"maintheme"
+	],
+	"fonts": [
+		"pixel"
 	]
 }

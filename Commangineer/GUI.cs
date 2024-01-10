@@ -166,7 +166,12 @@ namespace Commangineer
                 case "NavigateToMenu":
                     res = delegate { Commangineer.instance.NavigateToMenu(actionValue); };
                     break;
-
+                case "EmailCrash":
+                    res = delegate { Commangineer.instance.EmailCrash(); };
+                    break;
+                case "Quit":
+                    res = delegate { Commangineer.instance.Exit(); };
+                    break;
                 case " ":
                     break;
             }
