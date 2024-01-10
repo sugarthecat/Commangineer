@@ -14,12 +14,39 @@ namespace Commangineer.GUI_Types
     /// </summary>`
     internal class DialogueGUI : ScalingGUI
     {
+        private GUIElement characterOne;
+        private GUIElement characterTwo;
+        private List<TextArea> textAreas;
         public DialogueGUI() : base(600, 400)
         {
-            //LoadElements("DialogueGUI");
-            // Load elements depending on current scene
+            SetEnabled(false);
+        }
 
-            //Log.logText("test");
+        private void ClearText()
+        {
+            foreach (TextArea textElement in textAreas)
+            {
+                RemoveGuiElement(textElement);
+            }
+            textAreas.Clear();
+        }
+
+        public void ChangeText(string newText)
+        {
+            ClearText();
+            TextArea newTextElement = new TextArea(new Rectangle(25, 300, 550, 50), Assets.GetFont("pixel"), newText);
+            textAreas.Add(newTextElement);
+            AddGuiElement(newTextElement);
+        }
+
+        public void ChangeCharacter(int position, Character newChar, bool focused)
+        {
+
+        }
+
+        public void FocusCharacter(int position, bool focused)
+        {
+
         }
     }
 }

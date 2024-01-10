@@ -124,7 +124,6 @@ namespace Commangineer
         protected override void Initialize()
         {
             base.Initialize();
-            Log.LogText("Game Initialized: " + DateTime.Now.ToString());
             //initialize UIs
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
@@ -137,11 +136,6 @@ namespace Commangineer
             //initialize camera
             Camera.UpdateScale(0);
             LoadContent();
-        }
-
-        protected override void OnExiting(object sender, EventArgs args)
-        {
-            base.OnExiting(sender, args);
         }
 
         protected override void LoadContent()
@@ -236,6 +230,7 @@ namespace Commangineer
                 _spriteBatch.End();
             }
         }
+
         protected override void Draw(GameTime gameTime)
         {
             try
