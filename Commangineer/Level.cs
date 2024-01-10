@@ -83,22 +83,34 @@ namespace Commangineer
 
                             case '2':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].Auuki.Age(1);
+                                if (tiles[i,j].HasAuukiTile)
+                                {
+                                    tiles[i, j].Auuki.Age(1);
+                                }
                                 break;
 
                             case '3':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].Auuki.Age(5);
+                                if (tiles[i, j].HasAuukiTile)
+                                {
+                                    tiles[i, j].Auuki.Age(5);
+                                }
                                 break;
 
                             case '4':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].Auuki.Age(10);
+                                if (tiles[i, j].HasAuukiTile)
+                                {
+                                    tiles[i, j].Auuki.Age(10);
+                                }
                                 break;
 
                             case '5':
                                 tiles[i, j].InfectWithAuuki();
-                                tiles[i, j].Auuki.Age(30);
+                                if (tiles[i, j].HasAuukiTile)
+                                {
+                                    tiles[i, j].Auuki.Age(30);
+                                }
                                 break;
 
                             default:
