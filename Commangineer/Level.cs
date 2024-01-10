@@ -168,24 +168,10 @@ namespace Commangineer
                 }
                 //Load actions
                 JsonArray actions = levelJSON["actions"].AsArray();
+                gameActions = new GameAction[actions.Count];
                 for (int i = 0; i < actions.Count; i++)
                 {
-                    switch (gameActions[i].GameValue)
-                    {
-                        case GameValue.GameTime:
-                            gameActions[i].Update((int)gameTime);
-                            break;
-                        case GameValue.PlayerUnitCount:
-                            gameActions[i].Update(0);
-                            break;
-                        case GameValue.AuukiUnitCount:
-                            gameActions[i].Update(auukiCreatures.Count);
-                            break;
-                    }
-                    if (gameActions[i].Active)
-                    {
-                        gameActions[i].Deactivate();
-                    }
+                    gameActions[i] = new GameAction((JsonObject)actions[i]);
                 }
                 Log.LogText("Loaded level " + level + " succesfully.");
             }
@@ -298,9 +284,24 @@ namespace Commangineer
         }
         private void UpdateActions()
         {
-            for(int i = 0; i < gameActions.Length; i++)
+            for (int i = 0; i < gameActions.Length; i++)
             {
-                
+                switch (gameActions[i].GameValue)
+                {
+                    case GameValue.GameTime:
+                        gameActions[i].Update((int)gameTime);
+                        break;
+                    case GameValue.PlayerUnitCount:
+                        gameActions[i].Update(0);
+                        break;
+                    case GameValue.AuukiUnitCount:
+                        gameActions[i].Update(auukiCreatures.Count);
+                        break;
+                }
+                if (gameActions[i].Active)
+                {
+                    gameActions[i].Deactivate();
+                }
             }
         }
         /// <summary>

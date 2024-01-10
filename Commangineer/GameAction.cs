@@ -22,7 +22,7 @@ namespace Commangineer
         private ValueRelationship comparison;
         private int threshold;
 
-        private GameAction(JsonObject actionJSON)
+        public GameAction(JsonObject actionJSON)
         {
             gameValue = GameValue.GameTime;
             comparison = ValueRelationship.LessThan;

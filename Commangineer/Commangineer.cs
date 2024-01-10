@@ -220,7 +220,7 @@ namespace Commangineer
         {
             string informationString = DateTime.Now.ToString("MM/dd/yyyy h:mm tt") + " " + msg + " at " + trace;
             lastError = informationString;
-            Log.logText(informationString);
+            Log.LogText(informationString);
             currentGUI = new ErrorGUI(msg, informationString);
         }
 

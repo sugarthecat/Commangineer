@@ -13,5 +13,5 @@ try
 }
 catch (Exception exc)
 {
-    Log.logText("A unkown critical exception has occured: " + exc.ToString());
+    Log.LogText("A unkown critical exception has occured: " + exc.ToString());
 };
