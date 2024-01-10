@@ -10,9 +10,9 @@ namespace Commangineer
         private Texture2D texture;
         private Point position;
         protected AuukiFloor AuukiTile;
-        private AuukiStructure OccupyingAuukiStructure;
+        private AuukiStructure occupyingAuukiStructure;
         protected float transmissionChance;
-
+        protected bool isSolid = false;
         public Tile(Texture2D texture, Point position, float transmissionChance)
         {
             AuukiTile = null;
@@ -109,6 +109,14 @@ namespace Commangineer
             if (HasAuukiTile)
             {
                 AuukiTile.Update(deltaTime);
+            }
+        }
+
+        public bool IsSolid
+        {
+            get
+            {
+                return isSolid;
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Commangineer.Tile_Types
     {
         public MountainTile(Point point) : base(Assets.GetTexture("mountain"), point, 0f)
         {
-
+            isSolid = true;
         }
     }
 }

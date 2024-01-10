@@ -12,7 +12,7 @@ namespace Commangineer.Tile_Types
     {
         public DeepWaterTile(Point point) : base(Assets.GetTexture("deepwater"), point, 0f)
         {
-
+            isSolid = true;
         }
     }
 }

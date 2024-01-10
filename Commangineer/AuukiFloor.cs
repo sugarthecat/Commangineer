@@ -112,7 +112,7 @@ namespace Commangineer
         /// Age up the Floor Auuki
         /// </summary>
         /// <param name="minutes">The amount of minutes to age the auuki</param>
-        public void Age(int minutes)
+        public void Age(float minutes)
         {
             timeGrown = minutes * 60;
         }

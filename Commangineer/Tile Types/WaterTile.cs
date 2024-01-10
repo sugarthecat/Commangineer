@@ -12,7 +12,7 @@ namespace Commangineer.Tile_Types
     {
         public WaterTile(Point point) : base(Assets.GetTexture("water"), point, 0.001f)
         {
-
+            isSolid = true;
         }
         public override void InfectWithAuuki()
         {

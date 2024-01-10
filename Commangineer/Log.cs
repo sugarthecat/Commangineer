@@ -49,7 +49,7 @@ namespace Commangineer
         /// <param name="msg"></param>
         public static void LogText(string msg)
         {
-            if (!File.Exists(outLocation + "/log.txt"))
+            if (!File.Exists(outLocation + "/" + logName))
             {
                 CreateOutput();
             }

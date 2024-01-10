@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,15 +19,14 @@ namespace Commangineer
         private GameAction[] gameActions;
         private AuukiStructure[] auukiStructures;
         private List<AuukiCreature> auukiCreatures;
-        private MovingSquare debugSquare;
         private float gameTime = 0f;
+
         /// <summary>
         /// Initializes the level
         /// </summary>
         /// <param name="level">The specific level to initialize (Level 1, 2, etc)</param>
         public Level(int level)
         {
-            debugSquare = new MovingSquare();
             auukiCreatures = new List<AuukiCreature>();
             JsonObject levelJSON = null;
             try
@@ -78,14 +76,18 @@ namespace Commangineer
                         switch (auukiMapString[i * width + j])
                         {
                             case '1':
-                                tiles[i, j].InfectWithAuuki();
+                                //creates spotty grass
+                                if(levelLoadRandom.Next(0,3) != 0)
+                                {
+                                    tiles[i, j].InfectWithAuuki();
+                                }
                                 break;
 
                             case '2':
                                 tiles[i, j].InfectWithAuuki();
-                                if (tiles[i,j].HasAuukiTile)
+                                if (tiles[i, j].HasAuukiTile)
                                 {
-                                    tiles[i, j].Auuki.Age(1);
+                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 2));
                                 }
                                 break;
 
@@ -93,7 +95,7 @@ namespace Commangineer
                                 tiles[i, j].InfectWithAuuki();
                                 if (tiles[i, j].HasAuukiTile)
                                 {
-                                    tiles[i, j].Auuki.Age(5);
+                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 4 + 2));
                                 }
                                 break;
 
@@ -101,7 +103,7 @@ namespace Commangineer
                                 tiles[i, j].InfectWithAuuki();
                                 if (tiles[i, j].HasAuukiTile)
                                 {
-                                    tiles[i, j].Auuki.Age(10);
+                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 6 + 7));
                                 }
                                 break;
 
@@ -109,7 +111,7 @@ namespace Commangineer
                                 tiles[i, j].InfectWithAuuki();
                                 if (tiles[i, j].HasAuukiTile)
                                 {
-                                    tiles[i, j].Auuki.Age(30);
+                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 10 + 20));
                                 }
                                 break;
 
@@ -121,7 +123,7 @@ namespace Commangineer
                 JsonArray structures = levelJSON["structures"].AsArray();
                 auukiStructures = new AuukiStructure[structures.Count];
                 //Loop through and create an array for all structures
-                for(int i = 0; i<structures.Count; i++)
+                for (int i = 0; i < structures.Count; i++)
                 {
                     JsonNode structure = structures[i];
                     int xPos = (int)structure["x"];
@@ -129,28 +131,36 @@ namespace Commangineer
                     Point position = new Point(xPos, yPos);
                     int type = (int)structure["type"];
                     AuukiStructure outputStructure = null;
-                    switch (type) {
+                    switch (type)
+                    {
                         case 1:
-                        outputStructure = new Bush(position);
+                            outputStructure = new Bush(position);
                             break;
+
                         case 2:
-                        outputStructure = new Tree(position);
+                            outputStructure = new Tree(position);
                             break;
+
                         case 3:
                             outputStructure = new BigTree(position);
                             break;
+
                         case 5:
                             outputStructure = new RatSpawner(position);
                             break;
+
                         case 6:
                             outputStructure = new DeerSpawner(position);
                             break;
+
                         case 7:
                             outputStructure = new FoxSpawner(position);
                             break;
+
                         case 8:
                             outputStructure = new BearSpawner(position);
                             break;
+
                         default:
                             Log.LogText("Undefined Type at index" + i);
                             outputStructure = new Bush(position);
@@ -158,7 +168,7 @@ namespace Commangineer
                             break;
                     }
                     auukiStructures[i] = outputStructure;
-                    for(int x = 0; x<outputStructure.Size.X && x + xPos< tiles.GetLength(0); x++)
+                    for (int x = 0; x < outputStructure.Size.X && x + xPos < tiles.GetLength(0); x++)
                     {
                         for (int y = 0; y < outputStructure.Size.Y && y + yPos < tiles.GetLength(1); y++)
                         {
@@ -200,6 +210,7 @@ namespace Commangineer
         {
             return tiles.GetLength(1);
         }
+
         /// <summary>
         /// Render the level
         /// </summary>
@@ -210,8 +221,8 @@ namespace Commangineer
             DrawTiles(spriteBatch);
             DrawCreatures(spriteBatch);
             DrawStructures(spriteBatch);
-            Camera.Draw(spriteBatch,debugSquare);
         }
+
         /// <summary>
         /// Draws the tiles within the level
         /// </summary>
@@ -230,9 +241,10 @@ namespace Commangineer
                 }
             }
         }
+
         private void DrawStructures(SpriteBatch spriteBatch)
         {
-            for(int i = 0; i<auukiStructures.Length; i++)
+            for (int i = 0; i < auukiStructures.Length; i++)
             {
                 if (auukiStructures[i].Alive)
                 {
@@ -240,13 +252,15 @@ namespace Commangineer
                 }
             }
         }
+
         private void DrawCreatures(SpriteBatch spriteBatch)
         {
-            for(int i = 0; i<auukiCreatures.Count; i++)
+            for (int i = 0; i < auukiCreatures.Count; i++)
             {
                 Camera.Draw(spriteBatch, auukiCreatures[i]);
             }
         }
+
         /// <summary>
         /// Updates the level
         /// </summary>
@@ -260,28 +274,13 @@ namespace Commangineer
             {
                 Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
             }
-            Camera.UpdateMovement(keyboardState, ms); 
-            if (keyboardState.IsKeyDown(Keys.Left))
-            {
-                debugSquare.moveX(-deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                debugSquare.moveX(deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.Up))
-            {
-                debugSquare.moveY(-deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                debugSquare.moveY(deltaTime);
-            }
+            Camera.UpdateMovement(keyboardState, ms);
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
             UpdateAuukiCreatures(deltaTime);
             UpdateAuukiStructures(deltaTime);
         }
+
         private void UpdateActions()
         {
             for (int i = 0; i < gameActions.Length; i++)
@@ -291,9 +290,11 @@ namespace Commangineer
                     case GameValue.GameTime:
                         gameActions[i].Update((int)gameTime);
                         break;
+
                     case GameValue.PlayerUnitCount:
                         gameActions[i].Update(0);
                         break;
+
                     case GameValue.AuukiUnitCount:
                         gameActions[i].Update(auukiCreatures.Count);
                         break;
@@ -304,6 +305,7 @@ namespace Commangineer
                 }
             }
         }
+
         /// <summary>
         /// Updates the tiles in the world
         /// </summary>
@@ -318,6 +320,7 @@ namespace Commangineer
                 }
             }
         }
+
         /// <summary>
         /// Updates the auuki structures in the world
         /// </summary>
@@ -333,6 +336,7 @@ namespace Commangineer
                 }
             }
         }
+
         /// <summary>
         /// Updates the auuki creatures in the world
         /// </summary>
@@ -341,7 +345,7 @@ namespace Commangineer
         {
             for (int i = 0; i < auukiCreatures.Count; i++)
             {
-                auukiCreatures[i].Update(deltaTime);
+                auukiCreatures[i].Update(deltaTime, this);
             }
         }
 
@@ -379,6 +383,44 @@ namespace Commangineer
                     }
                 }
             }
+        }
+
+        public bool Collides(AuukiCreature creature)
+        {
+            bool colliding = false;
+            Point topLeft = new Point(
+                 (int)Math.Floor(creature.Position.X),
+                 (int)Math.Floor(creature.Position.Y)
+                 );
+            Point bottomRight = new Point(
+             (int)Math.Ceiling(creature.Position.X + creature.Size.X),
+             (int)Math.Ceiling(creature.Position.Y + creature.Size.Y)
+                );
+            //if any bit is out of bounds, it collides
+            if (creature.Position.X < 0
+                || creature.Position.Y < 0
+                || creature.Position.X + creature.Size.X > tiles.GetLength(0) - 1
+                || creature.Position.Y + creature.Size.Y > tiles.GetLength(1) - 1)
+            {
+                colliding = true;
+                goto Collided;
+            }
+
+            //if any section is on a solid tile, it collides
+            for (int i = topLeft.X; i < bottomRight.X; i++)
+            {
+                for (int j = topLeft.Y; j < bottomRight.Y; j++)
+                {
+                    if (tiles[i, j].IsSolid)
+                    {
+                        colliding = true;
+                        goto Collided;
+                        //goto is only valid way to exit nested loops, even though it's considered "weird"
+                    }
+                }
+            }
+        Collided:
+            return colliding;
         }
     }
 }
