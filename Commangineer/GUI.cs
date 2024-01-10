@@ -150,7 +150,6 @@ namespace Commangineer
             try
             {
                 string sources = Assembly.GetExecutingAssembly().Location +"/../Content";
-                Debug.WriteLine(sources);
                 string text = String.Join("", File.ReadAllLines(sources + "/scenes/" + fileName + "/default.json").Select(x => x.Trim()).ToArray());
                 res = JsonObject.Parse(text);
             }
