@@ -17,7 +17,7 @@ namespace Commangineer
     public class Level
     {
         private Tile[,] tiles;
-        private GameAction[] gameActions;
+        private GameEvent[] gameEvents;
         private AuukiStructure[] auukiStructures;
         private List<AuukiCreature> auukiCreatures;
         private MovingSquare debugSquare;
@@ -167,25 +167,11 @@ namespace Commangineer
                     }
                 }
                 //Load actions
-                JsonArray actions = levelJSON["actions"].AsArray();
-                for (int i = 0; i < actions.Count; i++)
+                JsonArray events = levelJSON["events"].AsArray();
+                gameEvents = new GameEvent[events.Count];
+                for (int i = 0; i < events.Count; i++)
                 {
-                    switch (gameActions[i].GameValue)
-                    {
-                        case GameValue.GameTime:
-                            gameActions[i].Update((int)gameTime);
-                            break;
-                        case GameValue.PlayerUnitCount:
-                            gameActions[i].Update(0);
-                            break;
-                        case GameValue.AuukiUnitCount:
-                            gameActions[i].Update(auukiCreatures.Count);
-                            break;
-                    }
-                    if (gameActions[i].Active)
-                    {
-                        gameActions[i].Deactivate();
-                    }
+                    gameEvents[i] = new GameEvent((JsonObject)events[i]);
                 }
                 Log.LogText("Loaded level " + level + " succesfully.");
             }
@@ -275,32 +261,33 @@ namespace Commangineer
                 Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
             }
             Camera.UpdateMovement(keyboardState, ms); 
-            if (keyboardState.IsKeyDown(Keys.Left))
-            {
-                debugSquare.moveX(-deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.Right))
-            {
-                debugSquare.moveX(deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.Up))
-            {
-                debugSquare.moveY(-deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.Down))
-            {
-                debugSquare.moveY(deltaTime);
-            }
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
             UpdateAuukiCreatures(deltaTime);
             UpdateAuukiStructures(deltaTime);
+            UpdateActions();
         }
         private void UpdateActions()
         {
-            for(int i = 0; i < gameActions.Length; i++)
+            for(int i = 0; i < gameEvents.Length; i++)
             {
-                
+                switch (gameEvents[i].GameValue)
+                {
+                    case GameValue.GameTime:
+                        gameEvents[i].Update((int)gameTime);
+                        break;
+                    case GameValue.PlayerUnitCount:
+                        gameEvents[i].Update(0);
+                        break;
+                    case GameValue.AuukiUnitCount:
+                        gameEvents[i].Update(auukiCreatures.Count);
+                        break;
+                }
+                if (gameEvents[i].Active)
+                {
+                    //trigger actions of event
+                    gameEvents[i].Deactivate();
+                }
             }
         }
         /// <summary>

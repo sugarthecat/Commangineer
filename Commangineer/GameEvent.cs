@@ -14,7 +14,7 @@ namespace Commangineer
         GreaterThan    
     }
 
-    internal class GameAction
+    internal class GameEvent
     {
         private bool activated = false;
         private bool active = false;
@@ -22,7 +22,7 @@ namespace Commangineer
         private ValueRelationship comparison;
         private int threshold;
 
-        private GameAction(JsonObject actionJSON)
+        public GameEvent(JsonObject actionJSON)
         {
             gameValue = GameValue.GameTime;
             comparison = ValueRelationship.LessThan;
