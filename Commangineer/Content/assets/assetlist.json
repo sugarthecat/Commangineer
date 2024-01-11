@@ -44,15 +44,24 @@
 	],
 	"buttons": [
 		"generic",
-		"bigredbutton",
 		"quitBtn",
-		"okBtn"
+		"okBtn",
+		"exit-game",
+		"return",
+		"start",
+		"settings"
 	],
 	"sounds": [
 		"test"
 	],
 	"music": [
-		"maintheme"
+		"menutheme",
+		"song1",
+		"song2",
+		"song3",
+		"song4",
+		"song5",
+		"song6"
 	],
 	"fonts": [
 		"pixel"

@@ -1,0 +1,7 @@
+menutheme: Wax Lyricist - High on Loungin'
+song1: Wax Lyricist - Indulgence
+song2: HoliznaPATREON - Retro Radio
+song3: HoliznaCC0 - Waiting On A Trainsong
+song4: HoliznaCC0 - Tunez
+song5: HoliznaCC0 - There Will Come A Time
+song6: HoliznaCC0 - Ragtime Getdown

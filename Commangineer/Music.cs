@@ -16,9 +16,9 @@ namespace Commangineer
     {
         private Song gameMusic;
 
-        public Music(String name)
+        public Music(Song song)
         {
-            gameMusic = Assets.GetMusic(name);
+            gameMusic = song;
         }
 
         public void Play(bool repeat = false, int volume = 1)

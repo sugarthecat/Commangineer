@@ -29,7 +29,7 @@ namespace Commangineer
         private static Dictionary<string, Texture2D> images;
         private static Dictionary<string, Font> fonts;
         private static Dictionary<string, SoundEffect> sounds;
-        private static Dictionary<string, Song> music;
+        private static Dictionary<string, Song> songs;
         private static ContentManager content;
         private static Random accessRandom;
 
@@ -45,7 +45,7 @@ namespace Commangineer
             images = new Dictionary<string, Texture2D>();
             buttons = new Dictionary<string, Texture2D>();
             sounds = new Dictionary<string, SoundEffect>();
-            music = new Dictionary<string, Song>();
+            songs = new Dictionary<string, Song>();
             fonts = new Dictionary<string, Font>();
             LoadAssets();
             LoadLevels();
@@ -236,12 +236,12 @@ namespace Commangineer
 
         public static void LoadMusic(string name)
         {
-            music.Add(name, content.Load<Song>("audio/Music/" + name));
+            songs.Add(name, content.Load<Song>("audio/Music/" + name));
         }
 
-        public static Song GetMusic(string name)
+        public static Music GetMusic(string name)
         {
-            return music[name];
+            return new Music(songs[name]);
         }
     }
 }
