@@ -25,10 +25,12 @@ namespace Commangineer
         private MainMenuGUI mainMenuGUI;
         private TitleScreenGUI titleScreenGUI;
         private LevelGUI levelGUI;
+        private SettingsGUI settingsGUI;
+        private LevelSelectGUI levelSelectGUI;
         private DialogueGUI dialogueGUI;
+        private GameMusic musicManager;
         private MouseState previousMouseState;
         private KeyboardState previousKeyboardState;
-        private bool settingsActive;
         private bool windowActive;
         private bool spriteBatchBegun;
         private Level currentLevel;
@@ -86,11 +88,6 @@ namespace Commangineer
             return instance._graphics.PreferredBackBufferHeight;
         }
 
-        public void ToggleSettings()
-        {
-            settingsActive = !settingsActive;
-        }
-
         public void ToggleFullscreen()
         {
             _graphics.ToggleFullScreen();
@@ -98,26 +95,40 @@ namespace Commangineer
 
         public void NavigateToMenu(string newMenu)
         {
-            if (newMenu == "mainMenu")
-            {
-                currentGUI = mainMenuGUI;
-            }
-            if (newMenu == "titleScreen")
-            {
-                currentGUI = titleScreenGUI;
-            }
             if (newMenu == "level")
             {
+                musicManager.MusicType = MusicType.Gameplay;
                 currentGUI = levelGUI;
             }
-            if (newMenu == "dialogue")
+            else if (newMenu == "settings")
             {
-                // add onto current gui somehow, maybe add a function to gui to allow loading additional elements? no we need a subgui property for GUIs thats also a gui and then have the draw function check for the subgui as well no wait subgui should be a array of guis so that we can load multiple if needed, actually no a list since we dont know how many
-                //currentGUI.AddSubGUI(dialogueGUI);
+                settingsGUI.Active = !settingsGUI.Active;
             }
+            else
+            {
+                musicManager.MusicType = MusicType.Menu;
+                switch(newMenu)
+                {
+                    case "titleScreen":
+                        currentGUI = titleScreenGUI;
+                        break;
+                    case "mainMenu":
+                        currentGUI = mainMenuGUI;
+                        break;
+                    case "levelSelct":
+                        currentGUI = levelSelectGUI;
+                        break;
+                }
+            }
+
+
             if (currentGUI is ScalingGUI)
             {
                 ((ScalingGUI)currentGUI).Rescale();
+            }
+            if (settingsGUI.Active)
+            {
+                ((ScalingGUI)settingsGUI).Rescale();
             }
         }
 
@@ -128,6 +139,7 @@ namespace Commangineer
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
             levelGUI = new LevelGUI();
+            settingsGUI = new SettingsGUI();
             currentLevel = new Level(1);
             currentGUI = titleScreenGUI;
             //initialize interface values
@@ -135,7 +147,6 @@ namespace Commangineer
             previousMouseState = Mouse.GetState();
             //initialize camera
             Camera.UpdateScale(0);
-            LoadContent();
         }
 
         protected override void LoadContent()
@@ -143,6 +154,8 @@ namespace Commangineer
             base.LoadContent();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Assets.Setup(Content);
+            musicManager = new GameMusic();
+            musicManager.MusicType = MusicType.Menu;
         }
         public static void ExitGame()
         {
@@ -186,13 +199,23 @@ namespace Commangineer
                 {
                    if(previousMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed)
                    {
-
-                        currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                        if (settingsGUI.Active)
+                        {
+                            settingsGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                            ((SettingsGUI)settingsGUI).Rescale();
+                        }
+                        else
+                        {
+                            currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                        }
                    }
                 }
-                if (currentGUI == levelGUI)
+                if (!settingsGUI.Active)
                 {
-                    currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
+                    if (currentGUI == levelGUI)
+                    {
+                        currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
+                    }
                 }
                 previousMouseState = mouseState;
                 previousKeyboardState = keyboardState;
@@ -238,18 +261,30 @@ namespace Commangineer
                 GraphicsDevice.Clear(Color.Black);
                 ToggleSpriteBatch();
                 //draw GUI spritebatch
-                currentGUI.Draw(_spriteBatch);
-                ToggleSpriteBatch();
-                if (currentGUI == levelGUI)
+                if (settingsGUI.Active)
                 {
+                    settingsGUI.Draw(_spriteBatch);
                     ToggleSpriteBatch();
-                    currentLevel.Draw(_spriteBatch);
+                }
+                else
+                {
+                    currentGUI.Draw(_spriteBatch);
                     ToggleSpriteBatch();
+                    if (currentGUI == levelGUI)
+                    {
+                        ToggleSpriteBatch();
+                        currentLevel.Draw(_spriteBatch);
+                        ToggleSpriteBatch();
+                    }
                 }
 
                 if (currentGUI is ScalingGUI)
                 {
                     ((ScalingGUI)currentGUI).Rescale();
+                }
+                if (settingsGUI.Active)
+                {
+                    (settingsGUI).Rescale();
                 }
                 base.Draw(gameTime);
             }
