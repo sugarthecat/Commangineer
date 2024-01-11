@@ -19,6 +19,7 @@ namespace Commangineer
             this.texture = texture;
             this.position = position;
             this.transmissionChance = transmissionChance;
+            isPath = true;
         }
 
         public bool HasAuuki

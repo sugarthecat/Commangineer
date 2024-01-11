@@ -1,5 +1,6 @@
 ﻿using Commangineer.Floor_Auuki_types;
 using Commangineer.Tile_Types;
+using Commangineer.Units;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,6 +16,8 @@ namespace Commangineer
     public class Level
     {
         private Tile[,] tiles;
+        Class1 test;
+        Pathfinding pathing;
 
         /// <summary>
         /// Initializes the level
@@ -84,6 +87,9 @@ namespace Commangineer
                         }
                     }
                 }
+                
+                pathing = new Pathfinding(tiles);
+                test = new Class1(pathing);
             }
             catch (Exception ex)
             {
@@ -117,6 +123,7 @@ namespace Commangineer
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Assets.GetImage("background"), new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight()), Color.White);
+            
             for (int i = 0; i < tiles.GetLength(0); i++)
             {
                 for (int j = 0; j < tiles.GetLength(1); j++)
@@ -129,6 +136,7 @@ namespace Commangineer
                 }
             }
             //TODO add draw function
+            Camera.Draw(spriteBatch, test);
         }
 
         /// <summary>
@@ -146,6 +154,7 @@ namespace Commangineer
             Camera.UpdateMovement(keyboardState, ms);
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
+            test.update(deltaTime);
         }
         /// <summary>
         /// Updates the tiles in the world
