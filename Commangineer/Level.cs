@@ -300,6 +300,7 @@ namespace Commangineer
                 }
                 if (gameActions[i].Active)
                 {
+                    //do stuff
                     gameActions[i].Deactivate();
                 }
             }

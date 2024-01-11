@@ -17,7 +17,9 @@ namespace Commangineer
     {
         testChar1,
         testChar2,
-        testChar3
+        testChar3,
+        kirby,
+        mario
     }
     /// <summary>
     /// Manages assets for the game

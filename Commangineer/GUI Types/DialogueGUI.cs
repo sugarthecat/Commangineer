@@ -6,6 +6,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Drawing;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace Commangineer.GUI_Types
 {
@@ -14,12 +17,14 @@ namespace Commangineer.GUI_Types
     /// </summary>`
     internal class DialogueGUI : ScalingGUI
     {
-        private GUIElement characterOne;
-        private GUIElement characterTwo;
+        private (GUIElement element, Character character) characterOne;
+        private (GUIElement element, Character character) characterTwo;
         private List<TextArea> textAreas;
         public DialogueGUI() : base(600, 400)
         {
+            textAreas = new List<TextArea>();
             SetEnabled(false);
+            LoadElements("DialogueGUI");
         }
 
         private void ClearText()
@@ -34,19 +39,50 @@ namespace Commangineer.GUI_Types
         public void ChangeText(string newText)
         {
             ClearText();
-            TextArea newTextElement = new TextArea(new Rectangle(25, 300, 550, 50), Assets.GetFont("pixel"), newText);
+            TextArea newTextElement = new TextArea(new Rectangle(75, 300, 550, 50), Assets.GetFont("pixel"), newText);
             textAreas.Add(newTextElement);
             AddGuiElement(newTextElement);
         }
 
+        private void SwapCharacter(ref (GUIElement element, Character character) toChange, Character newChar, (int,int) elementPosition, bool focused)
+        {
+            Color toSet = Color.White;
+            if (!focused)
+            {
+                toSet = Color.Gray;
+            }
+            if (toChange.element != null)
+            {
+                RemoveGuiElement(toChange.element);
+            }
+            GUIElement newElement = new GUIElement(Assets.GetImage(newChar.ToString()), new Rectangle(elementPosition.Item1, elementPosition.Item2, 125, 175), toSet);
+            AddGuiElement(newElement);
+            toChange = (newElement, newChar);
+        }
+
         public void ChangeCharacter(int position, Character newChar, bool focused)
         {
+            if (position == 1)
+            {
+                SwapCharacter(ref characterOne, newChar, (0, 280), focused);
+            }
+            else
+            {
+                SwapCharacter(ref characterTwo, newChar, (650, 280), focused);
+            }
 
         }
 
         public void FocusCharacter(int position, bool focused)
         {
-
+            if (position == 1)
+            {
+                SwapCharacter(ref characterOne, characterOne.character, (0, 280), focused);
+            }
+            else
+            {
+                SwapCharacter(ref characterTwo, characterTwo.character, (650, 280), focused);
+            }
         }
     }
 }
