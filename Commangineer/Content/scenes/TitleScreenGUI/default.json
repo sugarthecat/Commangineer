@@ -25,8 +25,8 @@
 			"type": "Button",
 			"position": [ 240, 275 ],
 			"size": [ 120, 50 ],
-			"actionName": "NavigateToMenu",
-			"actionValue": "settings"
+			"actionName": "ToggleSettings",
+			"actionValue": ""
 		},
 		"exitGameButton": {
 			"name": "exit-game",

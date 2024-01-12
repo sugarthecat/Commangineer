@@ -11,31 +11,35 @@ namespace Commangineer
         Menu,
         Gameplay
     }
-    internal class GameMusic
+    internal static class GameMusic
     {
-        MusicType currentMusic = MusicType.Menu;
-        Music menuMusic;
-        Music[] gameMusic;
-        public GameMusic() {
+        static MusicType currentMusic = MusicType.Menu;
+        static Music menuMusic;
+        static Music[] gameMusic;
+        public static void Setup() {
             menuMusic = Assets.GetMusic("menutheme");
             gameMusic = new Music[6];
             for(int i = 0; i<gameMusic.Length; i++)
             {
                 gameMusic[i] = Assets.GetMusic("song"+ (i + 1));
             }
+            Play();
         }
-        private void Play()
+        private static void Play()
         {
-            if(currentMusic == MusicType.Menu)
+            if(Settings.MusicEnabled)
             {
-                menuMusic.Play(true);
-            }
-            if (currentMusic == MusicType.Gameplay)
-            {
-                gameMusic[0].Play(true);
+                if (currentMusic == MusicType.Menu)
+                {
+                    menuMusic.Play(true);
+                }
+                if (currentMusic == MusicType.Gameplay)
+                {
+                    gameMusic[0].Play(true);
+                }
             }
         }
-        private void Stop()
+        private static void Stop()
         {
             if (currentMusic == MusicType.Menu)
             {
@@ -46,14 +50,22 @@ namespace Commangineer
                 gameMusic[0].Stop();
             }
         }
-        public MusicType MusicType
+        public static MusicType MusicType
         {
             set
             {
-                Stop();
-                currentMusic = value;
-                Play();
+                if(currentMusic != value)
+                {
+                    Stop();
+                    currentMusic = value;
+                    Play();
+                }
             }
+        }
+        public static void Update()
+        {
+            Stop();
+            Play();
         }
     }
 }

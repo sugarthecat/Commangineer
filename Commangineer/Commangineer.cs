@@ -28,7 +28,6 @@ namespace Commangineer
         private SettingsGUI settingsGUI;
         private LevelSelectGUI levelSelectGUI;
         private DialogueGUI dialogueGUI;
-        private GameMusic musicManager;
         private MouseState previousMouseState;
         private KeyboardState previousKeyboardState;
         private bool windowActive;
@@ -77,7 +76,10 @@ namespace Commangineer
         {
             return instance.currentLevel;
         }
-
+        public void ToggleSettings()
+        {
+            settingsGUI.Active = !settingsGUI.Active;
+        }
         public static int GetScreenWidth()
         {
             return instance._graphics.PreferredBackBufferWidth;
@@ -97,16 +99,12 @@ namespace Commangineer
         {
             if (newMenu == "level")
             {
-                musicManager.MusicType = MusicType.Gameplay;
+                GameMusic.MusicType = MusicType.Gameplay;
                 currentGUI = levelGUI;
-            }
-            else if (newMenu == "settings")
-            {
-                settingsGUI.Active = !settingsGUI.Active;
             }
             else
             {
-                musicManager.MusicType = MusicType.Menu;
+                GameMusic.MusicType = MusicType.Menu;
                 switch(newMenu)
                 {
                     case "titleScreen":
@@ -115,7 +113,7 @@ namespace Commangineer
                     case "mainMenu":
                         currentGUI = mainMenuGUI;
                         break;
-                    case "levelSelct":
+                    case "levelSelect":
                         currentGUI = levelSelectGUI;
                         break;
                 }
@@ -135,11 +133,16 @@ namespace Commangineer
         protected override void Initialize()
         {
             base.Initialize();
+            //initialize top level game systems
+            Settings.LoadSettings();
+            GameMusic.Setup();
+            GameMusic.MusicType = MusicType.Menu;
             //initialize UIs
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
             levelGUI = new LevelGUI();
             settingsGUI = new SettingsGUI();
+            levelSelectGUI = new LevelSelectGUI();
             currentLevel = new Level(1);
             currentGUI = titleScreenGUI;
             //initialize interface values
@@ -154,8 +157,13 @@ namespace Commangineer
             base.LoadContent();
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Assets.Setup(Content);
-            musicManager = new GameMusic();
-            musicManager.MusicType = MusicType.Menu;
+        }
+        protected override void OnExiting(Object sender, EventArgs args)
+        {
+            base.OnExiting(sender, args);
+
+            Settings.SaveSettings();
+            // Stop the threads
         }
         public static void ExitGame()
         {
@@ -217,6 +225,10 @@ namespace Commangineer
                         currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
                     }
                 }
+                else
+                {
+                    settingsGUI.Update();
+                }
                 previousMouseState = mouseState;
                 previousKeyboardState = keyboardState;
                 base.Update(gameTime);
@@ -230,7 +242,7 @@ namespace Commangineer
         public void EmailCrash()
         {
             OpenUrl("mailto:tnickerson2024@jpkeefehs.org?subject=Commangineer%20Crash%20Report&body=" + lastError);
-            Exit();
+            ExitGame();
         }
 
         private void RaiseError(string msg, string trace)

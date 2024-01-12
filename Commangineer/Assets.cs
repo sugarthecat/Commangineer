@@ -8,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json.Nodes;
-using System.Diagnostics.Tracing;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Commangineer
 {
@@ -19,6 +17,7 @@ namespace Commangineer
         testChar2,
         testChar3
     }
+
     /// <summary>
     /// Manages assets for the game
     /// </summary>
@@ -82,27 +81,69 @@ namespace Commangineer
                 {
                     foreach (string s in res["images"].AsArray())
                     {
-                        LoadImage(s);
+                        try
+                        {
+                            LoadImage(s);
+                        }
+                        catch
+                        {
+                            Log.LogText("Error loading image " + s);
+                        }
                     }
                     foreach (JsonNode node in res["textures"].AsArray())
                     {
-                        LoadTexture((string)node[0], (string)node[1]);
+                        try
+                        {
+                            LoadTexture((string)node[0], (string)node[1]);
+                        }
+                        catch
+                        {
+                            Log.LogText("Error loading texture " + node.ToJsonString());
+                        }
                     }
                     foreach (string s in res["buttons"].AsArray())
                     {
-                        LoadButton(s);
+                        try
+                        {
+                            LoadButton(s);
+                        }
+                        catch
+                        {
+                            Log.LogText("Error loading button " + s);
+                        }
                     }
                     foreach (string s in res["sounds"].AsArray())
                     {
+                        try
+                        {
                             LoadSound(s);
+                        }
+                        catch
+                        {
+                            Log.LogText("Error loading sound " + s);
+                        }
                     }
                     foreach (string s in res["music"].AsArray())
                     {
+                        try
+                        {
                             LoadMusic(s);
+                        }
+                        catch
+                        {
+                            Log.LogText("Error loading music " + s);
+                        }
                     }
                     foreach (string s in res["fonts"].AsArray())
                     {
-                        LoadFont(s);
+                        try
+                        {
+                            LoadFont(s);
+                        }
+                        catch
+                        {
+                            Log.LogText("Error loading font " + s);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -131,6 +172,7 @@ namespace Commangineer
             string dest = "assets/fonts/" + fontName;
             fonts.Add(fontName, new Font(dest, content));
         }
+
         /// <summary>
         /// Loads the assets for a button with the given name
         /// </summary>

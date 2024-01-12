@@ -7,7 +7,9 @@
 		"basicFrame",
 		"mario",
 		"kirby",
-		"errorMsg"
+		"errorMsg",
+		"music",
+		"nomusic"
 	],
 	"textures": [
 		[ "dirt", "dirt1" ],
@@ -49,6 +51,7 @@
 		"exit-game",
 		"return",
 		"start",
+		"toggle-music",
 		"settings"
 	],
 	"sounds": [

@@ -15,7 +15,7 @@ namespace Commangineer
     public class Music
     {
         private Song gameMusic;
-
+        TimeSpan songProgress = new TimeSpan(0);
         public Music(Song song)
         {
             gameMusic = song;
@@ -25,13 +25,15 @@ namespace Commangineer
         {
             MediaPlayer.Stop();
             MediaPlayer.Volume = (float)(volume);
-            MediaPlayer.Play(gameMusic);
+            MediaPlayer.Play(gameMusic,songProgress);
+            
             MediaPlayer.IsRepeating = repeat;
         }
 
         public void Stop()
         {
             MediaPlayer.Stop();
+            songProgress = MediaPlayer.PlayPosition;
         }
 
         public MediaState GetState()

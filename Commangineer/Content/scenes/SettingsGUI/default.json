@@ -9,10 +9,30 @@
 		"returnButton": {
 			"name": "return",
 			"type": "Button",
-			"position": [ 50, 50 ],
+			"position": [ 20, 20 ],
 			"size": [ 100, 50 ],
-			"actionName": "NavigateToMenu",
-			"actionValue": "settings"
+			"actionName": "ToggleSettings",
+			"actionValue": ""
+		},
+		"toggleMusicButton": {
+			"name": "toggle-music",
+			"type": "Button",
+			"position": [ 50, 100 ],
+			"size": [ 200, 50 ],
+			"actionName": "ToggleMusic",
+			"actionValue": ""
+		},
+		"musicIcon": {
+			"name": "music",
+			"type": "GUIElement",
+			"position": [ 250, 100 ],
+			"size": [ 50, 50 ]
+		},
+		"noMusicIcon": {
+			"name": "nomusic",
+			"type": "GUIElement",
+			"position": [ 250, 100 ],
+			"size": [ 50, 50 ]
 		}
 	}
 }

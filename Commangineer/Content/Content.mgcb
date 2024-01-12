@@ -184,6 +184,30 @@
 /processorParam:TextureFormat=Color
 /build:assets/buttons/return.png
 
+#begin assets/buttons/return.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/return.png
+
+#begin assets/buttons/settings.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/settings.png
+
 #begin assets/buttons/settings.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -207,6 +231,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/buttons/start.png
+
+#begin assets/buttons/start.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/start.png
+
+#begin assets/buttons/toggle-music.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/toggle-music.png
 
 #begin assets/default.png
 /importer:TextureImporter
@@ -712,6 +760,30 @@
 /processorParam:TextureFormat=Color
 /build:assets/mario.png
 
+#begin assets/music.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/music.png
+
+#begin assets/nomusic.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/nomusic.png
+
 #begin assets/smiley.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1197,6 +1269,9 @@
 
 #begin scenes/ErrorGUI/default.json
 /copy:scenes/ErrorGUI/default.json
+
+#begin scenes/LevelSelectGUI/default.json
+/copy:scenes/LevelSelectGUI/default.json
 
 #begin scenes/SettingsGUI/default.json
 /copy:scenes/SettingsGUI/default.json

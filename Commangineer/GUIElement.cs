@@ -19,7 +19,7 @@ namespace Commangineer
         protected Texture2D textureHover;
         protected Action activationAction;
         private Color color;
-
+        private bool visible = true;
         public GUIElement(Texture2D baseTexture, Texture2D hoverTexture, Rectangle elementPosition, Action actionOnActivate)
         {
             position = elementPosition;
@@ -46,17 +46,24 @@ namespace Commangineer
         public GUIElement(Texture2D baseTexture, Rectangle elementPosition, Action actionOnActivate) : this(baseTexture, baseTexture, elementPosition, actionOnActivate)
         {
         }
+        public bool Visible
+        {
+            set { visible = value; }
+        }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            MouseState mouseState = Mouse.GetState();
-            if (position.Contains(mouseState.X, mouseState.Y))
+            if (visible)
             {
-                spriteBatch.Draw(textureHover, position, color);
-            }
-            else
-            {
-                spriteBatch.Draw(texture, position, color);
+                MouseState mouseState = Mouse.GetState();
+                if (position.Contains(mouseState.X, mouseState.Y))
+                {
+                    spriteBatch.Draw(textureHover, position, color);
+                }
+                else
+                {
+                    spriteBatch.Draw(texture, position, color);
+                }
             }
         }
 

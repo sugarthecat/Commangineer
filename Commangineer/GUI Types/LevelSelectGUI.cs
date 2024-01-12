@@ -5,10 +5,11 @@ namespace Commangineer.GUI_Types
     /// <summary>
     /// A GUI + The level
     /// </summary>
-    internal class LevelSelectGUI : GUI
+    internal class LevelSelectGUI : ScalingGUI
     {
-        public LevelSelectGUI() : base()
+        public LevelSelectGUI() : base(600,400)
         {
+            LoadElements("LevelSelectGUI");
         }
 
     }

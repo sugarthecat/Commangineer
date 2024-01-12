@@ -1,4 +1,5 @@
 ﻿using Commangineer.GUI_Element_Types;
+using Commangineer.GUI_Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -178,9 +179,19 @@ namespace Commangineer
                     res = delegate { Commangineer.instance.EmailCrash(); };
                     break;
                 case "Quit":
-                    res = delegate { Commangineer.instance.Exit(); };
+                    res = delegate { Commangineer.ExitGame(); };
                     break;
-                case " ":
+                case "ToggleSettings":
+                    res = delegate { Commangineer.instance.ToggleSettings(); };
+                    break;
+                case "ToggleFullscreen":
+                    res = delegate { Commangineer.instance.ToggleFullscreen(); };
+                    break;
+                case "ToggleMusic":
+                    res = delegate { Settings.MusicEnabled = !Settings.MusicEnabled; };
+                    break;
+                default:
+                    res = delegate { Log.LogText(actionName + "does not have a valid action"); };
                     break;
             }
             return res;
