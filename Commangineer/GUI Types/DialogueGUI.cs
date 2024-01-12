@@ -17,8 +17,8 @@ namespace Commangineer.GUI_Types
     /// </summary>`
     internal class DialogueGUI : ScalingGUI
     {
-        private (GUIElement element, Character character) characterOne;
-        private (GUIElement element, Character character) characterTwo;
+        private (GUIElement element, string character) characterOne;
+        private (GUIElement element, string character) characterTwo;
         private List<TextArea> textAreas;
         public DialogueGUI() : base(600, 400)
         {
@@ -39,12 +39,30 @@ namespace Commangineer.GUI_Types
         public void ChangeText(string newText)
         {
             ClearText();
-            TextArea newTextElement = new TextArea(new Rectangle(75, 300, 550, 50), Assets.GetFont("pixel"), newText);
+            TextArea newTextElement = new TextArea(new Rectangle(100, 300, 550, 50), Assets.GetFont("pixel"), newText);
             textAreas.Add(newTextElement);
             AddGuiElement(newTextElement);
         }
 
-        private void SwapCharacter(ref (GUIElement element, Character character) toChange, Character newChar, (int,int) elementPosition, bool focused)
+        public void RemoveCharacter(int position)
+        {
+            if (position == 1)
+            {
+                RemoveGuiElement(characterOne.element);
+            }
+            else
+            {
+                RemoveGuiElement(characterTwo.element);
+            }
+        }
+
+        public void RemoveAllCharacters()
+        {
+            RemoveCharacter(1);
+            RemoveCharacter(2);
+        }
+
+        private void SwapCharacter(ref (GUIElement element, string character) toChange, string newChar, (int,int) elementPosition, bool focused)
         {
             Color toSet = Color.White;
             if (!focused)
@@ -55,12 +73,12 @@ namespace Commangineer.GUI_Types
             {
                 RemoveGuiElement(toChange.element);
             }
-            GUIElement newElement = new GUIElement(Assets.GetImage(newChar.ToString()), new Rectangle(elementPosition.Item1, elementPosition.Item2, 125, 175), toSet);
+            GUIElement newElement = new GUIElement(Assets.GetImage(newChar.ToString()), new Rectangle(elementPosition.Item1, elementPosition.Item2, 150, 150), toSet);
             AddGuiElement(newElement);
             toChange = (newElement, newChar);
         }
 
-        public void ChangeCharacter(int position, Character newChar, bool focused)
+        public void ChangeCharacter(int position, string newChar, bool focused)
         {
             if (position == 1)
             {
@@ -70,7 +88,7 @@ namespace Commangineer.GUI_Types
             {
                 SwapCharacter(ref characterTwo, newChar, (650, 280), focused);
             }
-
+            int a = 1;
         }
 
         public void FocusCharacter(int position, bool focused)

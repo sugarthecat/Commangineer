@@ -128,7 +128,7 @@ namespace Commangineer
             titleScreenGUI = new TitleScreenGUI();
             mainMenuGUI = new MainMenuGUI();
             levelGUI = new LevelGUI();
-            currentLevel = new Level(1);
+            currentLevel = new Level(1, levelGUI);
             currentGUI = titleScreenGUI;
             //initialize interface values
             previousKeyboardState = Keyboard.GetState();
@@ -188,6 +188,7 @@ namespace Commangineer
                    {
 
                         currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                        currentLevel.HandleClick(new Point(mouseState.X, mouseState.Y));
                    }
                 }
                 if (currentGUI == levelGUI)
@@ -236,16 +237,18 @@ namespace Commangineer
             try
             {
                 GraphicsDevice.Clear(Color.Black);
-                ToggleSpriteBatch();
-                //draw GUI spritebatch
-                currentGUI.Draw(_spriteBatch);
-                ToggleSpriteBatch();
+                
                 if (currentGUI == levelGUI)
                 {
                     ToggleSpriteBatch();
                     currentLevel.Draw(_spriteBatch);
                     ToggleSpriteBatch();
                 }
+
+                ToggleSpriteBatch();
+                //draw GUI spritebatch
+                currentGUI.Draw(_spriteBatch);
+                ToggleSpriteBatch();
 
                 if (currentGUI is ScalingGUI)
                 {

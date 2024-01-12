@@ -17,12 +17,6 @@ namespace Commangineer.GUI_Types
         public TitleScreenGUI() : base(600, 400)
         {
             LoadElements("TitleScreenGUI");
-            DialogueGUI dialogueGUI = new DialogueGUI();
-            AddSubGUI(dialogueGUI);
-            dialogueGUI.ChangeCharacter(1, Character.mario, true);
-            dialogueGUI.ChangeCharacter(2, Character.kirby, false);
-            dialogueGUI.ChangeText("u wanna go bro");
-            dialogueGUI.SetEnabled(true);
         }
     }
 }

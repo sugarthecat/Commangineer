@@ -1,5 +1,6 @@
 ﻿using Commangineer.AuukiStructures;
 using Commangineer.AuukiStructures.Spawners;
+using Commangineer.GUI_Types;
 using Commangineer.Tile_Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,16 +19,22 @@ namespace Commangineer
     {
         private Tile[,] tiles;
         private GameAction[] gameActions;
+        private List<DialogueGUI> dialogueGUIs;
         private AuukiStructure[] auukiStructures;
         private List<AuukiCreature> auukiCreatures;
         private MovingSquare debugSquare;
         private float gameTime = 0f;
+        private float lastDialogueClick = 0f;
+        private LevelGUI currentGUI;
         /// <summary>
         /// Initializes the level
         /// </summary>
         /// <param name="level">The specific level to initialize (Level 1, 2, etc)</param>
-        public Level(int level)
+        /// /// <param name="levelGUI">The gui corresponding to the level</param>
+        internal Level(int level, LevelGUI levelGUI)
         {
+            currentGUI = levelGUI;
+            dialogueGUIs = new List<DialogueGUI>();
             debugSquare = new MovingSquare();
             auukiCreatures = new List<AuukiCreature>();
             JsonObject levelJSON = null;
@@ -277,11 +284,47 @@ namespace Commangineer
             {
                 debugSquare.moveY(deltaTime);
             }
+            UpdateActions();
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
             UpdateAuukiCreatures(deltaTime);
             UpdateAuukiStructures(deltaTime);
         }
+
+        public void HandleClick(Point p)
+        {
+            if ((gameTime - lastDialogueClick > .5) && dialogueGUIs.Count != 0)
+            {
+                lastDialogueClick = gameTime;
+                DialogueGUI dialogue = dialogueGUIs[0];
+                dialogue.SetEnabled(false);
+                dialogue.RemoveAllGuiElements();
+                dialogueGUIs.RemoveAt(0);
+                if (dialogueGUIs.Count != 0)
+                {
+                    dialogueGUIs[0].SetEnabled(true);
+                }
+            }
+        }
+
+        private void QueueDialogue(string text, string char1, string char2)
+        {
+            DialogueGUI dialogueGUI = new DialogueGUI();
+            currentGUI.AddSubGUI(dialogueGUI);
+            dialogueGUI.ChangeCharacter(1, char1 + "icon", true);
+            if (char2 != null)
+            {
+                dialogueGUI.ChangeCharacter(2, char2 + "icon", false);
+            }
+            dialogueGUI.ChangeText(text);
+            dialogueGUIs.Add(dialogueGUI);
+            if (dialogueGUIs.Count == 1)
+            {
+                lastDialogueClick = gameTime;
+                dialogueGUI.SetEnabled(true);
+            }
+        }
+
         private void UpdateActions()
         {
             for (int i = 0; i < gameActions.Length; i++)
@@ -300,6 +343,20 @@ namespace Commangineer
                 }
                 if (gameActions[i].Active)
                 {
+                    foreach (Dictionary<string, string> gameEvent in gameActions[i].Events)
+                    {
+                        switch (gameEvent["eventType"])
+                        {
+                            case "dialogue":
+                                string char2 = null;
+                                if (gameEvent.ContainsKey("character2"))
+                                {
+                                    char2 = gameEvent["character2"];
+                                }
+                                QueueDialogue(gameEvent["speech"], gameEvent["character"], char2);
+                                break;
+                        }
+                    }
                     //do stuff
                     gameActions[i].Deactivate();
                 }

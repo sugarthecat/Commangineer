@@ -10,10 +10,5 @@ namespace Commangineer.GUI_Types
         public LevelGUI() : base()
         {
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-        }
     }
 }

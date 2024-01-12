@@ -13,14 +13,6 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Commangineer
 {
-    public enum Character
-    {
-        testChar1,
-        testChar2,
-        testChar3,
-        kirby,
-        mario
-    }
     /// <summary>
     /// Manages assets for the game
     /// </summary>
