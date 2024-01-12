@@ -1,6 +1,7 @@
 ﻿using Commangineer.AuukiStructures;
 using Commangineer.AuukiStructures.Spawners;
 using Commangineer.Tile_Types;
+using Commangineer.Units;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -27,6 +28,7 @@ namespace Commangineer
         private List<AuukiCreature> auukiCreatures;
         private List<Unit> playerUnits;
         private float gameTime = 0f;
+        Pathfinding pathing;
 
         /// <summary>
         /// Initializes the level
@@ -200,6 +202,7 @@ namespace Commangineer
                     gameActions[i] = new GameAction((JsonObject)actions[i]);
                 }
                 Log.LogText("Loaded level " + level + " succesfully.");
+                pathing = new Pathfinding(tiles);
             }
             catch (Exception ex)
             {

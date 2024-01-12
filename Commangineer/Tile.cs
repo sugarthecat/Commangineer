@@ -12,13 +12,16 @@ namespace Commangineer
         protected AuukiFloor AuukiTile;
         private AuukiStructure occupyingAuukiStructure;
         protected float transmissionChance;
+        bool isPath;
         protected bool isSolid = false;
+
         public Tile(Texture2D texture, Point position, float transmissionChance)
         {
             AuukiTile = null;
             this.texture = texture;
             this.position = position;
             this.transmissionChance = transmissionChance;
+            isPath = true;
         }
 
         public bool HasAuukiTile
@@ -97,6 +100,14 @@ namespace Commangineer
             get
             {
                 return position;
+            }
+        }
+
+        public bool IsPath
+        {
+            get
+            {
+                return isPath;
             }
         }
 
