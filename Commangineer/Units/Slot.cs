@@ -36,9 +36,12 @@ namespace Commangineer.Units
             }
         }
 
-        public void Update(double time)
+        public void Update(float time)
         {
-            weapon.Update(time);
+            if(weapon != null)
+            {
+                weapon.Update(time);
+            }           
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Commangineer.Units
             return turretSize;
         }
 
-        public void Update(double time)
+        public void Update(float time)
         {
             if (attackProgress > 0.0d)
             {

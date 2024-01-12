@@ -60,9 +60,7 @@ namespace Commangineer
             int width = m.GetLength(0);
             int height = m.GetLength(1);
 
-
             map = m;
-
 
             pathStart = new float[width,height];
             pathGoal = new float[width,height];
@@ -80,41 +78,41 @@ namespace Commangineer
             pos = p;
             goal = g;
 
-            pathStart[pos.X, pos.Y] = 0;
-            pathGoal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
-            pathTotal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
-            search[pos.X,pos.Y] = true;
-            enter[pos.X,pos.Y] = pos;
-
-            addSearch(pos);
-            Debug.WriteLine("finding1");
-            while (!goalReach && check.Count > 0)
+            if (pos != goal)
             {
-                Debug.WriteLine("loop");
-                check = check.OrderBy(o=>o.getFloat()).ToList();
+                pathStart[pos.X, pos.Y] = 0;
+                pathGoal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
+                pathTotal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
+                search[pos.X, pos.Y] = true;
+                enter[pos.X, pos.Y] = pos;
 
-                addSearch(check[0].getPoint());
-
-                if (check[0].getPoint() == goal)
+                addSearch(pos);
+                while (!goalReach && check.Count > 0)
                 {
-                    Debug.WriteLine("findinghehe");
-                    goalReach =true;
+                    check = check.OrderBy(o => o.getFloat()).ToList();
+
+                    addSearch(check[0].getPoint());
+
+                    if (check[0].getPoint() == goal)
+                    {
+                        goalReach = true;
+                    }
+
+                    check.RemoveAt(0);
                 }
 
-                check.RemoveAt(0);
-            }
-
-            if (goalReach)
-            {
-                track = goal;
-                while(track != pos)
+                if (goalReach)
                 {
-                    Debug.WriteLine("track atack");
-                    path.Add(track);
-                    track = enter[track.X,track.Y];
+                    track = goal;
+                    while (track != pos)
+                    {
+                        path.Add(track);
+                        track = enter[track.X, track.Y];
+                    }
+                    path.Reverse();
                 }
-                path.Reverse();
             }
+            
 
             return path;
 
@@ -149,6 +147,7 @@ namespace Commangineer
                         pathTotal[p.X - 1, p.Y] = pathGoal[p.X - 1, p.Y] + pathStart[p.X - 1, p.Y];
                         enter[p.X - 1, p.Y] = p;
                     }
+
                     if (!search[p.X-1, p.Y])
                     {
                         checks tempCheck = new checks(pathTotal[p.X - 1, p.Y], new Point(p.X - 1, p.Y));
@@ -175,6 +174,7 @@ namespace Commangineer
                         pathTotal[p.X, p.Y - 1] = pathGoal[p.X, p.Y - 1] + pathStart[p.X, p.Y - 1];
                         enter[p.X, p.Y-1] = p;
                     }
+
                     if (!search[p.X, p.Y - 1])
                     {
                         checks tempCheck = new checks(pathTotal[p.X, p.Y - 1], new Point(p.X, p.Y - 1));

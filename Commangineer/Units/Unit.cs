@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 
 namespace Commangineer.Units
 {
-    internal class Unit
+    internal class Unit : TexturedObject
     {
         public enum turretSize
         {
@@ -24,6 +28,16 @@ namespace Commangineer.Units
         private Material chassisMaterial;
         private Engine engine;
         private Material engineMaterial;
+
+        Point position;
+        Point goal;
+        List<Point> path = new List<Point>();
+        Pathfinding pathing;
+        float maxMove = 1;
+        float move = 1;
+        float maxRescan = 20;
+        float rescan = 0;
+        bool idle = true;
 
         enum specialStats
         {
@@ -69,11 +83,85 @@ namespace Commangineer.Units
 
         }
 
-        public void Update(double time)
+        public Unit(Unit u, Point pos, Pathfinding pathing)
+        {
+            this.name = u.name;
+            this.health = u.health;
+            this.maxHealth = u.maxHealth;
+            this.armour = u.armour;
+            this.speed = u.speed;
+            this.chassis = u.chassis;
+            this.chassisMaterial = u.chassisMaterial;
+            this.engine = u.engine;
+            this.engineMaterial = u.engineMaterial;
+
+            position = pos;
+            this.pathing = pathing;
+
+        }
+
+        public void Update(float time)
         {
             foreach (Slot w in weapons)
             {
                 w.Update(time);
+            }
+            if (!idle)
+            {
+                pathfindingUpdate(time);
+            }
+        }
+
+        public void pathfindingUpdate(float deltaTime)
+        {
+            if (rescan <= 0)
+            {
+                rescan = maxRescan;
+                path = pathing.find(position, goal);
+            }
+            else
+            {
+                rescan -= deltaTime;
+            }
+            if (move <= 0)
+            {
+                move = maxMove;
+                if (path.Count > 0)
+                {
+                    Point temp = Vector2.Normalize(path[0].ToVector2() - position.ToVector2()).ToPoint();
+                    moveX(temp.X);
+                    moveY(temp.Y);
+                    path.RemoveAt(0);
+                }
+                else
+                {
+                    idle = true;
+                }
+            }
+            else
+            {
+                move -= deltaTime;
+            }
+        }
+
+        public void addGoal(Point g)
+        {
+            goal = g;
+            idle = false;
+        }
+
+        public Point Size
+        {
+            get
+            {
+                return new Point(1, 1);
+            }
+        }
+        public Point Position
+        {
+            get
+            {
+                return position;
             }
         }
 
@@ -85,6 +173,30 @@ namespace Commangineer.Units
                 d = 1;
             }
              health -= d;
+        }
+
+        public Texture2D GetTexture()
+        {
+            return Assets.GetTexture("wood");
+        }
+
+        public void moveX(int val)
+        {
+            position.X += val;
+        }
+        public void moveY(int val)
+        {
+            position.Y += val;
+        }
+
+        public Point GetSize()
+        {
+            return Size;
+        }
+
+        public Point GetPosition()
+        {
+            return Position;
         }
     }
 }

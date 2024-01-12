@@ -16,7 +16,6 @@ namespace Commangineer
     public class Level
     {
         private Tile[,] tiles;
-        Class1 test;
         Pathfinding pathing;
 
         /// <summary>
@@ -89,7 +88,6 @@ namespace Commangineer
                 }
                 
                 pathing = new Pathfinding(tiles);
-                test = new Class1(pathing);
             }
             catch (Exception ex)
             {
@@ -136,7 +134,6 @@ namespace Commangineer
                 }
             }
             //TODO add draw function
-            Camera.Draw(spriteBatch, test);
         }
 
         /// <summary>
@@ -154,7 +151,6 @@ namespace Commangineer
             Camera.UpdateMovement(keyboardState, ms);
             GrowFloorAuuki(deltaTime);
             UpdateTiles(deltaTime);
-            test.update(deltaTime);
         }
         /// <summary>
         /// Updates the tiles in the world
