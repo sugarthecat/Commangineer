@@ -1,0 +1,10 @@
+{
+	"objects": {
+		"background": {
+			"name": "background",
+			"type": "GUIElement",
+			"position": [ 75, 50 ],
+			"size": [ 450, 300 ]
+		}
+	}
+}

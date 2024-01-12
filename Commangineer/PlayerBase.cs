@@ -28,5 +28,15 @@ namespace Commangineer
         {
             return texture;
         }
+        public bool ContainsPoint(Vector2 point)
+        {
+            Rectangle bounds = new Rectangle(
+                (int)position.X,
+                (int)position.Y,
+                (int)Size.X,
+                (int)Size.Y
+                );
+            return bounds.Contains(point);
+        }
     }
 }

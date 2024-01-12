@@ -3,13 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace Commangineer
 {
@@ -34,6 +29,7 @@ namespace Commangineer
         private bool spriteBatchBegun;
         private Level currentLevel;
         private string lastError;
+
         public Commangineer()
         {
             instance = this;
@@ -76,10 +72,12 @@ namespace Commangineer
         {
             return instance.currentLevel;
         }
+
         public void ToggleSettings()
         {
             settingsGUI.Active = !settingsGUI.Active;
         }
+
         public static int GetScreenWidth()
         {
             return instance._graphics.PreferredBackBufferWidth;
@@ -105,20 +103,21 @@ namespace Commangineer
             else
             {
                 GameMusic.MusicType = MusicType.Menu;
-                switch(newMenu)
+                switch (newMenu)
                 {
                     case "titleScreen":
                         currentGUI = titleScreenGUI;
                         break;
+
                     case "mainMenu":
                         currentGUI = mainMenuGUI;
                         break;
+
                     case "levelSelect":
                         currentGUI = levelSelectGUI;
                         break;
                 }
             }
-
 
             if (currentGUI is ScalingGUI)
             {
@@ -158,6 +157,7 @@ namespace Commangineer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Assets.Setup(Content);
         }
+
         protected override void OnExiting(Object sender, EventArgs args)
         {
             base.OnExiting(sender, args);
@@ -165,10 +165,12 @@ namespace Commangineer
             Settings.SaveSettings();
             // Stop the threads
         }
+
         public static void ExitGame()
         {
             instance.Exit();
         }
+
         private void OpenUrl(string url)
         {
             try
@@ -196,6 +198,7 @@ namespace Commangineer
                 }
             }
         }
+
         protected override void Update(GameTime gameTime)
         {
             try
@@ -205,8 +208,9 @@ namespace Commangineer
                 Keys[] pressedKeys = keyboardState.GetPressedKeys();
                 if (windowActive)
                 {
-                   if(previousMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed)
-                   {
+                    //handle left click
+                    if (previousMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed && windowActive)
+                    {
                         if (settingsGUI.Active)
                         {
                             settingsGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
@@ -215,12 +219,24 @@ namespace Commangineer
                         else
                         {
                             currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
-                            currentLevel.HandleClick(new Point(mouseState.X, mouseState.Y));
+                            if (currentGUI == levelGUI)
+                            {
+                                currentLevel.HandleClick(new Point(mouseState.X, mouseState.Y));
+                            }
                         }
-                   }
-                   if(previousKeyboardState.IsKeyUp(Keys.Escape) && keyboardState.IsKeyDown(Keys.Escape)) {
+                    }
+                    //handle right click
+                    if (previousMouseState.RightButton == ButtonState.Released && mouseState.RightButton == ButtonState.Pressed && windowActive)
+                    {
+                        if (currentGUI == levelGUI && !settingsGUI.Active)
+                        {
+                            currentLevel.HandleRightClick(new Point(mouseState.X, mouseState.Y));
+                        }
+                    }
+                    if (previousKeyboardState.IsKeyUp(Keys.Escape) && keyboardState.IsKeyDown(Keys.Escape))
+                    {
                         ToggleSettings();
-                   }
+                    }
                 }
                 if (!settingsGUI.Active)
                 {
@@ -233,7 +249,7 @@ namespace Commangineer
                 {
                     settingsGUI.Update();
                 }
-                   
+
                 previousMouseState = mouseState;
                 previousKeyboardState = keyboardState;
                 base.Update(gameTime);

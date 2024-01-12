@@ -99,10 +99,16 @@ namespace Commangineer
         {
             subGUIs.Clear();
         }
-
-        public void SetEnabled(bool newState)
+        public bool Enabled
         {
-            enabled = newState;
+            get
+            {
+                return enabled;
+            }
+            set
+            {
+                enabled = value;
+            }
         }
 
         /// <summary>

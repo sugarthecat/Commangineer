@@ -23,7 +23,7 @@ namespace Commangineer.GUI_Types
         public DialogueGUI() : base(600, 400)
         {
             textAreas = new List<TextArea>();
-            SetEnabled(false);
+            Enabled = false;
             LoadElements("DialogueGUI");
         }
 

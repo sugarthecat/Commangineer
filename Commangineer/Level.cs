@@ -27,9 +27,10 @@ namespace Commangineer
         private List<Unit> playerUnits;
         private float gameTime = 0f;
         private float lastDialogueClick = 0f;
-        private bool newSecond;
-        Pathfinding pathing;
+        private Pathfinding pathing;
         private LevelGUI currentGUI;
+        private UnitEditorGUI unitEditor;
+
         /// <summary>
         /// Initializes the level
         /// </summary>
@@ -38,8 +39,9 @@ namespace Commangineer
         internal Level(int level, LevelGUI levelGUI)
         {
             currentGUI = levelGUI;
+            unitEditor = new UnitEditorGUI();
+            unitEditor.Enabled = false;
             dialogueGUIs = new List<DialogueGUI>();
-            newSecond = false;
             auukiCreatures = new List<AuukiCreature>();
             JsonObject levelJSON = null;
             try
@@ -93,12 +95,12 @@ namespace Commangineer
                         {
                             case '1':
                                 //creates spotty grass
-                                if(levelLoadRandom.Next(0,3) != 0)
+                                if (levelLoadRandom.Next(0, 3) != 0)
                                 {
                                     tiles[i, j].InfectWithAuuki();
                                     if (tiles[i, j].HasAuukiTile)
                                     {
-                                        tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() *0.5f));
+                                        tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 0.5f));
                                     }
                                 }
                                 break;
@@ -107,7 +109,7 @@ namespace Commangineer
                                 tiles[i, j].InfectWithAuuki();
                                 if (tiles[i, j].HasAuukiTile)
                                 {
-                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 1+0.5f));
+                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 1 + 0.5f));
                                 }
                                 break;
 
@@ -244,7 +246,11 @@ namespace Commangineer
             DrawTiles(spriteBatch);
             DrawCreatures(spriteBatch);
             DrawStructures(spriteBatch);
-            Camera.Draw(spriteBatch,playerBase);
+            Camera.Draw(spriteBatch, playerBase);
+            if (unitEditor.Enabled)
+            {
+                unitEditor.Draw(spriteBatch);
+            }
         }
 
         /// <summary>
@@ -293,41 +299,56 @@ namespace Commangineer
         public void Update(int ms, KeyboardState keyboardState, KeyboardState previousKeyboardState, MouseState mouseState, MouseState previousMouseState)
         {
             float deltaTime = ms / 1000f;
-            newSecond = (gameTime + deltaTime > Math.Ceiling(gameTime)) ? true : false;
-            gameTime += deltaTime;
-            
-            if (mouseState.ScrollWheelValue != previousMouseState.ScrollWheelValue)
+            if (unitEditor.Enabled)
             {
-                Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
+                unitEditor.Rescale();
             }
-            if(mouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            else
             {
-                HandleClick(mouseState.Position);
+                if (dialogueGUIs.Count == 0)
+                {
+                    //only continue game if dialogue is over
+                    gameTime += deltaTime;
+                    UpdateActions();
+                    GrowFloorAuuki(deltaTime);
+                    UpdateTiles(deltaTime);
+                    UpdateAuukiCreatures(deltaTime);
+                    UpdateAuukiStructures(deltaTime);
+                }
+                if (mouseState.ScrollWheelValue != previousMouseState.ScrollWheelValue)
+                {
+                    Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
+                }
+                Camera.UpdateMovement(keyboardState, ms);
             }
-            UpdateActions();
-            Camera.UpdateMovement(keyboardState, ms);
-            GrowFloorAuuki(deltaTime);
-            UpdateTiles(deltaTime);
-            UpdateAuukiCreatures(deltaTime);
-            UpdateAuukiStructures(deltaTime);
         }
 
         public void HandleClick(Point clickPosition)
         {
-            if ((gameTime - lastDialogueClick > .5) && dialogueGUIs.Count != 0)
+            if (unitEditor.Enabled)
+            {
+
+            }else if (dialogueGUIs.Count != 0)
             {
                 lastDialogueClick = gameTime;
                 DialogueGUI dialogue = dialogueGUIs[0];
-                dialogue.SetEnabled(false);
+                dialogue.Enabled = false;
                 dialogue.RemoveAllGuiElements();
                 dialogueGUIs.RemoveAt(0);
                 if (dialogueGUIs.Count != 0)
                 {
-                    dialogueGUIs[0].SetEnabled(true);
+                    dialogueGUIs[0].Enabled = true;
                 }
             }
+        }
+
+        public void HandleRightClick(Point clickPosition)
+        {
             Vector2 adjustedClickPosition = Camera.DeprojectPoint(new Vector2(clickPosition.X, clickPosition.Y));
-            Debug.WriteLine(adjustedClickPosition.X + "," + adjustedClickPosition.Y);
+            if (playerBase.ContainsPoint(adjustedClickPosition) && unitEditor.Enabled == false)
+            {
+                unitEditor.Enabled = true;
+            }
         }
 
         private void QueueDialogue(string text, string char1, string char2)
@@ -344,9 +365,10 @@ namespace Commangineer
             if (dialogueGUIs.Count == 1)
             {
                 lastDialogueClick = gameTime;
-                dialogueGUI.SetEnabled(true);
+                dialogueGUI.Enabled = true;
             }
         }
+
         private void UpdateActions()
         {
             for (int i = 0; i < gameActions.Length; i++)
