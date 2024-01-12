@@ -266,6 +266,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Draws the structures within the level
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch to draw with</param>
         private void DrawStructures(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < auukiStructures.Length; i++)
@@ -277,6 +281,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Draws the creatures within the level
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch to draw with</param>
         private void DrawCreatures(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < auukiCreatures.Count; i++)
@@ -312,6 +320,10 @@ namespace Commangineer
             UpdateAuukiStructures(deltaTime);
         }
 
+        /// <summary>
+        /// Handle all click events corresponding to the level
+        /// </summary>
+        /// <param name="clickPosition">The mouse position</param>
         public void HandleClick(Point clickPosition)
         {
             if ((gameTime - lastDialogueClick > .5) && dialogueGUIs.Count != 0)
@@ -330,10 +342,17 @@ namespace Commangineer
             Debug.WriteLine(adjustedClickPosition.X + "," + adjustedClickPosition.Y);
         }
 
+        /// <summary>
+        /// Adds a dialogue popup to a queue of popups
+        /// </summary>
+        /// <param name="text">The message to display</param>
+        /// <param name="char1">The character on the left</param>
+        /// <param name="char2">The character on the right</param>
         private void QueueDialogue(string text, string char1, string char2)
         {
             DialogueGUI dialogueGUI = new DialogueGUI();
             currentGUI.AddSubGUI(dialogueGUI);
+            // Note that the third parameter, is if the character is active (not grey'd out), here we assume char1 is always the first one active
             dialogueGUI.ChangeCharacter(1, char1 + "icon", true);
             if (char2 != null)
             {
@@ -347,6 +366,10 @@ namespace Commangineer
                 dialogueGUI.SetEnabled(true);
             }
         }
+        
+        /// <summary>
+        /// Updates all game actions
+        /// </summary>
         private void UpdateActions()
         {
             for (int i = 0; i < gameActions.Length; i++)
@@ -367,6 +390,7 @@ namespace Commangineer
                 }
                 if (gameActions[i].Active)
                 {
+                    // Loads in events like dialogue popups
                     foreach (Dictionary<string, string> gameEvent in gameActions[i].Events)
                     {
                         switch (gameEvent["eventType"])
@@ -381,7 +405,6 @@ namespace Commangineer
                                 break;
                         }
                     }
-                    //do stuff
                     gameActions[i].Deactivate();
                 }
             }
@@ -466,6 +489,11 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Checks if a given creature is colliding
+        /// </summary>
+        /// <param name="creature">The creature to check</param>
+        /// <returns>If the creature is colliding</returns>
         public bool Collides(AuukiCreature creature)
         {
             bool colliding = false;

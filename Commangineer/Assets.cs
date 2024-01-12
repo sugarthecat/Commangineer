@@ -266,21 +266,39 @@ namespace Commangineer
             */
         }
 
+        /// <summary>
+        /// Loads the sound with the given name
+        /// </summary>
+        /// <param name="name">the sound's name</param>
         public static void LoadSound(string name)
         {
             sounds.Add(name, content.Load<SoundEffect>("audio/Sounds/" + name));
         }
 
+        /// <summary>
+        /// Gets a sound
+        /// </summary>
+        /// <param name="name">the requested sounds name</param>
+        /// <returns>The requested sound</returns>
         public static SoundEffect GetSound(string name)
         {
             return sounds[name];
         }
 
+        /// <summary>
+        /// Loads the song with the given name
+        /// </summary>
+        /// <param name="name">the song's name</param>
         public static void LoadMusic(string name)
         {
             songs.Add(name, content.Load<Song>("audio/Music/" + name));
         }
 
+        /// <summary>
+        /// Gets a song
+        /// </summary>
+        /// <param name="name">the requested song's name</param>
+        /// <returns>The requested song</returns>
         public static Music GetMusic(string name)
         {
             return new Music(songs[name]);

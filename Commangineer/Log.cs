@@ -34,7 +34,7 @@ namespace Commangineer
         /// <summary>
         /// Adds text to a log file
         /// </summary>
-        /// <param name="msg"></param> The text to be added
+        /// <param name="msg">The text to be added</param>
         private static void AppendOutput(string msg)
         {
             using (StreamWriter sw = File.AppendText(outLocation+ "/" + logName))
@@ -46,7 +46,7 @@ namespace Commangineer
         /// <summary>
         /// A standard method to be called by other classes which adds text to a log file
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg">The text to be added</param>
         public static void LogText(string msg)
         {
             if (!File.Exists(outLocation + "/" + logName))
