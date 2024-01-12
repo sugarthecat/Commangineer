@@ -150,18 +150,18 @@ namespace Commangineer.Units
             idle = false;
         }
 
-        public Point Size
+        public Vector2 Size
         {
             get
             {
-                return new Point(1, 1);
+                return new Vector2(1, 1);
             }
         }
-        public Point Position
+        public Vector2 Position
         {
             get
             {
-                return position;
+                return new Vector2(position.X,position.Y);
             }
         }
 
@@ -189,14 +189,5 @@ namespace Commangineer.Units
             position.Y += val;
         }
 
-        public Point GetSize()
-        {
-            return Size;
-        }
-
-        public Point GetPosition()
-        {
-            return Position;
-        }
     }
 }

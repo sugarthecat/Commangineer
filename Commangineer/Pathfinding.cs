@@ -81,8 +81,8 @@ namespace Commangineer
             if (pos != goal)
             {
                 pathStart[pos.X, pos.Y] = 0;
-                pathGoal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
-                pathTotal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
+                pathGoal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].Position, map[goal.X, goal.Y].Position);
+                pathTotal[pos.X, pos.Y] = Vector2.Distance(map[pos.X, pos.Y].Position, map[goal.X, goal.Y].Position);
                 search[pos.X, pos.Y] = true;
                 enter[pos.X, pos.Y] = pos;
 
@@ -138,12 +138,12 @@ namespace Commangineer
         {
            if(p.X != 0)
             {
-                if (map[p.X -1, p.Y].getIsPath())
+                if (map[p.X -1, p.Y].IsPath)
                 {
                     if (pathTotal[p.X - 1, p.Y] == 0 || pathStart[p.X -1, p.Y] > pathStart[p.X,p.Y] + 1)
                     {
                         pathStart[p.X - 1, p.Y] = pathStart[p.X,p.Y] + 1;
-                        pathGoal[p.X- 1, p.Y] = Vector2.Distance(map[p.X - 1, p.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
+                        pathGoal[p.X- 1, p.Y] = Vector2.Distance(map[p.X - 1, p.Y].Position, map[goal.X, goal.Y].Position);
                         pathTotal[p.X - 1, p.Y] = pathGoal[p.X - 1, p.Y] + pathStart[p.X - 1, p.Y];
                         enter[p.X - 1, p.Y] = p;
                     }
@@ -165,12 +165,12 @@ namespace Commangineer
 
             if (p.Y != 0)
             {
-                if (map[p.X, p.Y - 1].getIsPath())
+                if (map[p.X, p.Y - 1].IsPath)
                 {
                     if (pathTotal[p.X, p.Y - 1] == 0 || pathStart[p.X, p.Y - 1] > pathStart[p.X, p.Y] + 1)
                     {
                         pathStart[p.X, p.Y - 1] = pathStart[p.X, p.Y] + 1;
-                        pathGoal[p.X, p.Y - 1] = Vector2.Distance(map[p.X, p.Y - 1].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
+                        pathGoal[p.X, p.Y - 1] = Vector2.Distance(map[p.X, p.Y - 1].Position, map[goal.X, goal.Y].Position);
                         pathTotal[p.X, p.Y - 1] = pathGoal[p.X, p.Y - 1] + pathStart[p.X, p.Y - 1];
                         enter[p.X, p.Y-1] = p;
                     }
@@ -192,12 +192,12 @@ namespace Commangineer
 
             if (p.X != map.GetLength(0) - 1)
             {
-                if (map[p.X + 1, p.Y].getIsPath())
+                if (map[p.X + 1, p.Y].IsPath)
                 {
                     if (pathTotal[p.X + 1, p.Y] == 0 || pathStart[p.X + 1, p.Y] > pathStart[p.X, p.Y] + 1)
                     {
                         pathStart[p.X + 1, p.Y] = pathStart[p.X, p.Y] + 1;
-                        pathGoal[p.X + 1, p.Y] = Vector2.Distance(map[p.X + 1, p.Y].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
+                        pathGoal[p.X + 1, p.Y] = Vector2.Distance(map[p.X + 1, p.Y].Position, map[goal.X, goal.Y].Position);
                         pathTotal[p.X + 1, p.Y] = pathGoal[p.X + 1, p.Y] + pathStart[p.X + 1, p.Y];
                         enter[p.X + 1, p.Y] = p;
                     }
@@ -219,12 +219,12 @@ namespace Commangineer
 
             if (p.Y != map.GetLength(1) - 1)
             {
-                if (map[p.X, p.Y + 1].getIsPath())
+                if (map[p.X, p.Y + 1].IsPath)
                 {
                     if (pathTotal[p.X, p.Y + 1] == 0 || pathStart[p.X, p.Y + 1] > pathStart[p.X, p.Y] + 1)
                     {
                         pathStart[p.X, p.Y + 1] = pathStart[p.X, p.Y] + 1;
-                        pathGoal[p.X, p.Y + 1] = Vector2.Distance(map[p.X, p.Y + 1].GetPosition().ToVector2(), map[goal.X, goal.Y].GetPosition().ToVector2());
+                        pathGoal[p.X, p.Y + 1] = Vector2.Distance(map[p.X, p.Y + 1].Position, map[goal.X, goal.Y].Position);
                         pathTotal[p.X, p.Y + 1] = pathGoal[p.X, p.Y + 1] + pathStart[p.X, p.Y + 1];
                         enter[p.X, p.Y + 1] = p;
                     }

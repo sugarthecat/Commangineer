@@ -15,10 +15,6 @@ using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
-    class Unit
-    {
-        //legit just here to test level code
-    }
     public class Level
     {
         private Tile[,] tiles;
