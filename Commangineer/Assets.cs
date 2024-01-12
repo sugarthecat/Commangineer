@@ -140,7 +140,7 @@ namespace Commangineer
         /// <param name="imageName">the image's name</param>
         public static void LoadImage(string imageName)
         {
-            images.Add(imageName, content.Load<Texture2D>("assets/" + imageName));
+            images.Add(imageName, content.Load<Texture2D>("assets/images/" + imageName));
         }
 
         /// <summary>
