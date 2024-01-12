@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,12 +14,18 @@ using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
+    class Unit
+    {
+        //legit just here to test level code
+    }
     public class Level
     {
         private Tile[,] tiles;
+        private PlayerBase playerBase;
         private GameAction[] gameActions;
         private AuukiStructure[] auukiStructures;
         private List<AuukiCreature> auukiCreatures;
+        private List<Unit> playerUnits;
         private float gameTime = 0f;
 
         /// <summary>
@@ -40,7 +47,10 @@ namespace Commangineer
                 int height = (int)levelJSON["height"];
                 string tileMapString = (string)levelJSON["tileMap"];
                 string auukiMapString = (string)levelJSON["floorAuukiMap"];
-                auukiStructures = new AuukiStructure[0];
+                //
+                JsonObject playerBaseJson = (JsonObject)levelJSON["playerBase"];
+                playerBase = new PlayerBase(new Point((int)playerBaseJson["x"], (int)playerBaseJson["y"]));
+                //load tiles
                 tiles = new Tile[width, height];
                 for (int i = 0; i < width; i++)
                 {
@@ -80,6 +90,10 @@ namespace Commangineer
                                 if(levelLoadRandom.Next(0,3) != 0)
                                 {
                                     tiles[i, j].InfectWithAuuki();
+                                    if (tiles[i, j].HasAuukiTile)
+                                    {
+                                        tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() *0.5f));
+                                    }
                                 }
                                 break;
 
@@ -87,7 +101,7 @@ namespace Commangineer
                                 tiles[i, j].InfectWithAuuki();
                                 if (tiles[i, j].HasAuukiTile)
                                 {
-                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 2));
+                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 1+0.5f));
                                 }
                                 break;
 
@@ -95,7 +109,7 @@ namespace Commangineer
                                 tiles[i, j].InfectWithAuuki();
                                 if (tiles[i, j].HasAuukiTile)
                                 {
-                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 4 + 2));
+                                    tiles[i, j].Auuki.Age((float)(levelLoadRandom.NextDouble() * 2 + 3));
                                 }
                                 break;
 
@@ -120,6 +134,8 @@ namespace Commangineer
                         }
                     }
                 }
+                //load structures
+                auukiStructures = new AuukiStructure[0];
                 JsonArray structures = levelJSON["structures"].AsArray();
                 auukiStructures = new AuukiStructure[structures.Count];
                 //Loop through and create an array for all structures
@@ -221,6 +237,7 @@ namespace Commangineer
             DrawTiles(spriteBatch);
             DrawCreatures(spriteBatch);
             DrawStructures(spriteBatch);
+            Camera.Draw(spriteBatch,playerBase);
         }
 
         /// <summary>
@@ -270,9 +287,14 @@ namespace Commangineer
         {
             float deltaTime = ms / 1000f;
             gameTime += deltaTime;
+            
             if (mouseState.ScrollWheelValue != previousMouseState.ScrollWheelValue)
             {
                 Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
+            }
+            if(mouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            {
+                HandleClick(mouseState.Position);
             }
             Camera.UpdateMovement(keyboardState, ms);
             GrowFloorAuuki(deltaTime);
@@ -280,7 +302,11 @@ namespace Commangineer
             UpdateAuukiCreatures(deltaTime);
             UpdateAuukiStructures(deltaTime);
         }
-
+        public void HandleClick(Point clickPosition)
+        {
+            Vector2 adjustedClickPosition = Camera.DeprojectPoint(new Vector2 (clickPosition.X, clickPosition.Y));
+            Debug.WriteLine(adjustedClickPosition.X + "," + adjustedClickPosition.Y);
+        }
         private void UpdateActions()
         {
             for (int i = 0; i < gameActions.Length; i++)

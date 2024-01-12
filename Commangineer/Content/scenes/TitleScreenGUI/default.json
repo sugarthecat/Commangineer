@@ -9,8 +9,8 @@
 		"banner": {
 			"name": "banner",
 			"type": "GUIElement",
-			"position": [ 100, 50 ],
-			"size": [ 400, 150 ]
+			"position": [ 50, 0 ],
+			"size": [ 500, 240 ]
 		},
 		"startGameButton": {
 			"name": "start",

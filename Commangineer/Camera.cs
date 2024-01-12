@@ -183,9 +183,10 @@ namespace Commangineer
         }
         public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw)
         {
+            Point projectedPoint = ProjectPoint(toDraw.Position);
             Rectangle destinationRectangle = new Rectangle(
-                (int)Math.Floor(toDraw.Position.X * scaleFactor - x),
-                (int)Math.Floor(toDraw.Position.Y * scaleFactor - y),
+                projectedPoint.X,
+                projectedPoint.Y,
                (int)(scaleFactor * toDraw.Size.X),
                 (int)(scaleFactor * toDraw.Size.Y));
             Rectangle screenView = new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight());
@@ -193,6 +194,28 @@ namespace Commangineer
             {
                 spriteBatch.Draw(toDraw.GetTexture(), destinationRectangle, Color.White);
             }
+        }
+        public static Point ProjectPoint(Point startPoint)
+        {
+            return new Point(
+                (int)Math.Floor(startPoint.X * scaleFactor - x),
+                (int)Math.Floor(startPoint.Y * scaleFactor - y)
+                );
+
+        }
+        public static Point ProjectPoint(Vector2 startPoint)
+        {
+            return new Point(
+                (int)Math.Floor(startPoint.X * scaleFactor - x),
+                (int)Math.Floor(startPoint.Y * scaleFactor - y)
+                );
+        }
+        public static Vector2 DeprojectPoint(Vector2 startPoint)
+        {
+            return new Vector2(
+                    (float)(startPoint.X-x)/scaleFactor,
+                    (float)(startPoint.Y-y)/scaleFactor
+                );
         }
     }
 }

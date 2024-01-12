@@ -11,6 +11,7 @@ namespace Commangineer
     internal static class Settings
     {
         private static bool musicEnabled = true;
+        private static int levelOn = 1;
         private static string settingsFile = Assembly.GetExecutingAssembly().Location + "/../Content/settings.json";
         public static void LoadSettings()
         {
@@ -22,6 +23,7 @@ namespace Commangineer
                     string text = String.Join("", File.ReadAllLines(settingsFile).Select(x => x.Trim()).ToArray());
                     JsonObject settingsJson = (JsonObject)JsonObject.Parse(text);
                     musicEnabled = (bool)settingsJson["musicEnabled"];
+                    levelOn = (int)settingsJson["levelOn"];
                 }
                 catch(NullReferenceException)
                 {
@@ -35,7 +37,7 @@ namespace Commangineer
         }
         public static void SaveSettings()
         {
-            Object settingsObject = new {musicEnabled = musicEnabled};
+            Object settingsObject = new {musicEnabled = musicEnabled, levelOn = levelOn};
             
             File.WriteAllText(settingsFile, JsonSerializer.Serialize<Object>(settingsObject));
         }

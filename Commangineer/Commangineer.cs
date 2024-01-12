@@ -217,6 +217,9 @@ namespace Commangineer
                             currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
                         }
                    }
+                   if(previousKeyboardState.IsKeyUp(Keys.Escape) && keyboardState.IsKeyDown(Keys.Escape)) {
+                        ToggleSettings();
+                   }
                 }
                 if (!settingsGUI.Active)
                 {
