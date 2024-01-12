@@ -312,7 +312,7 @@ namespace Commangineer
             UpdateAuukiStructures(deltaTime);
         }
 
-        public void HandleClick(Point p)
+        public void HandleClick(Point clickPosition)
         {
             if ((gameTime - lastDialogueClick > .5) && dialogueGUIs.Count != 0)
             {

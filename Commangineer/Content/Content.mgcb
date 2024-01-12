@@ -28,18 +28,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/buttons/bigredbutton.png
 
-#begin assets/buttons/bigredbutton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/bigredbutton.png
-
 #begin assets/buttons/exit-game.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -51,30 +39,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/buttons/exit-game.png
-
-#begin assets/buttons/exit-game.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/exit-game.png
-
-#begin assets/buttons/generic.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/generic.png
 
 #begin assets/buttons/generic.png
 /importer:TextureImporter
@@ -100,30 +64,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/buttons/okBtn.png
 
-#begin assets/buttons/okBtn.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/okBtn.png
-
-#begin assets/buttons/quitBtn.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/quitBtn.png
-
 #begin assets/buttons/quitBtn.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -148,18 +88,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/buttons/return.png
 
-#begin assets/buttons/return.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/return.png
-
 #begin assets/buttons/settings.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -171,30 +99,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/buttons/settings.png
-
-#begin assets/buttons/settings.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/settings.png
-
-#begin assets/buttons/start.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/buttons/start.png
 
 #begin assets/buttons/start.png
 /importer:TextureImporter
@@ -219,30 +123,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/buttons/toggle-music.png
-
-#begin assets/default.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/default.png
-
-#begin assets/errorMsg.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/errorMsg.png
 
 #begin assets/fonts/pixel/0.png
 /importer:TextureImporter
@@ -784,6 +664,30 @@
 /processorParam:TextureFormat=Color
 /build:assets/images/mario.png
 
+#begin assets/images/music.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/images/music.png
+
+#begin assets/images/nomusic.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/images/nomusic.png
+
 #begin assets/images/smiley.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -796,7 +700,7 @@
 /processorParam:TextureFormat=Color
 /build:assets/images/smiley.png
 
-#begin assets/music.png
+#begin assets/images/terneicon.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -806,31 +710,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/music.png
-
-#begin assets/nomusic.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/nomusic.png
-
-#begin assets/smiley.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/images/smiley.png
+/build:assets/images/terneicon.png
 
 #begin assets/textures/algae1.png
 /importer:TextureImporter
@@ -1246,11 +1126,29 @@
 /processorParam:Quality=Best
 /build:audio/Music/menutheme.mp3
 
+#begin audio/Music/menutheme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/menutheme.mp3
+
 #begin audio/Music/song1.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:audio/Music/song1.mp3
+
+#begin audio/Music/song1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/song1.mp3
+
+#begin audio/Music/song2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/song2.mp3
 
 #begin audio/Music/song2.mp3
 /importer:Mp3Importer
@@ -1264,6 +1162,18 @@
 /processorParam:Quality=Best
 /build:audio/Music/song3.mp3
 
+#begin audio/Music/song3.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/song3.mp3
+
+#begin audio/Music/song4.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/song4.mp3
+
 #begin audio/Music/song4.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -1276,11 +1186,26 @@
 /processorParam:Quality=Best
 /build:audio/Music/song5.mp3
 
+#begin audio/Music/song5.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/song5.mp3
+
 #begin audio/Music/song6.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:audio/Music/song6.mp3
+
+#begin audio/Music/song6.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:audio/Music/song6.mp3
+
+#begin audio/Music/Songs.txt
+/copy:audio/Music/Songs.txt
 
 #begin audio/Sounds/test.wav
 /importer:WavImporter

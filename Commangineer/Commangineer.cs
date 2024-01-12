@@ -215,6 +215,7 @@ namespace Commangineer
                         else
                         {
                             currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
+                            currentLevel.HandleClick(new Point(mouseState.X, mouseState.Y));
                         }
                    }
                    if(previousKeyboardState.IsKeyUp(Keys.Escape) && keyboardState.IsKeyDown(Keys.Escape)) {
@@ -232,11 +233,7 @@ namespace Commangineer
                 {
                     settingsGUI.Update();
                 }
-
-                        currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
-                        currentLevel.HandleClick(new Point(mouseState.X, mouseState.Y));
-                   }
-                }
+                   
                 previousMouseState = mouseState;
                 previousKeyboardState = keyboardState;
                 base.Update(gameTime);
@@ -288,20 +285,16 @@ namespace Commangineer
                 }
                 else
                 {
-                    currentGUI.Draw(_spriteBatch);
-                    ToggleSpriteBatch();
                     if (currentGUI == levelGUI)
                     {
-                        ToggleSpriteBatch();
                         currentLevel.Draw(_spriteBatch);
+                        //flush sprite batch for cleanliness
+                        ToggleSpriteBatch();
                         ToggleSpriteBatch();
                     }
+                    currentGUI.Draw(_spriteBatch);
+                    ToggleSpriteBatch();
                 }
-
-                ToggleSpriteBatch();
-                //draw GUI spritebatch
-                currentGUI.Draw(_spriteBatch);
-                ToggleSpriteBatch();
 
                 if (currentGUI is ScalingGUI)
                 {

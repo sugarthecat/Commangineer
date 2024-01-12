@@ -88,7 +88,6 @@ namespace Commangineer.GUI_Types
             {
                 SwapCharacter(ref characterTwo, newChar, (650, 280), focused);
             }
-            int a = 1;
         }
 
         public void FocusCharacter(int position, bool focused)
