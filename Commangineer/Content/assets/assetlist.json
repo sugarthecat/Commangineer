@@ -10,6 +10,7 @@
 		"errorMsg",
 		"music",
 		"nomusic"
+		"terneicon"
 	],
 	"textures": [
 		[ "dirt", "dirt1" ],

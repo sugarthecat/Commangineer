@@ -1,4 +1,8 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.Collections;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
@@ -13,6 +17,10 @@ namespace Commangineer
         LessThan,
         GreaterThan    
     }
+    internal enum EventType
+    {
+        dialogue
+    }
 
     internal class GameAction
     {
@@ -20,12 +28,14 @@ namespace Commangineer
         private bool active = false;
         private GameValue gameValue;
         private ValueRelationship comparison;
+        private List<Dictionary<string,string>> eventList;
         private int threshold;
 
         public GameAction(JsonObject actionJSON)
         {
             gameValue = GameValue.GameTime;
             comparison = ValueRelationship.LessThan;
+            eventList = new List<Dictionary<string, string>>();
             switch ((string)actionJSON["gameValue"])
             {
                 case "time":
@@ -47,6 +57,16 @@ namespace Commangineer
                     comparison = ValueRelationship.GreaterThan;
                     break;
             }
+            threshold = (int)actionJSON["compareValue"];
+            foreach (JsonObject node in actionJSON["events"].AsArray())
+            {
+                Dictionary<string, string> foundEvent = new Dictionary<string, string>();
+                foreach (KeyValuePair<string, JsonNode> pair in node.AsObject())
+                {
+                    foundEvent.Add(pair.Key, (string)pair.Value);
+                }
+                eventList.Add(foundEvent);
+            }
         }
         public GameValue GameValue
         {
@@ -60,6 +80,13 @@ namespace Commangineer
             get
             {
                 return active;
+            }
+        }
+        public List<Dictionary<string, string>> Events
+        {
+            get
+            {
+                return eventList;
             }
         }
         public void Update(int gameValue)
