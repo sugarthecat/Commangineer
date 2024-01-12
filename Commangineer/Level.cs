@@ -25,6 +25,7 @@ namespace Commangineer
         private MovingSquare debugSquare;
         private float gameTime = 0f;
         private float lastDialogueClick = 0f;
+        private bool newSecond;
         private LevelGUI currentGUI;
         /// <summary>
         /// Initializes the level
@@ -35,6 +36,7 @@ namespace Commangineer
         {
             currentGUI = levelGUI;
             dialogueGUIs = new List<DialogueGUI>();
+            newSecond = false;
             debugSquare = new MovingSquare();
             auukiCreatures = new List<AuukiCreature>();
             JsonObject levelJSON = null;
@@ -262,6 +264,7 @@ namespace Commangineer
         public void Update(int ms, KeyboardState keyboardState, KeyboardState previousKeyboardState, MouseState mouseState, MouseState previousMouseState)
         {
             float deltaTime = ms / 1000f;
+            newSecond = (gameTime + deltaTime > Math.Ceiling(gameTime)) ? true : false;
             gameTime += deltaTime;
             if (mouseState.ScrollWheelValue != previousMouseState.ScrollWheelValue)
             {

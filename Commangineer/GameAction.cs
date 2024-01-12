@@ -57,6 +57,7 @@ namespace Commangineer
                     comparison = ValueRelationship.GreaterThan;
                     break;
             }
+            threshold = (int)actionJSON["compareValue"];
             foreach (JsonObject node in actionJSON["events"].AsArray())
             {
                 Dictionary<string, string> foundEvent = new Dictionary<string, string>();
