@@ -213,8 +213,8 @@ namespace Commangineer
         public static Vector2 DeprojectPoint(Vector2 startPoint)
         {
             return new Vector2(
-                    (float)(startPoint.X-x)/scaleFactor,
-                    (float)(startPoint.Y-y)/scaleFactor
+                    (float)(startPoint.X+x)/scaleFactor,
+                    (float)(startPoint.Y+y)/scaleFactor
                 );
         }
     }
