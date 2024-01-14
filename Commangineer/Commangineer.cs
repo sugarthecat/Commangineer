@@ -1,4 +1,5 @@
 ﻿using Commangineer.GUI_Types;
+using Commangineer.User_Interface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,12 +18,10 @@ namespace Commangineer
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private GUI currentGUI;
-        private MainMenuGUI mainMenuGUI;
         private TitleScreenGUI titleScreenGUI;
         private LevelGUI levelGUI;
         private SettingsGUI settingsGUI;
         private LevelSelectGUI levelSelectGUI;
-        private DialogueGUI dialogueGUI;
         private MouseState previousMouseState;
         private KeyboardState previousKeyboardState;
         private bool windowActive;
@@ -52,10 +51,7 @@ namespace Commangineer
             _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             _graphics.ApplyChanges();
-            if (currentGUI is ScalingGUI)
-            {
-                ((ScalingGUI)currentGUI).Rescale();
-            }
+            currentGUI.Update();
         }
 
         public void WindowOpened(object sendet, EventArgs args)
@@ -75,7 +71,7 @@ namespace Commangineer
 
         public void ToggleSettings()
         {
-            settingsGUI.Active = !settingsGUI.Active;
+            settingsGUI.Enabled = !settingsGUI.Enabled;
         }
 
         public static int GetScreenWidth()
@@ -91,6 +87,14 @@ namespace Commangineer
         public void ToggleFullscreen()
         {
             _graphics.ToggleFullScreen();
+        }
+
+        public static Level Level
+        {
+            get
+            {
+                return instance.currentLevel;
+            }
         }
 
         public void NavigateToMenu(string newMenu)
@@ -109,23 +113,15 @@ namespace Commangineer
                         currentGUI = titleScreenGUI;
                         break;
 
-                    case "mainMenu":
-                        currentGUI = mainMenuGUI;
-                        break;
-
                     case "levelSelect":
                         currentGUI = levelSelectGUI;
                         break;
                 }
             }
-
-            if (currentGUI is ScalingGUI)
+            currentGUI.Update();
+            if (settingsGUI.Enabled)
             {
-                ((ScalingGUI)currentGUI).Rescale();
-            }
-            if (settingsGUI.Active)
-            {
-                ((ScalingGUI)settingsGUI).Rescale();
+                settingsGUI.Update();
             }
         }
 
@@ -138,10 +134,10 @@ namespace Commangineer
             GameMusic.MusicType = MusicType.Menu;
             //initialize UIs
             titleScreenGUI = new TitleScreenGUI();
-            mainMenuGUI = new MainMenuGUI();
             levelGUI = new LevelGUI();
             currentLevel = new Level(1, levelGUI);
             settingsGUI = new SettingsGUI();
+            settingsGUI.Enabled = false;
             levelSelectGUI = new LevelSelectGUI();
             currentGUI = titleScreenGUI;
             //initialize interface values
@@ -211,24 +207,24 @@ namespace Commangineer
                     //handle left click
                     if (previousMouseState.LeftButton == ButtonState.Released && mouseState.LeftButton == ButtonState.Pressed && windowActive)
                     {
-                        if (settingsGUI.Active)
+                        if (settingsGUI.Enabled)
                         {
                             settingsGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
-                            ((SettingsGUI)settingsGUI).Rescale();
+                            settingsGUI.Update();
                         }
                         else
                         {
                             currentGUI.HandleClick(new Point(mouseState.X, mouseState.Y));
                             if (currentGUI == levelGUI)
                             {
-                                currentLevel.HandleClick(new Point(mouseState.X, mouseState.Y));
+                                currentLevel.HandleClick(new Point(mouseState.X, mouseState.Y), keyboardState.IsKeyDown(Keys.LeftShift));
                             }
                         }
                     }
                     //handle right click
                     if (previousMouseState.RightButton == ButtonState.Released && mouseState.RightButton == ButtonState.Pressed && windowActive)
                     {
-                        if (currentGUI == levelGUI && !settingsGUI.Active)
+                        if (currentGUI == levelGUI && !settingsGUI.Enabled)
                         {
                             currentLevel.HandleRightClick(new Point(mouseState.X, mouseState.Y));
                         }
@@ -238,7 +234,7 @@ namespace Commangineer
                         ToggleSettings();
                     }
                 }
-                if (!settingsGUI.Active)
+                if (!settingsGUI.Enabled)
                 {
                     if (currentGUI == levelGUI)
                     {
@@ -249,7 +245,7 @@ namespace Commangineer
                 {
                     settingsGUI.Update();
                 }
-
+                currentGUI.Update();
                 previousMouseState = mouseState;
                 previousKeyboardState = keyboardState;
                 base.Update(gameTime);
@@ -294,7 +290,7 @@ namespace Commangineer
                 GraphicsDevice.Clear(Color.Black);
                 ToggleSpriteBatch();
                 //draw GUI spritebatch
-                if (settingsGUI.Active)
+                if (settingsGUI.Enabled)
                 {
                     settingsGUI.Draw(_spriteBatch);
                     ToggleSpriteBatch();
@@ -312,13 +308,10 @@ namespace Commangineer
                     ToggleSpriteBatch();
                 }
 
-                if (currentGUI is ScalingGUI)
+                currentGUI.Update();
+                if (settingsGUI.Enabled)
                 {
-                    ((ScalingGUI)currentGUI).Rescale();
-                }
-                if (settingsGUI.Active)
-                {
-                    (settingsGUI).Rescale();
+                    settingsGUI.Update();
                 }
                 base.Draw(gameTime);
             }

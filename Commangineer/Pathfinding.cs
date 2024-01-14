@@ -41,42 +41,30 @@ namespace Commangineer
             return (p);
         }
     }
-    internal class Pathfinding
+    internal static class Pathfinding
     {
-        Tile[,] map;
-        float[,] pathStart;
-        float[,] pathGoal;
-        float[,] pathTotal;
-        bool[,] search;
-        Point[,] enter;
-        List<checks> check = new List<checks>();
+        static Tile[,] map;
+        static float[,] pathStart;
+        static float[,] pathGoal;
+        static float[,] pathTotal;
+        static bool[,] search;
+        static Point[,] enter;
+        static List<checks> check = new List<checks>();
 
-        Point pos;
-        Point goal;
+        static Point pos;
+        static Point goal;
 
 
-        public Pathfinding(Tile[,] m)
-        {
-            int width = m.GetLength(0);
-            int height = m.GetLength(1);
 
-            map = m;
 
-            pathStart = new float[width,height];
-            pathGoal = new float[width,height];
-            pathTotal = new float[width,height];
-            search = new bool[width,height];
-            enter = new Point[width,height];
-        }
-
-        public List<Point> find(Point p, Point g)
+        public static List<Point> find(Point origin, Point destination)
         {
             resetVars();
             List<Point> path = new List<Point>();
             Point track;
             bool goalReach = false;
-            pos = p;
-            goal = g;
+            pos = origin;
+            goal = destination;
 
             if (pos != goal)
             {
@@ -118,8 +106,18 @@ namespace Commangineer
 
         }
 
-        void resetVars()
+        static void resetVars()
         {
+            int width = Commangineer.Level.GetTileWidth();
+            int height = Commangineer.Level.GetTileHeight();
+
+            map = Commangineer.Level.GetTileMap(); ;
+
+            pathStart = new float[width, height];
+            pathGoal = new float[width, height];
+            pathTotal = new float[width, height];
+            search = new bool[width, height];
+            enter = new Point[width, height];
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
@@ -134,7 +132,7 @@ namespace Commangineer
             check.Clear();
         }
 
-        void addSearch(Point p)
+        static void addSearch(Point p)
         {
            if(p.X != 0)
             {

@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using Point = Microsoft.Xna.Framework.Point;
+using RectangleF = System.Drawing.RectangleF;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace Commangineer
 {
@@ -36,13 +39,13 @@ namespace Commangineer
             scaleFactor = (int)Math.Floor(scaleFactor * Math.Pow(1.001, change));
 
             //If screen is too small, shrink game
-            if (Commangineer.GetScreenWidth() > scaleFactor * Commangineer.GetLevel().GetTileWidth())
+            if (Commangineer.GetScreenWidth() > scaleFactor * Commangineer.Level.GetTileWidth())
             {
-                scaleFactor = Commangineer.GetScreenWidth() / Commangineer.GetLevel().GetTileWidth();
+                scaleFactor = Commangineer.GetScreenWidth() / Commangineer.Level.GetTileWidth();
             }
-            if (Commangineer.GetScreenHeight() > scaleFactor * Commangineer.GetLevel().GetTileHeight())
+            if (Commangineer.GetScreenHeight() > scaleFactor * Commangineer.Level.GetTileHeight())
             {
-                scaleFactor = Commangineer.GetScreenHeight() / Commangineer.GetLevel().GetTileHeight();
+                scaleFactor = Commangineer.GetScreenHeight() / Commangineer.Level.GetTileHeight();
             }
             int MINIMUM_GAME_TILE_SCREEN_SIZE = 5;
             //if game is too small, make it bigger
@@ -133,20 +136,22 @@ namespace Commangineer
                 }
             }
             //If camera speed is close enough to 0, set it to 0
-            if (xVelocity <= CAMERA_SPEED_DECREASE && xVelocity >= -CAMERA_SPEED_DECREASE && xAcceleration == 0) { 
-                xVelocity = 0; 
-            }
-            if (yVelocity <= CAMERA_SPEED_DECREASE && yVelocity >= -CAMERA_SPEED_DECREASE && yAcceleration == 0) {
-                yVelocity = 0; 
-            }
-            //If 
-            if (x + Commangineer.GetScreenWidth() > (scaleFactor * Commangineer.GetLevel().GetTileWidth()))
+            if (xVelocity <= CAMERA_SPEED_DECREASE && xVelocity >= -CAMERA_SPEED_DECREASE && xAcceleration == 0)
             {
-                x = scaleFactor * Commangineer.GetLevel().GetTileWidth() - Commangineer.GetScreenWidth();
+                xVelocity = 0;
             }
-            if (y + Commangineer.GetScreenHeight() > (scaleFactor * Commangineer.GetLevel().GetTileHeight()))
+            if (yVelocity <= CAMERA_SPEED_DECREASE && yVelocity >= -CAMERA_SPEED_DECREASE && yAcceleration == 0)
             {
-                y = scaleFactor * Commangineer.GetLevel().GetTileHeight() - Commangineer.GetScreenHeight();
+                yVelocity = 0;
+            }
+            //If
+            if (x + Commangineer.GetScreenWidth() > (scaleFactor * Commangineer.Level.GetTileWidth()))
+            {
+                x = scaleFactor * Commangineer.Level.GetTileWidth() - Commangineer.GetScreenWidth();
+            }
+            if (y + Commangineer.GetScreenHeight() > (scaleFactor * Commangineer.Level.GetTileHeight()))
+            {
+                y = scaleFactor * Commangineer.Level.GetTileHeight() - Commangineer.GetScreenHeight();
             }
             if (x < 0)
             {
@@ -169,8 +174,8 @@ namespace Commangineer
                 (int)(scaleFactor * toDraw.Size.Y));
 
             Rectangle visualRectangle = new Rectangle(
-                (int)Math.Floor((toDraw.Position.X + toDraw.Size.X/2f) * scaleFactor - x),
-                (int)Math.Floor((toDraw.Position.Y + toDraw.Size.Y/2f) * scaleFactor - y),
+                (int)Math.Floor((toDraw.Position.X + toDraw.Size.X / 2f) * scaleFactor - x),
+                (int)Math.Floor((toDraw.Position.Y + toDraw.Size.Y / 2f) * scaleFactor - y),
                (int)(scaleFactor * toDraw.Size.X),
                 (int)(scaleFactor * toDraw.Size.Y));
 
@@ -178,12 +183,13 @@ namespace Commangineer
             Rectangle screenView = new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight());
             if (screenView.Intersects(destinationRectangle))
             {
-                spriteBatch.Draw(texture, visualRectangle, null, Color.White, toDraw.Angle, new Vector2(texture.Width/2f, texture.Height/2f), SpriteEffects.None, 0f);     
+                spriteBatch.Draw(texture, visualRectangle, null, Color.White, toDraw.Angle, new Vector2(texture.Width / 2f, texture.Height / 2f), SpriteEffects.None, 0f);
             }
         }
+
         public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw)
         {
-            Point projectedPoint = ProjectPoint(toDraw.Position);
+            Point projectedPoint = Project(toDraw.Position);
             Rectangle destinationRectangle = new Rectangle(
                 projectedPoint.X,
                 projectedPoint.Y,
@@ -195,26 +201,53 @@ namespace Commangineer
                 spriteBatch.Draw(toDraw.GetTexture(), destinationRectangle, Color.White);
             }
         }
-        public static Point ProjectPoint(Point startPoint)
-        {
-            return new Point(
-                (int)Math.Floor(startPoint.X * scaleFactor - x),
-                (int)Math.Floor(startPoint.Y * scaleFactor - y)
-                );
 
+        public static void DrawProjected(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Texture2D toDraw)
+        {
+            Point projectedTopLeft = Project(position);
+            Point projectedBottomRight = Project(position + size);
+            Rectangle destinationRectangle = new Rectangle(
+                projectedTopLeft,
+                projectedBottomRight - projectedTopLeft);
+            Rectangle screenView = new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight());
+            if (screenView.Intersects(destinationRectangle))
+            {
+                spriteBatch.Draw(toDraw, destinationRectangle, Color.White);
+            }
         }
-        public static Point ProjectPoint(Vector2 startPoint)
+
+        public static Point Project(Point startPoint)
         {
             return new Point(
                 (int)Math.Floor(startPoint.X * scaleFactor - x),
                 (int)Math.Floor(startPoint.Y * scaleFactor - y)
                 );
         }
-        public static Vector2 DeprojectPoint(Vector2 startPoint)
+
+        public static Point Project(Vector2 startPoint)
+        {
+            return new Point(
+                (int)Math.Floor(startPoint.X * scaleFactor - x),
+                (int)Math.Floor(startPoint.Y * scaleFactor - y)
+                );
+        }
+
+        public static RectangleF Deproject(RectangleF rectangle)
+        {
+            return new RectangleF(
+                    (float)(rectangle.X + x) / scaleFactor,
+                    (float)(rectangle.Y + y) / scaleFactor,
+                rectangle.Width / scaleFactor,
+                rectangle.Height / scaleFactor
+
+                );
+        }
+
+        public static Vector2 Deproject(Vector2 startPoint)
         {
             return new Vector2(
-                    (float)(startPoint.X+x)/scaleFactor,
-                    (float)(startPoint.Y+y)/scaleFactor
+                    (float)(startPoint.X + x) / scaleFactor,
+                    (float)(startPoint.Y + y) / scaleFactor
                 );
         }
     }

@@ -25,37 +25,15 @@ namespace Commangineer.Units
             this.horsepower = horsepower;
             this.size = size;
         }
-
-
-        public string GetName()
+        public string Name { get {  return name; } }
+        public int MaterialCost { get {  return materialCost; } }
+        public int Steam { get {  return steam; } }
+        public int Speed { get { return speed; } }
+        public int Horsepower { get {  return horsepower; } }
+        public int Size { get { return size; } }
+        public Engine Clone()
         {
-            return name;
+            return new Engine(name, materialCost, steam, speed, horsepower, size);
         }
-
-        public int GetMaterialCost()
-        {
-            return materialCost;
-        }
-
-        public int GetSpeed()
-        {
-            return speed;
-        }
-
-        public int GetSteam()
-        {
-            return steam;
-        }
-
-        public int GetHorsepower()
-        {
-            return horsepower;
-        }
-
-        public int GetSize()
-        {
-            return size;
-        }
-
     }
 }

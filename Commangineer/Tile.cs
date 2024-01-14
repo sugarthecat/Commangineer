@@ -1,4 +1,5 @@
-﻿using Commangineer.Floor_Auuki_types;
+﻿using Commangineer.Auuki;
+using Commangineer.Floor_Auuki_types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

@@ -24,6 +24,10 @@ namespace Commangineer
         {
             get { return position; }
         }
+        public Point PointPosition
+        {
+            get { return position.ToPoint(); }
+        }
         public Texture2D GetTexture()
         {
             return texture;

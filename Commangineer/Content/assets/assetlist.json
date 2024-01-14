@@ -10,7 +10,9 @@
 		"errorMsg",
 		"music",
 		"nomusic",
-		"terneicon"
+		"terneicon",
+		"selectedUnit",
+		"selectZone"
 	],
 	"textures": [
 		[ "dirt", "dirt1" ],
@@ -43,7 +45,8 @@
 		[ "mountain", "mountain3" ],
 		[ "mountain", "mountain2" ],
 		[ "mountain", "mountain3" ],
-		[ "rat", "rat" ]
+		[ "rat", "rat" ],
+		[ "scrap", "scrap" ]
 	],
 	"buttons": [
 		"generic",
@@ -53,7 +56,8 @@
 		"return",
 		"start",
 		"toggle-music",
-		"settings"
+		"settings",
+		"x"
 	],
 	"sounds": [
 		"test"

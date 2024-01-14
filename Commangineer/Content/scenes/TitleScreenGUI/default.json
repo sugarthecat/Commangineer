@@ -31,8 +31,8 @@
 		"exitGameButton": {
 			"name": "exit-game",
 			"type": "Button",
-			"position": [ 240, 325 ],
-			"size": [ 120, 50 ],
+			"position": [ 220, 325 ],
+			"size": [ 160, 50 ],
 			"actionName": "Quit",
 			"actionValue": ""
 		}

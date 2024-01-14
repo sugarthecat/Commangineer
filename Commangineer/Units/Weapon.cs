@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Commangineer.Auuki;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +25,8 @@ namespace Commangineer.Units
         private int range;
         private int steamCost;
         private bool shooting;
-
+        private AuukiCreature target;
+        private Texture2D texture;
         public string Name { get => name; set => name = value; }
         internal Unit.turretSize TurretSize { get => turretSize; set => turretSize = value; }
         public double ReloadTime { get => reloadTime; set => reloadTime = value; }
@@ -42,16 +47,16 @@ namespace Commangineer.Units
             this.turretSize = turretSize;
             this.reloadTime = reloadTime;
             this.attackSpeed = attackSpeed;
-            this.attackTime = 1.0d/attackSpeed;
+            this.attackTime = 1.0d / attackSpeed;
             this.attackProgress = attackTime;
             this.damage = damage;
             this.maxAmmo = maxAmmo;
             this.range = range;
             this.steamCost = steamCost;
         }
-
         public Weapon(Weapon w)
         {
+            texture = Assets.GetTexture(w.name);
             this.name = w.Name;
             this.turretSize = w.TurretSize;
             this.reloadTime = w.ReloadTime;
@@ -63,7 +68,10 @@ namespace Commangineer.Units
             this.range = w.Range;
             this.steamCost = w.SteamCost;
         }
-
+        public Texture2D GetTexture()
+        {
+            return texture;
+        }
         public Unit.turretSize GetTurretSize()
         {
             return turretSize;
@@ -89,7 +97,6 @@ namespace Commangineer.Units
                 attackProgress = 0.0d;
             }
         }
-
         private void Attack()
         {
 

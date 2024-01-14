@@ -5,6 +5,22 @@
 			"type": "GUIElement",
 			"position": [ 75, 50 ],
 			"size": [ 450, 300 ]
+		},
+		"exitGameButton": {
+			"name": "x",
+			"type": "Button",
+			"position": [ 80, 55 ],
+			"size": [ 25, 25 ],
+			"actionName": "ExitUnitEditor",
+			"actionValue": ""
+		},
+		"spawnUnitButton": {
+			"name": "spawnUnit",
+			"type": "Button",
+			"position": [ 100, 310 ],
+			"size": [ 100, 25 ],
+			"actionName": "SpawnUnit",
+			"actionValue": ""
 		}
 	}
 }

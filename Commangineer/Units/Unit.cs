@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
-
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using Point = Microsoft.Xna.Framework.Point;
 namespace Commangineer.Units
 {
-    internal class Unit : TexturedObject
+    internal class Unit : RotatableTexturedObject
     {
         public enum turretSize
         {
@@ -18,6 +14,8 @@ namespace Commangineer.Units
             medium,
             big
         }
+
+        private float angle = 0;
         private string name;
         private int health;
         private int maxHealth;
@@ -29,150 +27,113 @@ namespace Commangineer.Units
         private Engine engine;
         private Material engineMaterial;
 
-        Point position;
-        Point goal;
-        List<Point> path = new List<Point>();
-        Pathfinding pathing;
-        float maxMove = 1;
-        float move = 1;
-        float maxRescan = 20;
-        float rescan = 0;
-        bool idle = true;
+        private Vector2 position;
+        private Vector2 goal;
+        private List<Point> path = new List<Point>();
+        private float maxMove = 1;
+        private float move = 1;
+        private float maxRescan = 20;
+        private float rescan = 0;
 
-        enum specialStats
+        public float Angle
         {
-                
-        }
-
-        public Unit(string name, Chassis chassis, Material chassisMaterial, Engine engine, Material engineMaterial)
-        {
-            int weight = 0;
-            int horse = 0;
-            double speed;
-
-            this.name = name;
-            this.chassis = chassis;
-            this.chassisMaterial = chassisMaterial;
-
-            this.weapons = new Slot[chassis.GetTurrets().Length];
-
-            for (int i = 0; i < chassis.GetTurrets().Length; i++)
+            get
             {
-                this.weapons[i] = new Slot(chassis.GetTurrets()[i]);
+                return angle;
             }
-
-            this.engine = engine;
-            this.engineMaterial = engineMaterial;
-
-            weight += chassis.GetSize() * chassisMaterial.GetWeight();
-            weight += engine.GetSize() * engineMaterial.GetWeight();
-
-            horse += engine.GetHorsepower() * engineMaterial.GetStrength();
-
-            speed = (System.Math.Pow((double)horse/(double)weight, (1.0 / 3.0)));
-
-            if(speed > engine.GetSpeed() * engineMaterial.GetWorkability())
-            {
-                speed = engine.GetSpeed() * engineMaterial.GetWorkability();
-            }
-
-            this.speed = speed;
-            this.maxHealth = chassis.GetHealth() * chassisMaterial.GetStrength();
-            this.health = this.maxHealth;
-            this.armour = chassis.GetArmour() * (chassisMaterial.GetWorkability()/ 10);
-
         }
 
-        public Unit(Unit u, Point pos, Pathfinding pathing)
+        public Unit(UnitTemplate template, Vector2 spawnPosition)
         {
-            this.name = u.name;
-            this.health = u.health;
-            this.maxHealth = u.maxHealth;
-            this.armour = u.armour;
-            this.speed = u.speed;
-            this.chassis = u.chassis;
-            this.chassisMaterial = u.chassisMaterial;
-            this.engine = u.engine;
-            this.engineMaterial = u.engineMaterial;
-
-            position = pos;
-            this.pathing = pathing;
-
+            name = template.Name;
+            health = template.Health;
+            maxHealth = template.MaxHealth;
+            armour = template.Armour;
+            speed = template.Speed;
+            chassis = template.Chassis;
+            engine = template.Engine;
+            weapons = template.Weapons;
+            goal = spawnPosition- new Vector2(0,Size.Y);
+            position = spawnPosition;
         }
 
-        public void Update(float time)
+        public MaterialBalance MaterialCost
+        {
+            get
+            {
+                MaterialBalance materialBalance = new MaterialBalance();
+                return materialBalance;
+            }
+        }
+
+        public void Update(float deltaTime, Level level)
         {
             foreach (Slot w in weapons)
             {
-                w.Update(time);
+                w.Update(deltaTime, position+Size/2, Angle);
             }
-            if (!idle)
+            Vector2 deltaPosition = position - goal;
+            angle = (float)Math.Atan2(deltaPosition.Y, deltaPosition.X);
+            Vector2 previousPosition = position;
+            float length = deltaPosition.Length();
+            if (length < deltaTime * (float)speed)
             {
-                pathfindingUpdate(time);
-            }
-        }
-
-        public void pathfindingUpdate(float deltaTime)
-        {
-            if (rescan <= 0)
-            {
-                rescan = maxRescan;
-                path = pathing.find(position, goal);
+                position = goal;
             }
             else
             {
-                rescan -= deltaTime;
+                deltaPosition *= deltaTime * (float)speed / length;
+                position = position - deltaPosition;
             }
-            if (move <= 0)
+            if (level.Collides(this))
             {
-                move = maxMove;
-                if (path.Count > 0)
-                {
-                    Point temp = Vector2.Normalize(path[0].ToVector2() - position.ToVector2()).ToPoint();
-                    moveX(temp.X);
-                    moveY(temp.Y);
-                    path.RemoveAt(0);
-                }
-                else
-                {
-                    idle = true;
-                }
+                position = previousPosition;
             }
-            else
+        }
+        public bool Intersects(RectangleF other)
+        {
+            return Bounds.IntersectsWith(other);
+        }
+        public RectangleF Bounds
+        {
+            get
             {
-                move -= deltaTime;
+                return new RectangleF(Position.X,position.Y, Size.X,Size.Y);
             }
         }
 
-        public void addGoal(Point g)
+        public Vector2 Goal
         {
-            goal = g;
-            idle = false;
+            set
+            {
+                goal = value;
+            }
         }
 
         public Vector2 Size
         {
             get
             {
-                return new Vector2(1, 1);
+                return chassis.Size;
             }
         }
+
         public Vector2 Position
         {
             get
             {
-                return new Vector2(position.X,position.Y);
+                return position;
             }
         }
 
-        public void Damage(int d)
+        public void Damage(int damage)
         {
-            d -= armour;
-            if(d <= 0)
+            damage -= armour;
+            if (damage <= 0)
             {
-                d = 1;
+                damage = 1;
             }
-             health -= d;
+            health -= damage;
         }
 
         public Texture2D GetTexture()
@@ -180,14 +141,17 @@ namespace Commangineer.Units
             return Assets.GetTexture("wood");
         }
 
-        public void moveX(int val)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            position.X += val;
+            Camera.Draw(spriteBatch, this);
+            for(int i = 0; i<weapons.Length; i++)
+            {
+                weapons[i].Draw(spriteBatch);
+            }
         }
-        public void moveY(int val)
+        public void DrawSelection(SpriteBatch spriteBatch)
         {
-            position.Y += val;
+            Camera.DrawProjected(spriteBatch, Position, Size, Assets.GetImage("selectedUnit"));
         }
-
     }
 }
