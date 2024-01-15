@@ -8,7 +8,7 @@ namespace Commangineer.Auuki.AuukiStructures.Spawners
     public class BearSpawner : Spawner
     {
         // Creates a new spawner of it's type
-        public BearSpawner(Point spawnPosition) : base(spawnPosition, new Point(4, 4), 2, 300, 5)
+        public BearSpawner(Point spawnPosition) : base(spawnPosition, new Point(4, 4), 2, 180, 5)
         {
         }
 

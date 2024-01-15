@@ -899,5 +899,40 @@ namespace Commangineer
         {
             unitEditor.Enabled = false;
         }
+
+        /// <summary>
+        /// If the level is over, and the player lost
+        /// </summary>
+        public bool Lost
+        {
+            get
+            {
+                return !playerBase.Alive;
+            }
+        }
+        /// <summary>
+        /// If the level is over, and the player won
+        /// </summary>
+        public bool Won
+        {
+            get
+            {
+                if(auukiCreatures.Count != 0)
+                {
+                    return false;
+                }
+                for(int i  = 0;i < tiles.GetLength(0); i++)
+                {
+                    for(int j = 0;j < tiles.GetLength(1); j++)
+                    {
+                        if (tiles[i,j].HasAuukiTile)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
     }
 }

@@ -65,7 +65,8 @@
     [ "musket", "musket" ],
     [ "machineGun", "machineGun" ],
     [ "revolver", "revolver" ],
-    [ "cannon", "cannon" ]
+    [ "cannon", "cannon" ],
+    [ "playerBase", "playerBase" ]
   ],
   "buttons": [
     "generic",

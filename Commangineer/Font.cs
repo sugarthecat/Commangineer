@@ -5,14 +5,11 @@ using System.Collections.Generic;
 
 namespace Commangineer
 {
-    /// <summary>
-    /// Represents a font, includes all assets for the font
-    /// </summary>
     public class Font
     {
-        public Dictionary<string, Texture2D> characterTextures;
-        private string supportedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        public Dictionary<char, Texture2D> characterTextures;
         private Texture2D defaultCharacter;
+        private string directory;
 
         /// <summary>
         /// Creates a new font, loads in all characters
@@ -21,18 +18,39 @@ namespace Commangineer
         /// <param name="content">The content manager to load the font</param>
         public Font(string addr, ContentManager content)
         {
+            directory = addr;
             defaultCharacter = content.Load<Texture2D>(addr + "/default");
-            characterTextures = new Dictionary<string, Texture2D>();
-            for (int i = 0; i < supportedCharacters.Length; i++)
+            characterTextures = new Dictionary<char, Texture2D>();
+            string basicCharacters = "abcdefghijklmnopqrstuvwxyz1234567890";
+            for (int i = 0; i < basicCharacters.Length; i++)
             {
-                try
-                {
-                    characterTextures.Add(supportedCharacters[i] + "", content.Load<Texture2D>(addr + "/" + supportedCharacters[i]));
-                }
-                catch
-                {
-                    characterTextures.Add(supportedCharacters[i] + "", defaultCharacter);
-                }
+                loadCharacter(basicCharacters[i], basicCharacters[i] + "", content);
+            }
+            string capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int i = 0; i < capitalLetters.Length; i++)
+            {
+                loadCharacter(capitalLetters[i], "capital" + basicCharacters[i], content);
+            }
+            loadCharacter(',', "comma", content);
+            loadCharacter(':', "colon", content);
+            loadCharacter('/', "slash", content);
+            loadCharacter('!', "exclamationPoint", content);
+        }
+        /// <summary>
+        /// Loads a charcter 
+        /// </summary>
+        /// <param name="character"></param>
+        /// <param name="addr"></param>
+        /// <param name="content"></param>
+        private void loadCharacter(char character, string addr, ContentManager content)
+        {
+            try
+            {
+                characterTextures.Add(character, content.Load<Texture2D>(directory + "/" + addr));
+            }
+            catch
+            {
+                characterTextures.Add(character, defaultCharacter);
             }
         }
 
@@ -48,9 +66,26 @@ namespace Commangineer
             int height = textArea.Height;
             int xOffset = 0;
             int yOffset = 0;
+            int widthFactor = 0;
+            if (textToDisplay.Length < 1)
+            {
+                return;
+            }
+            int heightFactor = 100;
+            for (int i = 0; i < textToDisplay.Length; i++)
+            {
+                if (characterTextures.ContainsKey(textToDisplay[i]))
+                {
+                    widthFactor += characterTextures[textToDisplay[i]].Width;
+                }
+                else
+                {
+                    widthFactor += 100;
+                }
+            }
 
-            int theoreticNewWidth = (int)(64d * textToDisplay.Length * height / 100d);
-            int theoreticNewHeight = (int)(100d * width / textToDisplay.Length / 64d);
+            int theoreticNewWidth = (int)(widthFactor * height / (double)heightFactor);
+            int theoreticNewHeight = (int)(heightFactor * width / (double)widthFactor);
             if (theoreticNewWidth < width)
             {
                 width = theoreticNewWidth;
@@ -63,12 +98,23 @@ namespace Commangineer
             }
             Rectangle displayArea = new Rectangle(textArea.X + xOffset, textArea.Y + yOffset, width, height);
 
+            int widthOn = 0;
             for (int i = 0; i < textToDisplay.Length; i++)
             {
-                if (characterTextures.ContainsKey(textToDisplay[i] + ""))
+                if (characterTextures.ContainsKey(textToDisplay[i]))
                 {
-                    Rectangle textRectangle = new Rectangle(displayArea.X + displayArea.Width / textToDisplay.Length * i, displayArea.Y, (int)((double)displayArea.Width / textToDisplay.Length), displayArea.Height);
-                    spriteBatch.Draw(characterTextures[textToDisplay[i] + ""], textRectangle, Color.White);
+                    Rectangle textRectangle = new Rectangle(
+                        displayArea.X + widthOn,
+                        displayArea.Y,
+                        (int)((double)displayArea.Width / widthFactor * characterTextures[textToDisplay[i]].Width),
+                        displayArea.Height
+                        );
+                    spriteBatch.Draw(characterTextures[textToDisplay[i]], textRectangle, Color.White);
+                    widthOn += textRectangle.Width;
+                }
+                else
+                {
+                    widthOn += (int)((double)displayArea.Width / widthFactor * 100);
                 }
             }
         }

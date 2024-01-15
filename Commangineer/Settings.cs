@@ -27,8 +27,8 @@ namespace Commangineer
                 {
                     string text = String.Join("", File.ReadAllLines(settingsFile).Select(x => x.Trim()).ToArray());
                     JsonObject settingsJson = (JsonObject)JsonObject.Parse(text);
-                    musicEnabled = (bool)settingsJson["musicEnabled"];
-                    levelOn = (int)settingsJson["levelOn"];
+                    //musicEnabled = (bool)settingsJson["musicEnabled"];
+                    //levelOn = (int)settingsJson["levelOn"];
                 }
                 catch (NullReferenceException)
                 {
