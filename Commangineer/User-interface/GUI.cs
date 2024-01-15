@@ -193,7 +193,9 @@ namespace Commangineer.User_Interface
                 case "NavigateToMenu":
                     res = delegate { Commangineer.instance.NavigateToMenu(actionValue); };
                     break;
-
+                case "BeginLevel":
+                    res = delegate { Commangineer.instance.BeginLevel(Convert.ToInt32(actionValue)); };
+                    break;
                 case "EmailCrash":
                     res = delegate { Commangineer.instance.EmailCrash(); };
                     break;

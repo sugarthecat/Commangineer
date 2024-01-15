@@ -80,7 +80,8 @@
     "x",
     "prev",
     "next",
-    "forge"
+    "forge",
+    "defaultButton"
   ],
   "sounds": [
     "test"
