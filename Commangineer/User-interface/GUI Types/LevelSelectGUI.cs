@@ -1,16 +1,13 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace Commangineer.GUI_Types
+﻿namespace Commangineer.GUI_Types
 {
     /// <summary>
     /// A GUI + The level
     /// </summary>
-    internal class LevelSelectGUI : ScalingGUI
+    public class LevelSelectGUI : ScalingGUI
     {
-        public LevelSelectGUI() : base(600,400)
+        public LevelSelectGUI() : base(600, 400)
         {
             LoadElements("LevelSelectGUI");
         }
-
     }
 }

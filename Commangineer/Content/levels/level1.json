@@ -7,7 +7,7 @@
     "x": 2,
     "y": 80
   },
-  
+
   "structures": [
     {
       "x": 34,
@@ -1080,39 +1080,39 @@
       "type": 3
     }
   ],
-  "actions": [
+  "events": [
     {
       "comparator": ">",
       "gameValue": "time",
       "compareValue": 25,
-      "events": [
+      "actions": [
         {
-          "eventType": "dialogue",
+          "actionType": "dialogue",
           "character": "terne",
           "speech": "Youve been here for 25 seconds"
         },
         {
-          "eventType": "dialogue",
+          "actionType": "dialogue",
           "character": "terne",
           "speech": "role call"
         },
         {
-          "eventType": "dialogue",
+          "actionType": "dialogue",
           "character": "terne",
           "speech": "alex terne"
         },
         {
-          "eventType": "dialogue",
+          "actionType": "dialogue",
           "character": "electrum",
           "speech": "alfred electrum"
         },
         {
-          "eventType": "dialogue",
+          "actionType": "dialogue",
           "character": "oak",
           "speech": "sergeant oak"
         },
         {
-          "eventType": "dialogue",
+          "actionType": "dialogue",
           "character": "magnox",
           "speech": "captain magnox"
         }
@@ -1122,11 +1122,15 @@
       "comparator": ">",
       "gameValue": "auukiUnits",
       "compareValue": 5,
-      "events": [
+      "actions": [
         {
-          "eventType": "dialogue",
+          "actionType": "dialogue",
           "character": "terne",
           "speech": "Theyre starting an offensive!"
+        },
+        {
+          "actionType": "ai",
+          "behavior": "attack"
         }
       ]
     }

@@ -85,9 +85,9 @@ namespace Commangineer
                         {
                             LoadImage(s);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            Log.LogText("Error loading image " + s);
+                            Log.LogText("Error loading image " + s + e.Message);
                         }
                     }
                     foreach (JsonNode node in res["textures"].AsArray())
@@ -236,7 +236,7 @@ namespace Commangineer
             }
             else
             {
-                Log.LogText("Texture grab error: " + name);
+                Log.LogText("Image grab error: " + name);
                 return images["default"];
             }
         }

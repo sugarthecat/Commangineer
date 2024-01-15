@@ -1,19 +1,17 @@
 ﻿using Commangineer.Auuki;
-using Commangineer.Floor_Auuki_types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace Commangineer
 {
-    internal class Tile : TexturedObject
-    { 
+    public class Tile : TexturedObject
+    {
         private Texture2D texture;
         private Point position;
         protected AuukiFloor AuukiTile;
         private AuukiStructure occupyingAuukiStructure;
         protected float transmissionChance;
-        bool isPath;
         protected bool isSolid = false;
 
         public Tile(Texture2D texture, Point position, float transmissionChance)
@@ -22,7 +20,6 @@ namespace Commangineer
             this.texture = texture;
             this.position = position;
             this.transmissionChance = transmissionChance;
-            isPath = true;
         }
 
         public bool HasAuukiTile
@@ -32,6 +29,7 @@ namespace Commangineer
                 return AuukiTile != null;
             }
         }
+
         public bool HasAuukiStructure
         {
             get
@@ -39,13 +37,19 @@ namespace Commangineer
                 return (occupyingAuukiStructure != null && occupyingAuukiStructure.Alive);
             }
         }
+
         public AuukiStructure AuukiStructure
         {
             set
             {
                 occupyingAuukiStructure = value;
             }
+            get
+            {
+                return occupyingAuukiStructure;
+            }
         }
+
         /// <summary>
         ///
         /// </summary>
@@ -64,10 +68,12 @@ namespace Commangineer
         public virtual void InfectWithAuuki()
         {
         }
+
         public void RemoveAuuki()
         {
             AuukiTile = null;
         }
+
         /// <summary>
         /// Attempts to get infected with Auuki
         /// </summary>
@@ -75,7 +81,7 @@ namespace Commangineer
         public void AttemptInfectWithAuuki(float deltaTime)
         {
             Random infectionChance = new Random();
-            if(Math.Pow(1 - transmissionChance, deltaTime) < infectionChance.NextDouble())
+            if (Math.Pow(1 - transmissionChance, deltaTime) < infectionChance.NextDouble())
             {
                 InfectWithAuuki();
             }
@@ -89,6 +95,7 @@ namespace Commangineer
         {
             return texture;
         }
+
         /// <summary>
         /// The size of tile. Always 1,1
         /// </summary>
@@ -96,9 +103,10 @@ namespace Commangineer
         {
             get
             {
-                return new Vector2(1,1);
+                return new Vector2(1, 1);
             }
         }
+
         /// <summary>
         /// The position of the tile, in vector format
         /// </summary>
@@ -109,6 +117,7 @@ namespace Commangineer
                 return new Vector2(position.X, position.Y);
             }
         }
+
         /// <summary>
         /// The position of the tile, in point format
         /// </summary>
@@ -119,15 +128,6 @@ namespace Commangineer
                 return position;
             }
         }
-
-        public bool IsPath
-        {
-            get
-            {
-                return isPath;
-            }
-        }
-
         /// <summary>
         /// Updates any time-based stats of the tile
         /// </summary>
@@ -137,6 +137,10 @@ namespace Commangineer
             if (HasAuukiTile)
             {
                 AuukiTile.Update(deltaTime);
+                if (!AuukiTile.Alive)
+                {
+                    RemoveAuuki();
+                }
             }
         }
 

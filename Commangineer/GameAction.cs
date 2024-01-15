@@ -1,33 +1,31 @@
-﻿using System.Collections;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
-    internal enum GameValue
+    public enum GameValue
     {
         GameTime,
         PlayerUnitCount,
         AuukiUnitCount
     }
-    internal enum ValueRelationship
+
+    public enum ValueRelationship
     {
         LessThan,
-        GreaterThan    
+        GreaterThan
     }
 
     /// <summary>
     /// A class representing a action event when in levels, which can be triggered by a variety of trackers and is used to trigger events such as dialogue popups
     /// </summary>
-    internal class GameAction
+    public class GameAction
     {
         private bool activated = false;
         private bool active = false;
         private GameValue gameValue;
         private ValueRelationship comparison;
-        private List<Dictionary<string,string>> eventList;
+        private List<Dictionary<string, string>> eventList;
         private int threshold;
 
         /// <summary>
@@ -44,9 +42,11 @@ namespace Commangineer
                 case "time":
                     gameValue = GameValue.GameTime;
                     break;
+
                 case "units":
                     gameValue = GameValue.PlayerUnitCount;
                     break;
+
                 case "auukiUnits":
                     gameValue = GameValue.AuukiUnitCount;
                     break;
@@ -56,13 +56,14 @@ namespace Commangineer
                 case "<":
                     comparison = ValueRelationship.LessThan;
                     break;
+
                 case ">":
                     comparison = ValueRelationship.GreaterThan;
                     break;
             }
             threshold = (int)actionJSON["compareValue"];
             // Loads in the action events that can get triggered
-            foreach (JsonObject node in actionJSON["events"].AsArray())
+            foreach (JsonObject node in actionJSON["actions"].AsArray())
             {
                 Dictionary<string, string> foundEvent = new Dictionary<string, string>();
                 foreach (KeyValuePair<string, JsonNode> pair in node.AsObject())
@@ -72,6 +73,7 @@ namespace Commangineer
                 eventList.Add(foundEvent);
             }
         }
+
         public GameValue GameValue
         {
             get
@@ -79,6 +81,7 @@ namespace Commangineer
                 return gameValue;
             }
         }
+
         public bool Active
         {
             get
@@ -86,6 +89,7 @@ namespace Commangineer
                 return active;
             }
         }
+
         public List<Dictionary<string, string>> Events
         {
             get
@@ -93,17 +97,18 @@ namespace Commangineer
                 return eventList;
             }
         }
+
         public void Update(int gameValue)
         {
-            if(activated)
+            if (activated)
             {
-                if ((comparison == ValueRelationship.LessThan && gameValue >= threshold) 
+                if ((comparison == ValueRelationship.LessThan && gameValue >= threshold)
                     || (comparison == ValueRelationship.GreaterThan && gameValue <= threshold))
                 {
                     activated = false;
                 }
             }
-            else if(!active) 
+            else if (!active)
             {
                 if ((comparison == ValueRelationship.LessThan && gameValue < threshold)
                     || (comparison == ValueRelationship.GreaterThan && gameValue > threshold))
@@ -112,6 +117,7 @@ namespace Commangineer
                 }
             }
         }
+
         public void Deactivate()
         {
             active = false;

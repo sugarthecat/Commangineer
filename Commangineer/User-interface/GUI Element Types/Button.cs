@@ -1,5 +1,4 @@
-﻿
-using Commangineer.User_Interface;
+﻿using Commangineer.User_Interface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -26,8 +25,8 @@ namespace Commangineer.GUI_Element_Types
         /// <param name="action">The action to be performed on click</param>
         public Button(string buttonName, Rectangle position, Action action) : base(Assets.GetButtonTexure(buttonName), position, action)
         {
-
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             MouseState mouseState = Mouse.GetState();

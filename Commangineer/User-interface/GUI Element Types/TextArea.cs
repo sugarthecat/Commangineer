@@ -1,5 +1,4 @@
-﻿
-using Commangineer.User_Interface;
+﻿using Commangineer.User_Interface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,7 +14,10 @@ namespace Commangineer.GUI_Element_Types
             this.font = font;
             this.text = text;
         }
-        public string Text { set { text = value; } }
+
+        public string Text
+        { set { text = value; } }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             font.DrawText(spriteBatch, text, position);

@@ -1,8 +1,6 @@
-﻿using Commangineer;
-using Commangineer.User_Interface;
-namespace Commangineer.GUI_Types
+﻿namespace Commangineer.GUI_Types
 {
-    internal class SettingsGUI : ScalingGUI
+    public class SettingsGUI : ScalingGUI
     {
         private bool active = false;
 
@@ -10,6 +8,7 @@ namespace Commangineer.GUI_Types
         {
             LoadElements("SettingsGUI");
         }
+
         public override void Update()
         {
             base.Update();

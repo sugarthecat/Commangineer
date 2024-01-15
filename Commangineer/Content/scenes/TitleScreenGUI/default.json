@@ -1,40 +1,40 @@
 {
-	"objects": {
-		"background": {
-			"name": "background",
-			"type": "GUIElement",
-			"position": [ 0, 0 ],
-			"size": [ 600, 400 ]
-		},
-		"banner": {
-			"name": "banner",
-			"type": "GUIElement",
-			"position": [ 50, 0 ],
-			"size": [ 500, 240 ]
-		},
-		"startGameButton": {
-			"name": "start",
-			"type": "Button",
-			"position": [ 200, 225 ],
-			"size": [ 200, 50 ],
-			"actionName": "NavigateToMenu",
-			"actionValue": "levelSelect"
-		},
-		"settingsButton": {
-			"name": "settings",
-			"type": "Button",
-			"position": [ 240, 275 ],
-			"size": [ 120, 50 ],
-			"actionName": "ToggleSettings",
-			"actionValue": ""
-		},
-		"exitGameButton": {
-			"name": "exit-game",
-			"type": "Button",
-			"position": [ 220, 325 ],
-			"size": [ 160, 50 ],
-			"actionName": "Quit",
-			"actionValue": ""
-		}
-	}
+  "objects": {
+    "background": {
+      "name": "background",
+      "type": "GUIElement",
+      "position": [ 0, 0 ],
+      "size": [ 600, 400 ]
+    },
+    "banner": {
+      "name": "banner",
+      "type": "GUIElement",
+      "position": [ 50, 0 ],
+      "size": [ 500, 240 ]
+    },
+    "startGameButton": {
+      "name": "start",
+      "type": "Button",
+      "position": [ 200, 225 ],
+      "size": [ 200, 50 ],
+      "actionName": "NavigateToMenu",
+      "actionValue": "levelSelect"
+    },
+    "settingsButton": {
+      "name": "settings",
+      "type": "Button",
+      "position": [ 240, 275 ],
+      "size": [ 120, 50 ],
+      "actionName": "ToggleSettings",
+      "actionValue": ""
+    },
+    "exitGameButton": {
+      "name": "exit-game",
+      "type": "Button",
+      "position": [ 220, 325 ],
+      "size": [ 160, 50 ],
+      "actionName": "Quit",
+      "actionValue": ""
+    }
+  }
 }

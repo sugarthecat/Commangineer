@@ -1,21 +1,13 @@
-﻿using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework.Media;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
-using System.Diagnostics;
-using Microsoft.Xna.Framework.Media;
 
 namespace Commangineer
 {
     public class Music
     {
         private Song gameMusic;
-        TimeSpan songProgress = new TimeSpan(0);
+        private TimeSpan songProgress = new TimeSpan(0);
+
         public Music(Song song)
         {
             gameMusic = song;
@@ -25,8 +17,8 @@ namespace Commangineer
         {
             MediaPlayer.Stop();
             MediaPlayer.Volume = (float)(volume);
-            MediaPlayer.Play(gameMusic,songProgress);
-            
+            MediaPlayer.Play(gameMusic, songProgress);
+
             MediaPlayer.IsRepeating = repeat;
         }
 

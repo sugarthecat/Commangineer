@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer
 {
@@ -14,7 +10,8 @@ namespace Commangineer
     public static class Log
     {
         private static string outLocation = Assembly.GetExecutingAssembly().Location + "/../Content/logs"; // The location of the folder containing logs
-        private static string logName = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day  + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + ".txt";
+        private static string logName = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Hour + "-" + DateTime.Now.Minute + ".txt";
+
         /// <summary>
         /// Creates a empty log file
         /// </summary>
@@ -37,7 +34,7 @@ namespace Commangineer
         /// <param name="msg">The text to be added</param>
         private static void AppendOutput(string msg)
         {
-            using (StreamWriter sw = File.AppendText(outLocation+ "/" + logName))
+            using (StreamWriter sw = File.AppendText(outLocation + "/" + logName))
             {
                 sw.WriteLine(msg);
             }

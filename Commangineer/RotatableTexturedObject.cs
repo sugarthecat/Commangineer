@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace Commangineer
+﻿namespace Commangineer
 {
-    internal interface RotatableTexturedObject : TexturedObject
+    public interface RotatableTexturedObject : TexturedObject
     {
         public float Angle { get; }
     }

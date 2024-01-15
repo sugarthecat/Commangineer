@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer
 {
-    internal interface TexturedObject
+    public interface TexturedObject
     {
         public Texture2D GetTexture();
 

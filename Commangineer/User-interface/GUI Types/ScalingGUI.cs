@@ -1,10 +1,8 @@
-﻿
-
-using Commangineer.User_Interface;
+﻿using Commangineer.User_Interface;
 
 namespace Commangineer.GUI_Types
 {
-    internal class ScalingGUI : GUI
+    public class ScalingGUI : GUI
     {
         private int originalWidth;
         private int originalHeight;
@@ -30,6 +28,7 @@ namespace Commangineer.GUI_Types
                 elements[i].ScaleY(screenHeightRatio);
             }
         }
+
         public override void Update()
         {
             base.Update();

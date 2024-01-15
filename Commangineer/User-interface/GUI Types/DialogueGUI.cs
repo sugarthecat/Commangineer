@@ -1,26 +1,20 @@
 ﻿using Commangineer.GUI_Element_Types;
-using Microsoft.Xna.Framework;
-using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using Commangineer.User_Interface;
 using System.Collections.Generic;
-using System.Drawing;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using Commangineer.User_Interface;
 
 namespace Commangineer.GUI_Types
 {
     /// <summary>
     /// The GUI object for the title screen
     /// </summary>`
-    internal class DialogueGUI : ScalingGUI
+    public class DialogueGUI : ScalingGUI
     {
         private (GUIElement element, string character) characterOne;
         private (GUIElement element, string character) characterTwo;
         private List<TextArea> textAreas;
+
         public DialogueGUI() : base(600, 400)
         {
             textAreas = new List<TextArea>();
@@ -63,7 +57,7 @@ namespace Commangineer.GUI_Types
             RemoveCharacter(2);
         }
 
-        private void SwapCharacter(ref (GUIElement element, string character) toChange, string newChar, (int,int) elementPosition, bool focused)
+        private void SwapCharacter(ref (GUIElement element, string character) toChange, string newChar, (int, int) elementPosition, bool focused)
         {
             Color toSet = Color.White;
             if (!focused)

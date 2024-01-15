@@ -1,18 +1,12 @@
 ﻿using Commangineer.GUI_Element_Types;
-using Commangineer.GUI_Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace Commangineer.User_Interface
 {
@@ -24,6 +18,7 @@ namespace Commangineer.User_Interface
         protected List<GUIElement> elements;
         protected List<GUI> subGUIs;
         private bool enabled;
+
         public GUI()
         {
             elements = new List<GUIElement>();
@@ -75,6 +70,7 @@ namespace Commangineer.User_Interface
         {
             subGUIs.Add(newGUI);
         }
+
         /// <summary>
         /// Removes a subGUI from subGUIs
         /// </summary>
@@ -83,6 +79,7 @@ namespace Commangineer.User_Interface
         {
             subGUIs.Remove(oldGUI);
         }
+
         /// <summary>
         /// Gets a sub gui at the given index
         /// </summary>
@@ -92,6 +89,7 @@ namespace Commangineer.User_Interface
         {
             return subGUIs[index];
         }
+
         /// <summary>
         /// Clears out the GUIs in subGUIs
         /// </summary>
@@ -99,6 +97,7 @@ namespace Commangineer.User_Interface
         {
             subGUIs.Clear();
         }
+
         public bool Enabled
         {
             get
@@ -155,7 +154,7 @@ namespace Commangineer.User_Interface
 
         /// <summary>
         /// Reads a JSON file containing objects to draw and converts it to a JsonNode
-        /// </summary>        
+        /// </summary>
         public JsonNode ReadAsync(string fileName)
         {
             JsonNode res = null;
@@ -171,13 +170,14 @@ namespace Commangineer.User_Interface
             }
             return res;
         }
+
         /// <summary>
         /// Updates the GUI
         /// </summary>
         public virtual void Update()
         {
-
         }
+
         /// <summary>
         /// Returns a Action dependent on the parameters
         /// </summary>
@@ -192,33 +192,42 @@ namespace Commangineer.User_Interface
                 case "NavigateToMenu":
                     res = delegate { Commangineer.instance.NavigateToMenu(actionValue); };
                     break;
+
                 case "EmailCrash":
                     res = delegate { Commangineer.instance.EmailCrash(); };
                     break;
+
                 case "Quit":
                     res = delegate { Commangineer.ExitGame(); };
                     break;
+
                 case "ToggleSettings":
                     res = delegate { Commangineer.instance.ToggleSettings(); };
                     break;
+
                 case "ToggleFullscreen":
                     res = delegate { Commangineer.instance.ToggleFullscreen(); };
                     break;
+
                 case "ToggleMusic":
                     res = delegate { Settings.MusicEnabled = !Settings.MusicEnabled; };
                     break;
+
                 case "ExitUnitEditor":
                     res = delegate { Commangineer.Level.ExitUnitEditor(); };
                     break;
+
                 case "SpawnUnit":
-                    res = delegate { Commangineer.Level.SpawnUnit(); };
+                    res = delegate { Commangineer.Level.SpawnUnit(0); };
                     break;
+
                 default:
                     res = delegate { Log.LogText(actionName + "does not have a valid action"); };
                     break;
             }
             return res;
         }
+
         /// <summary>
         /// Loads in all elements from a file to the screen
         /// </summary>
@@ -273,7 +282,6 @@ namespace Commangineer.User_Interface
                         }
                         else if (properties["type"].ToString() == "Button")
                         {
-
                             JsonArray position = properties["position"].AsArray();
                             JsonArray size = properties["size"].AsArray();
                             if (properties.ContainsKey("actionName"))

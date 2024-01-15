@@ -1,12 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Units;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer.Auuki
 {
-    internal class AuukiFloor : TexturedObject
+    public class AuukiFloor : TexturedObject, AuukiTarget
     {
         //default values
         private FloorAuukiStage[] stages;
+
         private int currentStageIndex;
         private float timeGrown = 0;
         private int health;
@@ -29,6 +31,7 @@ namespace Commangineer.Auuki
             this.stages = stages;
             SetStage();
         }
+
         public int Tier
         {
             get
@@ -36,13 +39,14 @@ namespace Commangineer.Auuki
                 return currentStageIndex;
             }
         }
+
         private void SetStage()
         {
-
             texture = stages[currentStageIndex].GetTexture();
             maxHealth = stages[currentStageIndex].GetHealth();
             health = maxHealth;
         }
+
         /// <summary>
         /// If the FloorAuuki is at full health
         /// </summary>
@@ -52,21 +56,26 @@ namespace Commangineer.Auuki
         }
 
         /// <summary>
-        /// If the FloorAuuki is dead
+        /// If the FloorAuuki is alive
         /// </summary>
-        public bool IsDead
+        public bool Alive
         {
-            get { return health <= 0; }
+            get { return health > 0; }
         }
 
         /// <summary>
         /// Takes a certain amount of damage
         /// </summary>
         /// <param name="damage"></param>
-        public void TakeDamage(int damage)
+        public void Damage(int damage)
         {
             health -= damage;
         }
+        public void Damage(int damage, Unit attackingUnit)
+        {
+            Damage(damage);
+        }
+
 
         /// <summary>
         ///
@@ -81,16 +90,26 @@ namespace Commangineer.Auuki
         {
             get
             {
-                return new Vector2(size.X, size.Y);
+                return size.ToVector2();
             }
         }
+
         public Vector2 Position
         {
             get
             {
-                return new Vector2(position.X, position.Y);
+                return position.ToVector2();
             }
         }
+
+        public Vector2 CenterPosition
+        {
+            get
+            {
+                return Position + Size / 2;
+            }
+        }
+
         public Texture2D GetTexture()
         { return texture; }
 
@@ -108,6 +127,7 @@ namespace Commangineer.Auuki
                 SetStage();
             }
         }
+
         /// <summary>
         /// Age up the Floor Auuki
         /// </summary>

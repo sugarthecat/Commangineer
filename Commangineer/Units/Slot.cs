@@ -1,45 +1,41 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer.Units
 {
-    internal class Slot : RotatableTexturedObject
+    public class Slot : RotatableTexturedObject
     {
-
         private Weapon weapon;
-        private Unit.turretSize size;
         private Vector2 position;
         private Vector2 offsetPosition;
 
-        public Slot(Unit.turretSize s, Vector2 turretPosition)
+        public Slot(Vector2 turretPosition)
         {
-            size = s;
             offsetPosition = turretPosition;
         }
+
         public Slot(Slot oldSlot)
         {
-            size = oldSlot.size;
             position = oldSlot.position;
-            if(oldSlot.weapon != null) {
+            if (oldSlot.weapon != null)
+            {
                 weapon = new Weapon(oldSlot.weapon);
             }
         }
+
         public float Angle
         {
             get
             {
-                if(weapon != null)
+                if (weapon != null)
                 {
                     return weapon.Angle;
                 }
                 return 0;
             }
         }
+
         /// <summary>
         /// atempts to add weapon to slot and returns a bool
         /// </summary>
@@ -47,7 +43,7 @@ namespace Commangineer.Units
         /// <returns>true if weapon successfully added else false</returns>
         public bool AddWeapon(Weapon w)
         {
-            if (w.GetTurretSize() == size && weapon == null)
+            if (weapon == null)
             {
                 weapon = new Weapon(w);
                 return true;
@@ -57,6 +53,7 @@ namespace Commangineer.Units
                 return false;
             }
         }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (weapon != null)
@@ -64,11 +61,25 @@ namespace Commangineer.Units
                 Camera.Draw(spriteBatch, this);
             }
         }
+
+        public void DrawBulletFrames(SpriteBatch spriteBatch)
+        {
+            if (weapon != null)
+            {
+                BulletFrame[] frames = weapon.BulletFrames;
+                for (int i = 0; i < frames.Length; i++)
+                {
+                    Camera.Draw(spriteBatch, frames[i]);
+                }
+            }
+        }
+
         public Texture2D GetTexture()
         {
             return weapon.GetTexture();
         }
-        public void Update(float time, Vector2 unitPosition, float rotationAngle, Level level) 
+
+        public void Update(float time, Vector2 unitPosition, float rotationAngle, Level level, Unit firingUnit)
         {
             Vector2 rotatedOffset = new Vector2(
                 (float)(offsetPosition.X * Math.Cos(rotationAngle) - offsetPosition.Y * Math.Sin(rotationAngle)),
@@ -79,18 +90,20 @@ namespace Commangineer.Units
             {
                 if (!weapon.HasTarget)
                 {
-                    weapon.Target = level.GetTarget(position, weapon.Range);
+                    weapon.Target = level.GetAuukiTarget(position, weapon.Range);
                 }
-                weapon.Update(time, position);
-            }           
+                weapon.Update(time, position, level, firingUnit);
+            }
         }
+
         public Vector2 Position
         {
             get
             {
-                return position-Size/2;
+                return position - Size / 2;
             }
         }
+
         public Vector2 Size
         {
             get
@@ -98,6 +111,5 @@ namespace Commangineer.Units
                 return new Vector2(1, 1);
             }
         }
-
     }
 }

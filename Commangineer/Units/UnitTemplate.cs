@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
+using System;
 
 namespace Commangineer.Units
 {
-    internal class UnitTemplate
+    public class UnitTemplate
     {
         public enum turretSize
         {
@@ -18,47 +12,34 @@ namespace Commangineer.Units
             medium,
             big
         }
-        private string name;
+
         private int health;
         private int maxHealth;
         private int armour;
         private double speed;
         private Chassis chassis;
-        private Material chassisMaterial;
         private Engine engine;
-        private Material engineMaterial;
 
-        public UnitTemplate(string name, Chassis chassis, Material chassisMaterial, Engine engine, Material engineMaterial)
+        public UnitTemplate(Chassis chassis, Engine engine)
         {
-            int weight = 0;
-            int horse = 0;
+            int weight = chassis.Weight + engine.Weight;
             double speed;
 
-            this.name = name;
             this.chassis = chassis;
-            this.chassisMaterial = chassisMaterial;
-
-
             this.engine = engine;
-            this.engineMaterial = engineMaterial;
+            int horse = engine.Horsepower;
 
-            weight += chassis.Volume * chassisMaterial.Weight;
-            weight += engine.Size * engineMaterial.Weight;
+            speed = Math.Pow((double)horse / weight, 0.3d);
 
-            horse += engine.Horsepower * engineMaterial.Strength;
-
-            speed = (System.Math.Pow((double)horse/(double)weight, (1.0 / 3.0)));
-
-            if(speed > engine.Speed * engineMaterial.Workability)
+            if (speed > engine.Speed)
             {
-                speed = engine.Speed * engineMaterial.Workability;
+                speed = engine.Speed;
             }
 
             this.speed = speed;
-            this.maxHealth = chassis.Health * chassisMaterial.Strength;
+            this.maxHealth = chassis.Health;
             this.health = this.maxHealth;
-            this.armour = chassis.Armour * (chassisMaterial.Workability/ 10);
-
+            this.armour = chassis.Armour;
         }
 
         public MaterialBalance MaterialCost
@@ -66,10 +47,12 @@ namespace Commangineer.Units
             get
             {
                 MaterialBalance materialBalance = new MaterialBalance();
-                materialBalance[MaterialType.Scrap] = 4;
+                materialBalance += engine.Cost;
+                materialBalance += chassis.Cost;
                 return materialBalance;
             }
         }
+
         public Vector2 Size
         {
             get
@@ -77,12 +60,18 @@ namespace Commangineer.Units
                 return chassis.Size;
             }
         }
-        public string Name {  get { return name; } }
-        public int Health { get { return health; } }
-        public int MaxHealth { get { return maxHealth; } }
-        public int Armour {  get { return armour; } }
-        public double Speed { get { return speed; } }
-        public Slot[] Weapons { get { return chassis.Weapons; } }
+
+        public int Health
+        { get { return health; } }
+        public int MaxHealth
+        { get { return maxHealth; } }
+        public int Armour
+        { get { return armour; } }
+        public double Speed
+        { get { return speed; } }
+        public Slot[] Weapons
+        { get { return chassis.Weapons; } }
+
         public Chassis Chassis
         {
             get
@@ -90,6 +79,7 @@ namespace Commangineer.Units
                 return chassis.Clone();
             }
         }
+
         public Engine Engine
         {
             get
@@ -101,18 +91,16 @@ namespace Commangineer.Units
         public void Damage(int d)
         {
             d -= armour;
-            if(d <= 0)
+            if (d <= 0)
             {
                 d = 1;
             }
-             health -= d;
+            health -= d;
         }
 
         public Texture2D GetTexture()
         {
             return Assets.GetTexture("wood");
         }
-
-
     }
 }

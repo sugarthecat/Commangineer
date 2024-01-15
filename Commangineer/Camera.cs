@@ -8,7 +8,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace Commangineer
 {
-    internal static class Camera
+    public static class Camera
     {
         private static double x = 0;
         private static double y = 0;
@@ -185,6 +185,21 @@ namespace Commangineer
             {
                 spriteBatch.Draw(texture, visualRectangle, null, Color.White, toDraw.Angle, new Vector2(texture.Width / 2f, texture.Height / 2f), SpriteEffects.None, 0f);
             }
+        }
+
+        public static void Draw(SpriteBatch spriteBatch, BulletFrame bulletFrame)
+        {
+            Vector2 deltaPosition = bulletFrame.destination - bulletFrame.origin;
+            Vector2 midpoint = (bulletFrame.destination + bulletFrame.origin) / 2;
+            float bulletAngle = (float)Math.Atan2(deltaPosition.Y, deltaPosition.X);
+            Texture2D texture = Assets.GetImage("bulletFrame");
+            Rectangle visualRectangle = new Rectangle(
+                (int)(midpoint.X * scaleFactor - x),
+                (int)(midpoint.Y * scaleFactor - y),
+                (int)Math.Abs(deltaPosition.Length() * scaleFactor),
+                (int)(bulletFrame.size * scaleFactor)
+                );
+            spriteBatch.Draw(texture, visualRectangle, null, Color.White, bulletAngle, new Vector2(texture.Width / 2f, texture.Height / 2f), SpriteEffects.None, 0f);
         }
 
         public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw)

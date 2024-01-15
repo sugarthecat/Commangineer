@@ -1,43 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer.Units
 {
-    internal class Chassis 
+    public class Chassis
     {
         private string name;
-        private int speed;
+        private int weight;
         private int armour;
         private int health;
         private int steam;
-        private int size;
+        private float size;
         private Slot[] turretSizes;
+        private MaterialBalance cost;
+        private Texture2D texture;
 
-        public Chassis(string name, int speed, int armour, int health, int size, Slot[] turretSizes)
+        public Chassis(string name, int armour, int weight, int health, float size, Slot[] turretSizes, MaterialBalance cost)
         {
+            texture = Assets.GetTexture(name);
             this.name = name;
-            this.speed = speed;
             this.armour = armour;
             this.health = health;
+            this.weight = weight;
             this.size = size;
             this.turretSizes = turretSizes;
+            this.cost = cost;
         }
-        public string Name { get { return name; } }
-        public int Speed {  get { return speed; } }
-        public int Armour { get { return armour; } }
-        public int Health { get { return health; } }
-        public int Volume { get { return size; } }
-        public Slot[] Weapons { 
-            get { 
 
-                return turretSizes; 
-            } 
+        public string Name
+        { get { return name; } }
+        public int Armour
+        { get { return armour; } }
+        public int Health
+        { get { return health; } }
+        public int Weight
+        { get { return weight; } }
+        public Texture2D Texture
+        { get { return texture; } }
+        public MaterialBalance Cost
+        { get { return cost; } }
+
+        public Slot[] Weapons
+        {
+            get
+            {
+                return turretSizes;
+            }
         }
+
+        public void SetWeapon(int index, Weapon weapon)
+        {
+            turretSizes[index].AddWeapon(weapon);
+        }
+
         public Vector2 Size
         {
             get
@@ -45,6 +60,7 @@ namespace Commangineer.Units
                 return new Vector2(size, size);
             }
         }
+
         public Slot[] GetTurrets()
         {
             return turretSizes;
@@ -52,8 +68,8 @@ namespace Commangineer.Units
 
         public Chassis Clone()
         {
-            Chassis newChassis = new Chassis(name, speed, armour, health, size, new Slot[turretSizes.Length]);
-            for(int i = 0; i < turretSizes.Length; i++)
+            Chassis newChassis = new Chassis(name, armour, weight, health, size, new Slot[turretSizes.Length], new MaterialBalance());
+            for (int i = 0; i < turretSizes.Length; i++)
             {
                 newChassis.turretSizes[i] = new Slot(turretSizes[i]);
             }

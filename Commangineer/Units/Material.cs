@@ -1,13 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer.Units
 {
-    internal class Material
+    public class Material
     {
         private string name;
         private int strength;
@@ -23,11 +18,16 @@ namespace Commangineer.Units
             this.workability = workability;
             this.weight = weight;
         }
-        public Texture2D Texture { get { return texture; } }
-        public int Strength { get { return strength; } }
-        public int Workability { get {  return workability; } }
-        public int Weight { get { return weight; } }
-        public string Name { get { return name; } }
 
+        public Texture2D Texture
+        { get { return texture; } }
+        public int Strength
+        { get { return strength; } }
+        public int Workability
+        { get { return workability; } }
+        public int Weight
+        { get { return weight; } }
+        public string Name
+        { get { return name; } }
     }
 }

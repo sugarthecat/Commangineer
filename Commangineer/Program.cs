@@ -1,8 +1,5 @@
 ﻿using Commangineer;
-using Microsoft.Xna.Framework;
 using System;
-using System.Diagnostics;
-using System.Windows.Input;
 
 try
 {

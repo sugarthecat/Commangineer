@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Commangineer
+﻿namespace Commangineer
 {
-    internal enum MusicType
+    public enum MusicType
     {
         Menu,
         Gameplay
     }
-    internal static class GameMusic
+
+    public static class GameMusic
     {
-        static MusicType currentMusic = MusicType.Menu;
-        static Music menuMusic;
-        static Music[] gameMusic;
-        public static void Setup() {
+        private static MusicType currentMusic = MusicType.Menu;
+        private static Music menuMusic;
+        private static Music gameMusic;
+
+        public static void Setup()
+        {
             menuMusic = Assets.GetMusic("menutheme");
-            gameMusic = new Music[6];
-            for(int i = 0; i<gameMusic.Length; i++)
-            {
-                gameMusic[i] = Assets.GetMusic("song"+ (i + 1));
-            }
+            gameMusic = Assets.GetMusic("gametheme");
             Play();
         }
+
         private static void Play()
         {
-            if(Settings.MusicEnabled)
+            if (Settings.MusicEnabled)
             {
                 if (currentMusic == MusicType.Menu)
                 {
@@ -35,10 +29,11 @@ namespace Commangineer
                 }
                 if (currentMusic == MusicType.Gameplay)
                 {
-                    gameMusic[0].Play(true);
+                    gameMusic.Play(true);
                 }
             }
         }
+
         private static void Stop()
         {
             if (currentMusic == MusicType.Menu)
@@ -47,14 +42,15 @@ namespace Commangineer
             }
             if (currentMusic == MusicType.Gameplay)
             {
-                gameMusic[0].Stop();
+                gameMusic.Stop();
             }
         }
+
         public static MusicType MusicType
         {
             set
             {
-                if(currentMusic != value)
+                if (currentMusic != value)
                 {
                     Stop();
                     currentMusic = value;
@@ -62,6 +58,7 @@ namespace Commangineer
                 }
             }
         }
+
         public static void Update()
         {
             Stop();

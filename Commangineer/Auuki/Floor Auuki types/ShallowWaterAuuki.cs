@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Commangineer.Floor_Auuki_types
 {
-    internal class ShallowWaterAuuki : AuukiFloor
+    public class ShallowWaterAuuki : AuukiFloor
 
     {
         public ShallowWaterAuuki(Point position)
@@ -13,7 +13,6 @@ namespace Commangineer.Floor_Auuki_types
                     new FloorAuukiStage(100,Assets.GetTexture("lilypads"),200f)
                 }, position)
         {
-
         }
     }
 }

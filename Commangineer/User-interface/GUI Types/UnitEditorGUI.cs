@@ -1,39 +1,50 @@
 ﻿using Commangineer.Units;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commangineer.GUI_Types
 {
-    internal class UnitEditorGUI : ScalingGUI
+    public class UnitEditorGUI : ScalingGUI
     {
+        private Weapon[] weapons;
+        private Chassis[] unitBases;
+        private Engine[] engines;
 
         public UnitEditorGUI() : base(600, 400)
         {
             LoadElements("UnitEditorGUI");
+            LoadIngredients();
         }
+
+        private void LoadIngredients()
+        {
+            //lots of this remains unimplemented, but can be expanded in a future update.
+            //time constraints limited unit editor implementation, unit spawn select created instead
+
+            weapons = new Weapon[] {
+                new Weapon("boltShooter", 5f, 15, 8, new MaterialBalance(5)) };
+            unitBases = new Chassis[] {
+                new Chassis("model1", 0, 100, 50, 0.9f,
+                    new Slot[]{
+                                     new Slot( new Vector2(0.45f, 0.45f)) },
+                    new MaterialBalance(20))
+            };
+            engines = new Engine[] {
+                new Engine("model1e",
+                    new MaterialBalance(20),
+                    4, 50, 20)
+            };
+        }
+
         public override void Update()
         {
             base.Update();
-
         }
-        public UnitTemplate currentUnit
+
+        public UnitTemplate GetUnit(int unitIndex)
         {
-            get
-            {
-                Slot weaponSlot = new Slot(Unit.turretSize.medium, new Vector2(-0.5f, 0));
-                weaponSlot.AddWeapon(new Weapon("boltShooter", Unit.turretSize.medium, 0.5f, 0.5f, 2, 5, 15, 5));
-                return new UnitTemplate("Base",
-                    new Chassis("Chassis 1",200,2,2,2,new Slot[1] {weaponSlot}),
-                    MaterialManager.GetMaterial(MaterialType.Scrap),
-                    new Engine("Engine",5,5,100,100,5),
-                    MaterialManager.GetMaterial(MaterialType.Scrap)
-                    );
-            }
+            Chassis finalChassis = unitBases[0].Clone();
+            finalChassis.SetWeapon(0, weapons[0]);
+            return new UnitTemplate(finalChassis, engines[0]);
         }
     }
 }

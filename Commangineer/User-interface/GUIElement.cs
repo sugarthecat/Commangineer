@@ -2,12 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Commangineer.User_Interface
 {
@@ -20,6 +14,7 @@ namespace Commangineer.User_Interface
         protected Action activationAction;
         private Color color;
         private bool visible = true;
+
         public GUIElement(Texture2D baseTexture, Texture2D hoverTexture, Rectangle elementPosition, Action actionOnActivate)
         {
             position = elementPosition;
@@ -46,6 +41,7 @@ namespace Commangineer.User_Interface
         public GUIElement(Texture2D baseTexture, Rectangle elementPosition, Action actionOnActivate) : this(baseTexture, baseTexture, elementPosition, actionOnActivate)
         {
         }
+
         public bool Visible
         {
             set { visible = value; }

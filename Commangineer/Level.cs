@@ -24,11 +24,12 @@ namespace Commangineer
         private GameAction[] gameActions;
         private List<DialogueGUI> dialogueGUIs;
         private AuukiStructure[] auukiStructures;
-        private List<AuukiCreature> auukiCreatures =new List<AuukiCreature>();
+        private List<AuukiCreature> auukiCreatures = new List<AuukiCreature>();
         private List<Unit> playerUnits = new List<Unit>();
-        private Queue<Unit> playerUnitQueue =  new Queue<Unit>();
+        private Queue<Unit> playerUnitQueue = new Queue<Unit>();
         private List<Unit> selectedUnits = new List<Unit>();
         private MaterialBalance resources = new MaterialBalance();
+        private AuukiAiMode SpawningAuukiAiMode = AuukiAiMode.Wander;
         private float gameTime = 0f;
         private LevelGUI currentGUI;
         private UnitEditorGUI unitEditor;
@@ -41,7 +42,7 @@ namespace Commangineer
         /// </summary>
         /// <param name="level">The specific level to initialize (Level 1, 2, etc)</param>
         /// /// <param name="levelGUI">The gui corresponding to the level</param>
-        internal Level(int level, LevelGUI levelGUI)
+        public Level(int level, LevelGUI levelGUI)
         {
             currentGUI = levelGUI;
             unitEditor = new UnitEditorGUI();
@@ -205,7 +206,7 @@ namespace Commangineer
                     }
                 }
                 //Load actions
-                JsonArray actions = levelJSON["actions"].AsArray();
+                JsonArray actions = levelJSON["events"].AsArray();
                 gameActions = new GameAction[actions.Count];
                 for (int i = 0; i < actions.Count; i++)
                 {
@@ -220,14 +221,48 @@ namespace Commangineer
                 Commangineer.ExitGame();
             }
         }
-
-        public AuukiTarget GetTarget(Vector2 position, float range)
+        public PlayerTarget GetUnitTarget(Vector2 position, float range)
         {
-            for(int i = 0; i < auukiCreatures.Count; i++)
+            PlayerTarget closestTarget = playerBase;
+            
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                if ((position - playerUnits[i].CenterPosition).Length() < (position - closestTarget.CenterPosition).Length())
+                {
+                    closestTarget = playerUnits[i];
+                }
+            }
+            return closestTarget;
+        }
+        public AuukiTarget GetAuukiTarget(Vector2 position, float range)
+        {
+            for (int i = 0; i < auukiCreatures.Count; i++)
             {
                 if ((position - auukiCreatures[i].CenterPosition).Length() < range)
                 {
                     return auukiCreatures[i];
+                }
+            }
+            Point pointPos = position.ToPoint();
+            Rectangle rectRange = new Rectangle(pointPos.X - (int)range, pointPos.Y - (int)range, (int)(range * 2), (int)(range * 2));
+            for (int i = Math.Max(rectRange.X, 0); i < Math.Min(rectRange.Right, GetTileWidth()); i++)
+            {
+                for (int j = Math.Max(rectRange.Y, 0); j < Math.Min(rectRange.Bottom, GetTileHeight()); j++)
+                {
+                    if (tiles[i, j].HasAuukiStructure)
+                    {
+                        return tiles[i, j].AuukiStructure;
+                    }
+                }
+            }
+            for (int i = Math.Max(rectRange.X, 0); i < Math.Min(rectRange.Right, GetTileWidth()); i++)
+            {
+                for (int j = Math.Max(rectRange.Y, 0); j < Math.Min(rectRange.Bottom, GetTileHeight()); j++)
+                {
+                    if (tiles[i, j].HasAuukiTile && (position - tiles[i, j].Position).Length() < range)
+                    {
+                        return tiles[i, j].Auuki;
+                    }
                 }
             }
             return null;
@@ -255,20 +290,24 @@ namespace Commangineer
         /// Gets the tile map fo the level
         /// </summary>
         /// <returns>an array of the level's tiles</returns>
-        internal Tile[,] GetTileMap()
+        public Tile[,] GetTileMap()
         {
             return tiles;
         }
+
         private void SelectNewUnits(RectangleF unprojectedSelectionRange)
         {
             RectangleF projectedSelection = Camera.Deproject(unprojectedSelectionRange);
             selectedUnits = new List<Unit>();
-            foreach (Unit unit in playerUnits) {
-                if (unit.Intersects(projectedSelection)){
+            foreach (Unit unit in playerUnits)
+            {
+                if (unit.Intersects(projectedSelection))
+                {
                     selectedUnits.Add(unit);
                 }
             }
         }
+
         /// <summary>
         /// Render the level
         /// </summary>
@@ -348,6 +387,10 @@ namespace Commangineer
             {
                 playerUnits[i].Draw(spriteBatch);
             }
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                playerUnits[i].DrawBulletFrames(spriteBatch);
+            }
             for (int i = 0; i < selectedUnits.Count; i++)
             {
                 selectedUnits[i].DrawSelection(spriteBatch);
@@ -374,8 +417,13 @@ namespace Commangineer
                 {
                     if (Math.Floor(gameTime + deltaTime) != Math.Floor(gameTime))
                     {
-                        //if new second,give 10 scrap
+                        //if new second,give 10 scrap, 2 iron, 5 tungsten. Add to editor.
                         resources[MaterialType.Scrap] += 10;
+                        resources[MaterialType.Iron] += 2;
+                        if (Math.Floor(gameTime) % 10 == 0)
+                        {
+                            resources[MaterialType.Tungsten] += 5;
+                        }
                     }
                     gameTime += deltaTime;
                     UpdateActions();
@@ -389,7 +437,7 @@ namespace Commangineer
                 {
                     Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
                 }
-                if (selectingZone && (keyboardState.IsKeyUp(Keys.LeftShift) || mouseState.LeftButton == ButtonState.Released || dialogueGUIs.Count > 0) )
+                if (selectingZone && (keyboardState.IsKeyUp(Keys.LeftShift) || mouseState.LeftButton == ButtonState.Released || dialogueGUIs.Count > 0))
                 {
                     selectingZone = false;
                     SelectNewUnits(SelectionRectangleF);
@@ -402,9 +450,9 @@ namespace Commangineer
         {
             for (int i = 0; i < playerUnits.Count; i++)
             {
-                playerUnits[i].Update(deltaTime,this);
+                playerUnits[i].Update(deltaTime, this);
             }
-            if(playerUnitQueue.Count > 0 && !Collides(playerUnitQueue.Peek()))
+            if (playerUnitQueue.Count > 0 && !Collides(playerUnitQueue.Peek()))
             {
                 playerUnits.Add(playerUnitQueue.Dequeue());
             }
@@ -444,6 +492,7 @@ namespace Commangineer
                 return new RectangleF(start.X, start.Y, size.X, size.Y);
             }
         }
+
         /// <summary>
         /// Handle all click events corresponding to the level
         /// </summary>
@@ -483,7 +532,7 @@ namespace Commangineer
             }
             else
             {
-                for(int i = 0; i<selectedUnits.Count; i++)
+                for (int i = 0; i < selectedUnits.Count; i++)
                 {
                     selectedUnits[i].Goal = adjustedClickPosition;
                 }
@@ -514,7 +563,6 @@ namespace Commangineer
             }
         }
 
-        
         /// <summary>
         /// Updates all game actions
         /// </summary>
@@ -541,7 +589,7 @@ namespace Commangineer
                     // Loads in events like dialogue popups
                     foreach (Dictionary<string, string> gameEvent in gameActions[i].Events)
                     {
-                        switch (gameEvent["eventType"])
+                        switch (gameEvent["actionType"])
                         {
                             case "dialogue":
                                 string char2 = null;
@@ -550,6 +598,17 @@ namespace Commangineer
                                     char2 = gameEvent["character2"];
                                 }
                                 QueueDialogue(gameEvent["speech"], gameEvent["character"], char2);
+                                break;
+                            case "ai":
+                                switch ((string)gameEvent["behavior"])
+                                {
+                                    case "wander":
+                                        SpawningAuukiAiMode = AuukiAiMode.Wander;
+                                        break;
+                                    case "attack":
+                                        SpawningAuukiAiMode = AuukiAiMode.Attack;
+                                        break;
+                                }
                                 break;
                         }
                     }
@@ -584,7 +643,9 @@ namespace Commangineer
                 auukiStructures[i].Update(deltaTime);
                 if (auukiStructures[i] is Spawner && auukiStructures[i].Alive && ((Spawner)auukiStructures[i]).CanSpawnAnimal)
                 {
-                    auukiCreatures.Add(((Spawner)auukiStructures[i]).Animal);
+                    AuukiCreature newAnimal = ((Spawner)auukiStructures[i]).Animal;
+                    newAnimal.Behavior = SpawningAuukiAiMode;
+                    auukiCreatures.Add(newAnimal);
                 }
             }
         }
@@ -597,7 +658,16 @@ namespace Commangineer
         {
             for (int i = 0; i < auukiCreatures.Count; i++)
             {
-                auukiCreatures[i].Update(deltaTime, this);
+                AuukiCreature creature = auukiCreatures[i];
+                if (creature.Alive)
+                {
+                    creature.Update(deltaTime, this);
+                }
+                else
+                {
+                    auukiCreatures.RemoveAt(i);
+                    i--;
+                }
             }
         }
 
@@ -637,9 +707,8 @@ namespace Commangineer
             }
         }
 
-        internal void DestroyTilesUnderUnit(Unit playerUnit)
+        public void DestroyTilesUnderUnit(Unit playerUnit)
         {
-
             Point topLeft = new Point(
                  (int)Math.Floor(playerUnit.Position.X),
                  (int)Math.Floor(playerUnit.Position.Y)
@@ -660,14 +729,15 @@ namespace Commangineer
                 }
             }
         }
-        public void SpawnUnit()
+
+        public void SpawnUnit(int unitIndex)
         {
-            UnitTemplate newUnit = unitEditor.currentUnit;
+            UnitTemplate newUnit = unitEditor.GetUnit(unitIndex);
             if (resources.GreaterThan(newUnit.MaterialCost))
             {
                 // newUnit is actually a unit template, a real position need to be given
                 Unit spawnableUnit = new Unit(newUnit, playerBase.Position);
-                if(Collides(spawnableUnit))
+                if (Collides(spawnableUnit))
                 {
                     playerUnitQueue.Enqueue(spawnableUnit);
                 }
@@ -675,7 +745,7 @@ namespace Commangineer
                 {
                     playerUnits.Add(spawnableUnit);
                 }
-                resources.remove(newUnit.MaterialCost);
+                resources.Remove(newUnit.MaterialCost);
             }
         }
 
@@ -684,7 +754,7 @@ namespace Commangineer
         /// </summary>
         /// <param name="creature">The creature to check</param>
         /// <returns>If the creature is colliding</returns>
-        internal bool Collides(AuukiCreature creature)
+        public bool Collides(AuukiCreature creature)
         {
             bool colliding = false;
             Point topLeft = new Point(
@@ -721,7 +791,8 @@ namespace Commangineer
         Collided:
             return colliding;
         }
-        internal bool Collides(Unit playerUnit)
+
+        public bool Collides(Unit playerUnit)
         {
             bool colliding = false;
             Point topLeft = new Point(
@@ -747,7 +818,7 @@ namespace Commangineer
             {
                 for (int j = topLeft.Y; j < bottomRight.Y; j++)
                 {
-                    if (tiles[i, j].IsSolid || tiles[i,j].HasAuukiStructure)
+                    if (tiles[i, j].IsSolid || tiles[i, j].HasAuukiStructure)
                     {
                         colliding = true;
                         goto Collided;
@@ -755,9 +826,9 @@ namespace Commangineer
                     }
                 }
             }
-            for(int i = 0; i<playerUnits.Count; i++)
+            for (int i = 0; i < playerUnits.Count; i++)
             {
-                if (playerUnits[i] != playerUnit && playerUnit.Intersects(playerUnits[i].Bounds))
+                if (playerUnits[i] != playerUnit && playerUnit.Collides(playerUnits[i]))
                 {
                     colliding = true;
                     goto Collided;

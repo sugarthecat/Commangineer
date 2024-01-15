@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Units;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer.Auuki
 {
-    internal class AuukiStructure : TexturedObject, AuukiTarget
+    public class AuukiStructure : TexturedObject, AuukiTarget
     {
         private Point position;
         private Point size;
@@ -13,6 +14,7 @@ namespace Commangineer.Auuki
         private bool alive = false;
         private int tileOn = 0;
         private int health = 0;
+
         protected AuukiStructure(Point position, Point size, Texture2D texture, int minFloorTier, int health)
         {
             this.minFloorTier = minFloorTier;
@@ -43,14 +45,20 @@ namespace Commangineer.Auuki
                 }
             }
         }
+
         public void Damage(int damage)
         {
             health -= damage;
-            if(health <= 0)
+            if (health <= 0)
             {
                 Die();
             }
         }
+        public void Damage(int damage, Unit attackingUnit)
+        {
+            Damage(damage);
+        }
+
         private void Die()
         {
             alive = false;
@@ -59,6 +67,7 @@ namespace Commangineer.Auuki
                 tilesUnder[i].RemoveAuuki();
             }
         }
+
         public bool Alive
         {
             get { return alive; }
@@ -93,14 +102,15 @@ namespace Commangineer.Auuki
                 return new Vector2(position.X, position.Y);
             }
         }
+
         public Vector2 CenterPosition
         {
-
             get
             {
                 return Position + Size / 2;
             }
         }
+
         public Texture2D GetTexture()
         {
             return texture;

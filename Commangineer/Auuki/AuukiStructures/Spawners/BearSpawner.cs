@@ -1,19 +1,13 @@
-﻿using Commangineer.Auuki.AuukiStructures;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
 namespace Commangineer.Auuki.AuukiStructures.Spawners
 {
-    internal class BearSpawner : Spawner
+    public class BearSpawner : Spawner
     {
         public BearSpawner(Point spawnPosition) : base(spawnPosition, new Point(4, 4), 2, 300, 5)
         {
-
         }
+
         protected override AuukiCreature CreateNewAnimal()
         {
             ClearSpawnProgress();

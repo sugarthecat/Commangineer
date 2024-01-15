@@ -2,7 +2,7 @@
 
 namespace Commangineer.Auuki
 {
-    internal class FloorAuukiStage
+    public class FloorAuukiStage
     {
         private int maxHealth;
         private Texture2D texture;
@@ -14,12 +14,16 @@ namespace Commangineer.Auuki
             this.texture = texture;
             this.stageLength = stageLength;
         }
-        public FloorAuukiStage(int maxHealth, Texture2D texture) : this(maxHealth, texture, 0) { }
+
+        public FloorAuukiStage(int maxHealth, Texture2D texture) : this(maxHealth, texture, 0)
+        {
+        }
 
         public int GetHealth()
         {
             return maxHealth;
         }
+
         public Texture2D GetTexture()
         {
             return texture;
