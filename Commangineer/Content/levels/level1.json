@@ -1159,5 +1159,11 @@
         }
       ]
     }
-  ]
+  ],
+
+  "resources": {
+    "scrap": 3,
+    "iron": 4,
+    "tungsten": 5
+  }
 }

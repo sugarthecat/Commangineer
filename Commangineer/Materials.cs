@@ -1,6 +1,7 @@
 ﻿using Commangineer.Units;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
@@ -25,6 +26,17 @@ namespace Commangineer
         public MaterialBalance()
         {
             SetupDictionary();
+        }
+
+        public MaterialBalance(JsonNode jsonNode)
+        {
+            SetupDictionary();
+
+            MaterialType[] materialTypes = Enum.GetValues<MaterialType>();
+            for (int i = 0; i < materialTypes.Length; i++)
+            {
+                materialCounts[materialTypes[i]] = (int)jsonNode[MaterialManager.GetMaterial(materialTypes[i]).Name];
+            }
         }
 
         public MaterialBalance(int scrap)

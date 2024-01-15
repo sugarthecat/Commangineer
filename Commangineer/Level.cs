@@ -40,6 +40,7 @@ namespace Commangineer
         private int levelNum;
         private bool winDialogueFinished;
 
+        private MaterialBalance income = new MaterialBalance();
         private bool selectingZone = false;
         private Vector2 zoneSelectionStart;
 
@@ -68,9 +69,11 @@ namespace Commangineer
                 int height = (int)levelJSON["height"];
                 string tileMapString = (string)levelJSON["tileMap"];
                 string auukiMapString = (string)levelJSON["floorAuukiMap"];
-                //
+
+                //load player base
                 JsonObject playerBaseJson = (JsonObject)levelJSON["playerBase"];
                 playerBase = new PlayerBase(new Point((int)playerBaseJson["x"], (int)playerBaseJson["y"]));
+
                 //load tiles
                 tiles = new Tile[width, height];
                 for (int i = 0; i < width; i++)
@@ -155,6 +158,7 @@ namespace Commangineer
                         }
                     }
                 }
+
                 //load structures
                 auukiStructures = new AuukiStructure[0];
                 JsonArray structures = levelJSON["structures"].AsArray();
@@ -213,6 +217,9 @@ namespace Commangineer
                         }
                     }
                 }
+                //load income
+                JsonNode resources = levelJSON["resources"];
+                income = new MaterialBalance(resources);
                 //Load actions
                 JsonArray actions = levelJSON["events"].AsArray();
                 gameActions = new GameAction[actions.Count];
@@ -443,9 +450,7 @@ namespace Commangineer
                     if (Math.Floor(gameTime + deltaTime) != Math.Floor(gameTime))
                     {
                         //if new second,give 10 scrap, 2 iron, 5 tungsten. Add to editor.
-                        resources[MaterialType.Scrap] += 100;
-                        resources[MaterialType.Iron] += 200;
-                        resources[MaterialType.Tungsten] += 500;
+                        resources += income;
                     }
                     gameTime += deltaTime;
                     UpdateActions();

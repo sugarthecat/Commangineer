@@ -74,7 +74,7 @@ namespace Commangineer
         /// </summary>
         private static async void LoadRuntimeSettings()
         {
-            using HttpResponseMessage response = await sharedClient.GetAsync("getSettings.php?userid="+userID);
+            using HttpResponseMessage response = await sharedClient.GetAsync("getSettings.php?userid=" + userID);
 
 
             string stringResponse = await response.Content.ReadAsStringAsync();
@@ -89,11 +89,11 @@ namespace Commangineer
             if (objectResponse.ContainsKey("name"))
             {
                 username = (string)objectResponse["name"];
-                while(username != username.Replace("1 ", " "))
+                while (username != username.Replace("1 ", " "))
                 {
                     username = username.Replace("  ", " ");
                 }
-                Log.LogText("Username: "+ username);
+                Log.LogText("Username: " + username);
             }
         }
 
@@ -113,7 +113,8 @@ namespace Commangineer
         {
             string[] parts = username.Split(' ');
             string rank = "Recruit";
-            if(parts.Length > 0 ) { 
+            if (parts.Length > 0)
+            {
                 rank = parts[0];
             }
             string firstName = "Cobalt";
@@ -122,11 +123,11 @@ namespace Commangineer
                 firstName = parts[1];
             }
             string lastName = "Hammer";
-            if(parts.Length > 2 )
+            if (parts.Length > 2)
             {
                 lastName = parts[2];
             }
-            string getString = "setSettings.php?userid=" + userID + "&rank=" + rank + "&fname="+firstName+"&lname=" + lastName + "&audio=" + (musicEnabled ? 0 : 1);
+            string getString = "setSettings.php?userid=" + userID + "&rank=" + rank + "&fname=" + firstName + "&lname=" + lastName + "&audio=" + (musicEnabled ? 0 : 1);
             Log.LogText("Requesting " + getString);
             using HttpResponseMessage response = await sharedClient.GetAsync(getString);
 
@@ -149,6 +150,11 @@ namespace Commangineer
                 GameMusic.Update();
                 SaveRuntimeSettings();
             }
+        }
+        public static int LevelOn
+        {
+            get { return levelOn; }
+            set { levelOn = value; }
         }
     }
 }
