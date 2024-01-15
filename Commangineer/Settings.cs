@@ -13,7 +13,7 @@ namespace Commangineer
     /// </summary>
     public static class Settings
     {
-        private static bool musicEnabled = false;
+        private static bool musicEnabled = true;
         private static int levelOn = 1;
         private static string username = "Recruit";
         private static string settingsFile = Assembly.GetExecutingAssembly().Location + "/../Content/settings.json";
@@ -154,7 +154,10 @@ namespace Commangineer
         public static int LevelOn
         {
             get { return levelOn; }
-            set { levelOn = value; }
+            set { 
+                levelOn = value;
+                SaveRuntimeSettings() ;
+            }
         }
     }
 }

@@ -26,13 +26,10 @@ namespace Commangineer.GUI_Types
                     if (level <= maxLevel+1)
                     {
                         nb = new Button("defaultButton", dimensions, GetAction("BeginLevel", level.ToString()));
-                        // draw a number over the button
-
-                        //
                     }
                     else
                     {
-                        nb = new Button("x", dimensions, GetAction("BeginLevel", "level"));
+                        nb = new Button("x", dimensions, GetAction("BeginLevel", level.ToString())) ;
                     }
                     AddGuiElement(nb);
                 }
