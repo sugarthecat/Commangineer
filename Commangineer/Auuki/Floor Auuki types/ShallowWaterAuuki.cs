@@ -3,9 +3,13 @@ using Microsoft.Xna.Framework;
 
 namespace Commangineer.Floor_Auuki_types
 {
+    /// <summary>
+    /// A shallow water Auuki
+    /// </summary>
     internal class ShallowWaterAuuki : AuukiFloor
 
     {
+        // Creates a new Auuki Floor of its type
         public ShallowWaterAuuki(Point position)
             : base(
                 new FloorAuukiStage[] {

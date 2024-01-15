@@ -6,6 +6,9 @@ using System;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// A class representing a tile, a square space in a level
+    /// </summary>
     internal class Tile : TexturedObject
     { 
         private Texture2D texture;
@@ -25,6 +28,9 @@ namespace Commangineer
             isPath = true;
         }
 
+        /// <summary>
+        /// Checks if the tile has Auuki on it
+        /// </summary>
         public bool HasAuukiTile
         {
             get
@@ -32,6 +38,10 @@ namespace Commangineer
                 return AuukiTile != null;
             }
         }
+
+        /// <summary>
+        /// Checks if the tile has a Auuki Structure on it
+        /// </summary>
         public bool HasAuukiStructure
         {
             get
@@ -39,6 +49,10 @@ namespace Commangineer
                 return (occupyingAuukiStructure != null && occupyingAuukiStructure.Alive);
             }
         }
+
+        /// <summary>
+        /// Sets the current Auuki structure
+        /// </summary>
         public AuukiStructure AuukiStructure
         {
             set
@@ -46,10 +60,10 @@ namespace Commangineer
                 occupyingAuukiStructure = value;
             }
         }
+
         /// <summary>
-        ///
+        /// The Auuki object of the tile
         /// </summary>
-        /// <returns></returns>
         public AuukiFloor Auuki
         {
             get
@@ -120,6 +134,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// If the tile is a path
+        /// </summary>
         public bool IsPath
         {
             get
@@ -140,6 +157,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// If the tile is solid
+        /// </summary>
         public bool IsSolid
         {
             get

@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer.Auuki
 {
+    /// <summary>
+    /// A Auuki floor object
+    /// </summary>
     internal class AuukiFloor : TexturedObject
     {
         //default values
@@ -16,11 +19,11 @@ namespace Commangineer.Auuki
         private Point size;
 
         /// <summary>
-        ///
+        /// Creates a new Auuki Floor
         /// </summary>
-        /// <param name="texture"></param>
-        /// <param name="position"></param>
-        /// <param name="maxHealth"></param>
+        /// <param name="texture">The texture of the Auuki floor</param>
+        /// <param name="position">The position of the Auuki floor</param>
+        /// <param name="maxHealth">The maximum amount of health of the Auuki floor</param>
         public AuukiFloor(FloorAuukiStage[] stages, Point position)
         {
             size = new Point(1, 1);
@@ -29,6 +32,10 @@ namespace Commangineer.Auuki
             this.stages = stages;
             SetStage();
         }
+
+        /// <summary>
+        /// Gets the current tier of the Auuki floor
+        /// </summary>
         public int Tier
         {
             get
@@ -36,6 +43,10 @@ namespace Commangineer.Auuki
                 return currentStageIndex;
             }
         }
+
+        /// <summary>
+        /// Sets the stage of a Auuki Floor
+        /// </summary>
         private void SetStage()
         {
 
@@ -69,14 +80,17 @@ namespace Commangineer.Auuki
         }
 
         /// <summary>
-        ///
+        /// Draws a Auuki floor to the screen
         /// </summary>
-        /// <param name="spriteBatch"></param>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             Camera.Draw(spriteBatch, this);
         }
 
+        /// <summary>
+        /// Gets the Auuki floor's size
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -84,6 +98,9 @@ namespace Commangineer.Auuki
                 return new Vector2(size.X, size.Y);
             }
         }
+        /// <summary>
+        /// Gets the Auuki floor's position
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -91,13 +108,17 @@ namespace Commangineer.Auuki
                 return new Vector2(position.X, position.Y);
             }
         }
+        /// <summary>
+        /// Gets the Auuki floor's texture
+        /// </summary>
+        /// <returns>The Auuki floor's texture</returns>
         public Texture2D GetTexture()
         { return texture; }
 
         /// <summary>
         /// Updates the tile
         /// </summary>
-        /// <param name="deltaTime"></param>
+        /// <param name="deltaTime">Time since the last update</param>
         public void Update(float deltaTime)
         {
             timeGrown += deltaTime;

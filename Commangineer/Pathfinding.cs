@@ -12,10 +12,13 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// A class used to represent a check
+    /// </summary>
     class checks
     {
-        float d;
-        Point p;
+        float d; // A float value used in determining the order of checks
+        Point p; // The point of the check
 
         public checks(float d, Point p)
         {
@@ -23,6 +26,11 @@ namespace Commangineer
             this.p = p;
         }
 
+        /// <summary>
+        /// Reworked equals function to work better with the custom checks object
+        /// </summary>
+        /// <param name="obj">The object to check if is equal to</param>
+        /// <returns>If the other object is the same as the current object</returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -31,16 +39,27 @@ namespace Commangineer
             return ((checks)obj).p == this.p;
         }
 
+        /// <summary>
+        /// Gets the float weight of the check
+        /// </summary>
+        /// <returns>The float weight</returns>
         public float getFloat()
         {
             return d;
         }
 
+        /// <summary>
+        /// Gets the point of the check
+        /// </summary>
+        /// <returns>The check's point</returns>
         public Point getPoint()
         {
             return (p);
         }
     }
+    /// <summary>
+    /// A static class used to find a path between points
+    /// </summary>
     internal static class Pathfinding
     {
         static Tile[,] map;
@@ -56,7 +75,12 @@ namespace Commangineer
 
 
 
-
+        /// <summary>
+        /// Finds the best path between two points
+        /// </summary>
+        /// <param name="origin">The starting point</param>
+        /// <param name="destination">The ending point</param>
+        /// <returns>A list of points to follow</returns>
         public static List<Point> find(Point origin, Point destination)
         {
             resetVars();
@@ -106,6 +130,9 @@ namespace Commangineer
 
         }
 
+        /// <summary>
+        /// Resets variables used in order to prevent any errors
+        /// </summary>
         static void resetVars()
         {
             int width = Commangineer.Level.GetTileWidth();
@@ -132,6 +159,10 @@ namespace Commangineer
             check.Clear();
         }
 
+        /// <summary>
+        /// Handles math regarding to searching for a best path
+        /// </summary>
+        /// <param name="p">The point to search a path for</param>
         static void addSearch(Point p)
         {
            if(p.X != 0)

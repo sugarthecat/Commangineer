@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Commangineer.User_Interface
 {
+    /// <summary>
+    /// A element within a GUI
+    /// </summary>
     public class GUIElement
     {
         protected Rectangle position;
@@ -20,6 +23,14 @@ namespace Commangineer.User_Interface
         protected Action activationAction;
         private Color color;
         private bool visible = true;
+
+        /// <summary>
+        /// Creates a new GUI element
+        /// </summary>
+        /// <param name="baseTexture">The base texture to be used</param>
+        /// <param name="hoverTexture">The hover texture if applicable to be used</param>
+        /// <param name="elementPosition">The position of the element</param>
+        /// <param name="actionOnActivate">A action to trigger if applicable</param>
         public GUIElement(Texture2D baseTexture, Texture2D hoverTexture, Rectangle elementPosition, Action actionOnActivate)
         {
             position = elementPosition;
@@ -29,6 +40,8 @@ namespace Commangineer.User_Interface
             activationAction = actionOnActivate;
             color = Color.White;
         }
+
+        // Different constructors for different scenarios
 
         public GUIElement(Texture2D baseTexture, Rectangle elementPosition) : this(baseTexture, baseTexture, elementPosition)
         {
@@ -46,11 +59,19 @@ namespace Commangineer.User_Interface
         public GUIElement(Texture2D baseTexture, Rectangle elementPosition, Action actionOnActivate) : this(baseTexture, baseTexture, elementPosition, actionOnActivate)
         {
         }
+
+        /// <summary>
+        /// Sets the visibility of the element
+        /// </summary>
         public bool Visible
         {
             set { visible = value; }
         }
 
+        /// <summary>
+        /// Draws the element to the screen
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (visible)
@@ -121,6 +142,11 @@ namespace Commangineer.User_Interface
             position.Width = originalPosition.Width;
         }
 
+        /// <summary>
+        /// Checks if a element was clicked
+        /// </summary>
+        /// <param name="mousePoint">The position the mouse clicked at</param>
+        /// <returns>If the element was clicked</returns>
         public bool HandleClick(Point mousePoint)
         {
             if (position.Contains(mousePoint))

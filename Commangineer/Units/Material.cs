@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// A class representing a material
+    /// </summary>
     internal class Material
     {
         private string name;
@@ -15,6 +18,7 @@ namespace Commangineer.Units
         private int weight;
         private Texture2D texture;
 
+        // Constructs a new material
         public Material(string name, int strength, int workability, int weight)
         {
             texture = Assets.GetTexture(name);
@@ -23,6 +27,7 @@ namespace Commangineer.Units
             this.workability = workability;
             this.weight = weight;
         }
+        // Getters for the properties
         public Texture2D Texture { get { return texture; } }
         public int Strength { get { return strength; } }
         public int Workability { get {  return workability; } }

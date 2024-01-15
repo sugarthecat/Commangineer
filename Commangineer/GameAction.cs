@@ -6,20 +6,33 @@ using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// Represents different conditions a action can use
+    /// </summary>
     internal enum GameValue
     {
         GameTime,
         PlayerUnitCount,
         AuukiUnitCount
     }
+    /// <summary>
+    /// Represents different comparisons a action can use
+    /// </summary>
     internal enum ValueRelationship
     {
         LessThan,
         GreaterThan    
     }
+    /// <summary>
+    /// Represents types of events a action can use
+    /// </summary>
+    internal enum EventType
+    {
+        dialogue
+    }
 
     /// <summary>
-    /// A class representing a action event when in levels, which can be triggered by a variety of trackers and is used to trigger events such as dialogue popups
+    /// A action which triggers a event when a condition is met
     /// </summary>
     internal class GameAction
     {
@@ -31,9 +44,9 @@ namespace Commangineer
         private int threshold;
 
         /// <summary>
-        /// Inlitializes the action
+        /// Loads in events from a JSON file
         /// </summary>
-        /// <param name="actionJSON">A JSON containing details of the action</param>
+        /// <param name="actionJSON">The JSON file containing requirements and events</param>
         public GameAction(JsonObject actionJSON)
         {
             gameValue = GameValue.GameTime;
@@ -72,6 +85,10 @@ namespace Commangineer
                 eventList.Add(foundEvent);
             }
         }
+
+        /// <summary>
+        /// Returns the current condition
+        /// </summary>
         public GameValue GameValue
         {
             get
@@ -79,6 +96,10 @@ namespace Commangineer
                 return gameValue;
             }
         }
+        
+        /// <summary>
+        /// Returns if the action is active
+        /// </summary>
         public bool Active
         {
             get
@@ -86,6 +107,10 @@ namespace Commangineer
                 return active;
             }
         }
+
+        /// <summary>
+        /// Returns the list of events
+        /// </summary>
         public List<Dictionary<string, string>> Events
         {
             get
@@ -93,6 +118,11 @@ namespace Commangineer
                 return eventList;
             }
         }
+
+        /// <summary>
+        /// Updates the action conditions, and activates the events if passed
+        /// </summary>
+        /// <param name="gameValue">The amount a value should be updated</param>
         public void Update(int gameValue)
         {
             if(activated)
@@ -112,6 +142,10 @@ namespace Commangineer
                 }
             }
         }
+
+        /// <summary>
+        /// Unactivated the event
+        /// </summary>
         public void Deactivate()
         {
             active = false;

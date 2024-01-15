@@ -8,11 +8,18 @@ using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// Handles current user settings
+    /// </summary>
     internal static class Settings
     {
         private static bool musicEnabled = true;
         private static int levelOn = 1;
         private static string settingsFile = Assembly.GetExecutingAssembly().Location + "/../Content/settings.json";
+
+        /// <summary>
+        /// Loads in settings from a JSON file in storage
+        /// </summary>
         public static void LoadSettings()
         {
             
@@ -35,12 +42,20 @@ namespace Commangineer
                 Log.LogText("No settings file found. Defaulted.");
             }
         }
+        
+        /// <summary>
+        /// Saves settings to a JSON file in storage
+        /// </summary>
         public static void SaveSettings()
         {
             Object settingsObject = new {musicEnabled = musicEnabled, levelOn = levelOn};
             
             File.WriteAllText(settingsFile, JsonSerializer.Serialize<Object>(settingsObject));
         }
+
+        /// <summary>
+        /// If the music is enabled
+        /// </summary>
         public static bool MusicEnabled
         {
             get

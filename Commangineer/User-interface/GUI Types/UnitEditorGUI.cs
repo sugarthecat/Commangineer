@@ -9,18 +9,29 @@ using System.Threading.Tasks;
 
 namespace Commangineer.GUI_Types
 {
+    /// <summary>
+    /// A GUI representing the Unit Editor
+    /// </summary>
     internal class UnitEditorGUI : ScalingGUI
     {
-
+        /// <summary>
+        /// Loads in the GUI's elements
+        /// </summary>
         public UnitEditorGUI() : base(600, 400)
         {
             LoadElements("UnitEditorGUI");
         }
+        /// <summary>
+        /// Updates the GUI
+        /// </summary>
         public override void Update()
         {
             base.Update();
 
         }
+        /// <summary>
+        /// Gets the current unit in the Unit Editor GUI
+        /// </summary>
         public UnitTemplate currentUnit
         {
             get

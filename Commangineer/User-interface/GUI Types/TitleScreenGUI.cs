@@ -14,6 +14,9 @@ namespace Commangineer.GUI_Types
     /// </summary>
     internal class TitleScreenGUI : ScalingGUI
     {
+        /// <summary>
+        /// Loads in the GUI's elements
+        /// </summary>
         public TitleScreenGUI() : base(600, 400)
         {
             LoadElements("TitleScreenGUI");

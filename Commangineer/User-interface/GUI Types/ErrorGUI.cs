@@ -15,10 +15,13 @@ using Commangineer.User_Interface;
 namespace Commangineer.GUI_Types
 {
     /// <summary>
-    /// The GUI object for the title screen
-    /// </summary>`
+    /// The GUI object for any critical errors
+    /// </summary>
     internal class ErrorGUI : ScalingGUI
     {
+        /// <summary>
+        /// Creates a new error screen, loading in its elements
+        /// </summary>
         public ErrorGUI(string msg, string info) : base(600, 400)
         {
             LoadElements("ErrorGUI");

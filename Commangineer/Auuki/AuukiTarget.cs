@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Commangineer.Auuki
 {
+    /// <summary>
+    /// A Auuki that is a target
+    /// </summary>
     public interface AuukiTarget
     {
         public void Damage(int damage);

@@ -7,6 +7,9 @@ using System;
 
 namespace Commangineer.GUI_Element_Types
 {
+    /// <summary>
+    /// A button element which can be clicked to trigger a event
+    /// </summary>
     public class Button : GUIElement
     {
         /// <summary>
@@ -28,6 +31,11 @@ namespace Commangineer.GUI_Element_Types
         {
 
         }
+
+        /// <summary>
+        /// Draws the button to the screen
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             MouseState mouseState = Mouse.GetState();

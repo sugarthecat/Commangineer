@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// A weapon of a unit
+    /// </summary>
     internal class Weapon
     {
         private string name;
@@ -27,6 +30,7 @@ namespace Commangineer.Units
         private bool shooting;
         private AuukiTarget target;
         private Texture2D texture;
+        // Getters and setter for the properties
         public string Name { get => name; set => name = value; }
         internal Unit.turretSize TurretSize { get => turretSize; set => turretSize = value; }
         public double ReloadTime { get => reloadTime; set => reloadTime = value; }
@@ -40,7 +44,7 @@ namespace Commangineer.Units
         public int Range { get => range; set => range = value; }
         public int SteamCost { get => steamCost; set => steamCost = value; }
         public bool Shooting { get => shooting; set => shooting = value; }
-
+        // Creates a new weapon
         public Weapon(string name, Unit.turretSize turretSize, double reloadTime, double attackSpeed, int damage, int maxAmmo, int range, int steamCost)
         {
             this.name = name;
@@ -54,6 +58,7 @@ namespace Commangineer.Units
             this.range = range;
             this.steamCost = steamCost;
         }
+        // Creates a new weapon from a preexisting weapon as a template
         public Weapon(Weapon w)
         {
             texture = Assets.GetTexture(w.name);
@@ -69,6 +74,10 @@ namespace Commangineer.Units
             this.steamCost = w.SteamCost;
         }
         private float angle = (float)Math.PI/2;
+
+        /// <summary>
+        /// Gets the angle to be used
+        /// </summary>
         public float Angle
         {
             get
@@ -76,6 +85,9 @@ namespace Commangineer.Units
                 return angle;
             }
         }
+        /// <summary>
+        /// Checks if the weapon has a target
+        /// </summary>
         public bool HasTarget
         {
             get
@@ -83,6 +95,9 @@ namespace Commangineer.Units
                 return this.target != null;
             }
         }
+        /// <summary>
+        /// Gets the weapon's target
+        /// </summary>
         public AuukiTarget Target
         {
             set
@@ -92,15 +107,28 @@ namespace Commangineer.Units
                 }
             }
         }
+        /// <summary>
+        /// Gets the weapon's texture
+        /// </summary>
+        /// <returns>The texture of the weapon</returns>
         public Texture2D GetTexture()
         {
             return texture;
         }
+        /// <summary>
+        /// Gets the weapon's turret size
+        /// </summary>
+        /// <returns>The size of the turret</returns>
         public Unit.turretSize GetTurretSize()
         {
             return turretSize;
         }
 
+        /// <summary>
+        /// Updates the weapon
+        /// </summary>
+        /// <param name="time">Time passed since the last update</param>
+        /// <param name="weaponPoint">The new weapon's point</param>
         public void Update(float time, Vector2 weaponPoint)
         {
             if(target != null)
@@ -131,6 +159,9 @@ namespace Commangineer.Units
                 attackProgress = 0.0d;
             }
         }
+        /// <summary>
+        /// Attacks with a weapon
+        /// </summary>
         private void Attack()
         {
 

@@ -9,11 +9,18 @@ using System.Threading.Tasks;
 
 namespace Commangineer.Auuki
 {
+    /// <summary>
+    /// Different modes the Auuki AI can be in
+    /// </summary>
     public enum AuukiAiMode
     {
         Wander
 
     }
+
+    /// <summary>
+    /// A Auuki Creature
+    /// </summary>
     public class AuukiCreature : RotatableTexturedObject, AuukiTarget
     {
         protected float speed = 1f;
@@ -24,6 +31,7 @@ namespace Commangineer.Auuki
         AuukiAiMode behavior = AuukiAiMode.Wander;
         Texture2D texture;
         Vector2 size;
+        // Creates a new Auuki creature
         public AuukiCreature(Vector2 position, Vector2 size, Texture2D texture, int health)
         {
             Random genRandom = new Random();
@@ -34,16 +42,26 @@ namespace Commangineer.Auuki
             this.size = size;
             this.texture = texture;
         }
+        // Creates a new Auuki creature with just a position
         public AuukiCreature(Vector2 position)
         {
             this.position = new Vector2(position.X - 0.5f, position.Y - 0.5f);
             size = new Vector2(1f, 1f);
             texture = Assets.GetTexture("default");
         }
+        /// <summary>
+        /// Damages the Auuki Creature
+        /// </summary>
+        /// <param name="damage">The amount of damage to deal</param>
         public void Damage(int damage)
         {
             health -= damage;
         }
+        /// <summary>
+        /// Updates the Auuki Creature
+        /// </summary>
+        /// <param name="deltaTime">The time since the last update</param>
+        /// <param name="level">The current level</param>
         public void Update(float deltaTime, Level level)
         {
             float prevX = position.X;
@@ -70,10 +88,17 @@ namespace Commangineer.Auuki
                 }
             }
         }
+        /// <summary>
+        /// Gets the Auuki creature's texture
+        /// </summary>
+        /// <returns>Auuki creature's texture</returns>
         public Texture2D GetTexture()
         {
             return texture;
         }
+        /// <summary>
+        /// Gets the Auuki creature's angle
+        /// </summary>
         public float Angle
         {
             get
@@ -81,6 +106,9 @@ namespace Commangineer.Auuki
                 return direction;
             }
         }
+        /// <summary>
+        /// Gets the Auuki creature's size
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -88,6 +116,9 @@ namespace Commangineer.Auuki
                 return size;
             }
         }
+        /// <summary>
+        /// Checks if the Auuki creature is alive
+        /// </summary>
         public bool Alive
         {
             get
@@ -95,6 +126,9 @@ namespace Commangineer.Auuki
                 return health >= 0;
             }
         }
+        /// <summary>
+        /// Gets the Auuki creature's ai mode
+        /// </summary>
         public AuukiAiMode Behavior
         {
             get
@@ -106,6 +140,9 @@ namespace Commangineer.Auuki
                 behavior = value;
             }
         }
+        /// <summary>
+        /// Gets the Auuki creature's position
+        /// </summary>
         public Vector2 Position
         {
 
@@ -114,6 +151,9 @@ namespace Commangineer.Auuki
                 return position;
             }
         }
+        /// <summary>
+        /// Gets the Auuki creature's center position
+        /// </summary>
         public Vector2 CenterPosition
         {
 

@@ -8,6 +8,9 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// Represents the game's camera in levels
+    /// </summary>
     internal static class Camera
     {
         private static double x = 0;
@@ -165,6 +168,11 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Draws a object the camera can see
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
+        /// <param name="toDraw">The rotatable object to be drawn</param>
         public static void Draw(SpriteBatch spriteBatch, RotatableTexturedObject toDraw)
         {
             Rectangle destinationRectangle = new Rectangle(
@@ -187,6 +195,11 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Draws a object the camera can see
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
+        /// <param name="toDraw">The object to be drawn</param>
         public static void Draw(SpriteBatch spriteBatch, TexturedObject toDraw)
         {
             Point projectedPoint = Project(toDraw.Position);
@@ -202,6 +215,13 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Draws a texture to the screen
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
+        /// <param name="position">The position to start drawing at</param>
+        /// <param name="size">The size of what to draw</param>
+        /// <param name="toDraw">The texture to be drawn</param>
         public static void DrawProjected(SpriteBatch spriteBatch, Vector2 position, Vector2 size, Texture2D toDraw)
         {
             Point projectedTopLeft = Project(position);
@@ -216,6 +236,11 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns a point influenced by the camera scale
+        /// </summary>
+        /// <param name="startPoint">The point to influence</param>
+        /// <returns>A new influenced point</returns>
         public static Point Project(Point startPoint)
         {
             return new Point(
@@ -224,6 +249,11 @@ namespace Commangineer
                 );
         }
 
+        /// <summary>
+        /// Returns a point influenced by the camera scale
+        /// </summary>
+        /// <param name="startPoint">The vector position to influence</param>
+        /// <returns>A new influenced point</returns>
         public static Point Project(Vector2 startPoint)
         {
             return new Point(
@@ -232,6 +262,11 @@ namespace Commangineer
                 );
         }
 
+        /// <summary>
+        /// Uninfluences a rectangle by the camera scale
+        /// </summary>
+        /// <param name="rectangle">The rectangle to uninfluence</param>
+        /// <returns>A new uninfluenced rectangle</returns>
         public static RectangleF Deproject(RectangleF rectangle)
         {
             return new RectangleF(
@@ -243,6 +278,11 @@ namespace Commangineer
                 );
         }
 
+        /// <summary>
+        /// Uninfluences a vector point by the camera scale
+        /// </summary>
+        /// <param name="rectangle">The vector point to uninfluence</param>
+        /// <returns>A new uninfluenced vector point</returns>
         public static Vector2 Deproject(Vector2 startPoint)
         {
             return new Vector2(

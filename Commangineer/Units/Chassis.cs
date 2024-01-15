@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// The chassis of a unit
+    /// </summary>
     internal class Chassis 
     {
         private string name;
@@ -18,6 +21,7 @@ namespace Commangineer.Units
         private int size;
         private Slot[] turretSizes;
 
+        // Constructs a new Chassis
         public Chassis(string name, int speed, int armour, int health, int size, Slot[] turretSizes)
         {
             this.name = name;
@@ -27,17 +31,24 @@ namespace Commangineer.Units
             this.size = size;
             this.turretSizes = turretSizes;
         }
+        // Getters for the Chassis
         public string Name { get { return name; } }
         public int Speed {  get { return speed; } }
         public int Armour { get { return armour; } }
         public int Health { get { return health; } }
         public int Volume { get { return size; } }
+        /// <summary>
+        /// Gets the slots of the chassis
+        /// </summary>
         public Slot[] Weapons { 
             get { 
 
                 return turretSizes; 
             } 
         }
+        /// <summary>
+        /// Gets the size of the chassis
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -45,11 +56,19 @@ namespace Commangineer.Units
                 return new Vector2(size, size);
             }
         }
+        /// <summary>
+        /// Gets the slots of the chassis
+        /// </summary>
+        /// <returns>The slots of the chassis</returns>
         public Slot[] GetTurrets()
         {
             return turretSizes;
         }
 
+        /// <summary>
+        /// Clones the Chassis
+        /// </summary>
+        /// <returns>A clone of the Chassis</returns>
         public Chassis Clone()
         {
             Chassis newChassis = new Chassis(name, speed, armour, health, size, new Slot[turretSizes.Length]);

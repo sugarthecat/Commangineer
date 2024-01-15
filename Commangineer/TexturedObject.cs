@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// Represents a object with a texture
+    /// </summary>
     internal interface TexturedObject
     {
         public Texture2D GetTexture();

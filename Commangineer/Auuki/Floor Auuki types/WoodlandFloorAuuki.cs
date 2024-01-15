@@ -3,8 +3,12 @@ using Microsoft.Xna.Framework;
 
 namespace Commangineer.Floor_Auuki_types
 {
+    /// <summary>
+    /// A woodland floor Auuki
+    /// </summary>
     internal class WoodlandFloorAuuki : AuukiFloor
     {
+        // Creates a new Auuki Floor of its type
         public WoodlandFloorAuuki(Point position)
             : base(
                 new FloorAuukiStage[] {

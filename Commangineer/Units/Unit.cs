@@ -6,8 +6,14 @@ using System.Drawing;
 using Point = Microsoft.Xna.Framework.Point;
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// A unit in game
+    /// </summary>
     internal class Unit : RotatableTexturedObject
     {
+        /// <summary>
+        /// The unit's turret size
+        /// </summary>
         public enum turretSize
         {
             small,
@@ -35,6 +41,9 @@ namespace Commangineer.Units
         private float maxRescan = 20;
         private float rescan = 0;
 
+        /// <summary>
+        /// Gets the angle of the unit
+        /// </summary>
         public float Angle
         {
             get
@@ -57,6 +66,9 @@ namespace Commangineer.Units
             position = spawnPosition;
         }
 
+        /// <summary>
+        /// Gets the cost of a material
+        /// </summary>
         public MaterialBalance MaterialCost
         {
             get
@@ -66,6 +78,11 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Updates the unit
+        /// </summary>
+        /// <param name="deltaTime">Time since last update</param>
+        /// <param name="level">The current level</param>
         public void Update(float deltaTime, Level level)
         {
             foreach (Slot w in weapons)
@@ -90,10 +107,18 @@ namespace Commangineer.Units
                 position = previousPosition;
             }
         }
+        /// <summary>
+        /// Checks if the unit is within a boundary
+        /// </summary>
+        /// <param name="other">The boundary</param>
+        /// <returns>If the unit is withing a boundary</returns>
         public bool Intersects(RectangleF other)
         {
             return Bounds.IntersectsWith(other);
         }
+        /// <summary>
+        /// Gets the bounds of the unit
+        /// </summary>
         public RectangleF Bounds
         {
             get
@@ -102,6 +127,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Sets the unit's goal
+        /// </summary>
         public Vector2 Goal
         {
             set
@@ -110,6 +138,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the unit's size
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -118,6 +149,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the unit's position
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -126,6 +160,10 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Damages the unit
+        /// </summary>
+        /// <param name="damage">The amount of damage to deal</param>
         public void Damage(int damage)
         {
             damage -= armour;
@@ -136,11 +174,19 @@ namespace Commangineer.Units
             health -= damage;
         }
 
+        /// <summary>
+        /// Gets the unit's texture
+        /// </summary>
+        /// <returns>The unit's texture</returns>
         public Texture2D GetTexture()
         {
             return Assets.GetTexture("wood");
         }
 
+        /// <summary>
+        /// Draws the unit
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             Camera.Draw(spriteBatch, this);
@@ -149,6 +195,10 @@ namespace Commangineer.Units
                 weapons[i].Draw(spriteBatch);
             }
         }
+        /// <summary>
+        /// Draws the selected unit
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void DrawSelection(SpriteBatch spriteBatch)
         {
             Camera.DrawProjected(spriteBatch, Position, Size, Assets.GetImage("selectedUnit"));

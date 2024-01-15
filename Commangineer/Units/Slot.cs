@@ -10,17 +10,21 @@ namespace Commangineer.Units
 {
     internal class Slot : RotatableTexturedObject
     {
-
+        /// <summary>
+        /// A slot of a unit
+        /// </summary>
         private Weapon weapon;
         private Unit.turretSize size;
         private Vector2 position;
         private Vector2 offsetPosition;
 
+        // Constructs a slot
         public Slot(Unit.turretSize s, Vector2 turretPosition)
         {
             size = s;
             offsetPosition = turretPosition;
         }
+        // Constructs a slot based off a old slot
         public Slot(Slot oldSlot)
         {
             size = oldSlot.size;
@@ -29,6 +33,9 @@ namespace Commangineer.Units
                 weapon = new Weapon(oldSlot.weapon);
             }
         }
+        /// <summary>
+        /// Gets the slot's angle
+        /// </summary>
         public float Angle
         {
             get
@@ -57,6 +64,10 @@ namespace Commangineer.Units
                 return false;
             }
         }
+        /// <summary>
+        /// Draws the slot
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
             if (weapon != null)
@@ -64,10 +75,21 @@ namespace Commangineer.Units
                 Camera.Draw(spriteBatch, this);
             }
         }
+        /// <summary>
+        /// Gets the slot's texture
+        /// </summary>
+        /// <returns>The slot's texture</returns>
         public Texture2D GetTexture()
         {
             return weapon.GetTexture();
         }
+        /// <summary>
+        /// Updates the slot
+        /// </summary>
+        /// <param name="time">The time since the last update</param>
+        /// <param name="unitPosition">The position of the unit</param>
+        /// <param name="rotationAngle">The rotation angle</param>
+        /// <param name="level">The current level</param>
         public void Update(float time, Vector2 unitPosition, float rotationAngle, Level level) 
         {
             Vector2 rotatedOffset = new Vector2(
@@ -84,6 +106,9 @@ namespace Commangineer.Units
                 weapon.Update(time, position);
             }           
         }
+        /// <summary>
+        /// Gets the position of the slot
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -91,6 +116,9 @@ namespace Commangineer.Units
                 return position-Size/2;
             }
         }
+        /// <summary>
+        /// Gets the size of the slot
+        /// </summary>
         public Vector2 Size
         {
             get

@@ -17,6 +17,9 @@ using RectangleF = System.Drawing.RectangleF;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// A class which handles most interactions with a level
+    /// </summary>
     public class Level
     {
         private Tile[,] tiles;
@@ -216,11 +219,16 @@ namespace Commangineer
             catch (Exception ex)
             {
                 Log.LogText("Error Loading Level: " + ex.Message);
-                //TODO log exceptions
                 Commangineer.ExitGame();
             }
         }
-
+        
+        /// <summary>
+        /// Gets a target to a Auuki at a position within a certain range
+        /// </summary>
+        /// <param name="position">The position to search for a Auuki at</param>
+        /// <param name="range">The range of how far away to search for a Auuki</param>
+        /// <returns>The first Auuki found</returns>
         public AuukiTarget GetTarget(Vector2 position, float range)
         {
             for(int i = 0; i < auukiCreatures.Count; i++)
@@ -252,13 +260,17 @@ namespace Commangineer
         }
 
         /// <summary>
-        /// Gets the tile map fo the level
+        /// Gets the tile map for the level
         /// </summary>
         /// <returns>an array of the level's tiles</returns>
         internal Tile[,] GetTileMap()
         {
             return tiles;
         }
+        /// <summary>
+        /// Selects units with a boundary
+        /// </summary>
+        /// <param name="unprojectedSelectionRange">The voundary to check for units</param>
         private void SelectNewUnits(RectangleF unprojectedSelectionRange)
         {
             RectangleF projectedSelection = Camera.Deproject(unprojectedSelectionRange);
@@ -398,6 +410,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Updates the player's units
+        /// </summary>
+        /// <param name="deltaTime">The amount of time passed since last update</param>
         private void UpdatePlayerUnits(float deltaTime)
         {
             for (int i = 0; i < playerUnits.Count; i++)
@@ -410,6 +426,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns a rectangle used for unit selection boundaries
+        /// </summary>
         private Rectangle SelectionRectangle
         {
             get
@@ -427,6 +446,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns a rectangleF used for unit selection boundaries
+        /// </summary>
         private RectangleF SelectionRectangleF
         {
             get
@@ -450,6 +472,11 @@ namespace Commangineer
         /// <param name="clickPosition">The mouse position</param>
         /// <param name="shiftEnabled">If shift is enabled</param>
 
+        /// <summary>
+        /// Handles left click interactions within the level
+        /// </summary>
+        /// <param name="clickPosition">The position the user is clicking</param>
+        /// <param name="shiftEnabled">If the shift key is being held down</param>
         public void HandleClick(Point clickPosition, bool shiftEnabled)
         {
             if (unitEditor.Enabled)
@@ -474,6 +501,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Handles all right click interactions with the level
+        /// </summary>
+        /// <param name="clickPosition">The position the player is clicking</param>
         public void HandleRightClick(Point clickPosition)
         {
             Vector2 adjustedClickPosition = Camera.Deproject(new Vector2(clickPosition.X, clickPosition.Y));
@@ -491,11 +522,11 @@ namespace Commangineer
         }
 
         /// <summary>
-        /// Adds a dialogue popup to a queue of popups
+        /// Adds a new dialogue popup to a list of popups to display
         /// </summary>
-        /// <param name="text">The message to display</param>
-        /// <param name="char1">The character on the left</param>
-        /// <param name="char2">The character on the right</param>
+        /// <param name="text">The text to display</param>
+        /// <param name="char1">The character speaking to display</param>
+        /// <param name="char2">A character listening to display</param>
         private void QueueDialogue(string text, string char1, string char2)
         {
             DialogueGUI dialogueGUI = new DialogueGUI();
@@ -522,6 +553,7 @@ namespace Commangineer
         {
             for (int i = 0; i < gameActions.Length; i++)
             {
+                // Updates action requirements
                 switch (gameActions[i].GameValue)
                 {
                     case GameValue.GameTime:
@@ -536,6 +568,7 @@ namespace Commangineer
                         gameActions[i].Update(auukiCreatures.Count);
                         break;
                 }
+                // If a action is activated, call it's respected event
                 if (gameActions[i].Active)
                 {
                     // Loads in events like dialogue popups
@@ -637,6 +670,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Destroys any Auuki tiles underneath a player unit
+        /// </summary>
+        /// <param name="playerUnit">The unit to destroy tiles under</param>
         internal void DestroyTilesUnderUnit(Unit playerUnit)
         {
 
@@ -660,6 +697,10 @@ namespace Commangineer
                 }
             }
         }
+
+        /// <summary>
+        /// Spawns a unit at the player base position
+        /// </summary>
         public void SpawnUnit()
         {
             UnitTemplate newUnit = unitEditor.currentUnit;
@@ -721,6 +762,12 @@ namespace Commangineer
         Collided:
             return colliding;
         }
+
+        /// <summary>
+        /// Checks if a player unit is colliding with anything it shouldn't be
+        /// </summary>
+        /// <param name="playerUnit">The player's unit</param>
+        /// <returns>If a player unit is colliding with anything it shouldn't be</returns>
         internal bool Collides(Unit playerUnit)
         {
             bool colliding = false;
@@ -767,6 +814,9 @@ namespace Commangineer
             return colliding;
         }
 
+        /// <summary>
+        /// Exits the unit editor
+        /// </summary>
         public void ExitUnitEditor()
         {
             unitEditor.Enabled = false;

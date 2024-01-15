@@ -99,6 +99,9 @@ namespace Commangineer.User_Interface
         {
             subGUIs.Clear();
         }
+        /// <summary>
+        /// Gets and sets if the gui is enabled
+        /// </summary>
         public bool Enabled
         {
             get
