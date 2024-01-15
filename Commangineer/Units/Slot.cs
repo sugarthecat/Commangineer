@@ -4,17 +4,21 @@ using System;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// A slot of a unit
+    /// </summary>
     public class Slot : RotatableTexturedObject
     {
         private Weapon weapon;
         private Vector2 position;
         private Vector2 offsetPosition;
 
+        // Constructs a slot
         public Slot(Vector2 turretPosition)
         {
             offsetPosition = turretPosition;
         }
-
+        // Constructs a slot based off a old slot
         public Slot(Slot oldSlot)
         {
             position = oldSlot.position;
@@ -24,6 +28,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the slot's angle
+        /// </summary>
         public float Angle
         {
             get
@@ -54,6 +61,10 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Draws the slot
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             if (weapon != null)
@@ -62,6 +73,10 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Draws bullet frames
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void DrawBulletFrames(SpriteBatch spriteBatch)
         {
             if (weapon != null)
@@ -74,11 +89,23 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the slot's texture
+        /// </summary>
+        /// <returns>The slot's texture</returns>
         public Texture2D GetTexture()
         {
             return weapon.GetTexture();
         }
 
+        /// <summary>
+        /// Updates the slot
+        /// </summary>
+        /// <param name="time">The time since the last update</param>
+        /// <param name="unitPosition">The position of the unit</param>
+        /// <param name="rotationAngle">The rotation angle</param>
+        /// <param name="level">The current level</param>
+        /// <param name="firingUnit">A unit firing</param>
         public void Update(float time, Vector2 unitPosition, float rotationAngle, Level level, Unit firingUnit)
         {
             Vector2 rotatedOffset = new Vector2(
@@ -96,6 +123,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the position of the slot
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -104,6 +134,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the size of the slot
+        /// </summary>
         public Vector2 Size
         {
             get

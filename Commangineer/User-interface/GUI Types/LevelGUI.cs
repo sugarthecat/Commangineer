@@ -12,6 +12,9 @@ namespace Commangineer.GUI_Types
     {
         private MaterialType[] materialTypes = Enum.GetValues<MaterialType>();
 
+        /// <summary>
+        /// Creates the Level GUI and loads in basic elements
+        /// </summary>
         public LevelGUI() : base(600, 400)
         {
             //add resource displays
@@ -24,6 +27,10 @@ namespace Commangineer.GUI_Types
             }
         }
 
+        /// <summary>
+        /// Updates the Level GUI
+        /// </summary>
+        /// <param name="resources">Resources the user has access to</param>
         public void Update(MaterialBalance resources)
         {
             base.Update();

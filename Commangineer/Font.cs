@@ -14,6 +14,11 @@ namespace Commangineer
         private string supportedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         private Texture2D defaultCharacter;
 
+        /// <summary>
+        /// Creates a new font, loads in all characters
+        /// </summary>
+        /// <param name="addr">The location/name of the font</param>
+        /// <param name="content">The content manager to load the font</param>
         public Font(string addr, ContentManager content)
         {
             defaultCharacter = content.Load<Texture2D>(addr + "/default");
@@ -31,6 +36,12 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Draws text with a font
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch to use when drawing</param>
+        /// <param name="textToDisplay">The text to display</param>
+        /// <param name="textArea">The area of where to draw the text</param>
         public void DrawText(SpriteBatch spriteBatch, string textToDisplay, Rectangle textArea)
         {
             int width = textArea.Width;

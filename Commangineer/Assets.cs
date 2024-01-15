@@ -11,13 +11,6 @@ using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
-    public enum Character
-    {
-        testChar1,
-        testChar2,
-        testChar3
-    }
-
     /// <summary>
     /// Manages assets for the game
     /// </summary>
@@ -259,13 +252,6 @@ namespace Commangineer
             }
         }
 
-        public static void LoadShaders(ContentManager content)
-        {
-            /*
-             * empty
-            */
-        }
-
         /// <summary>
         /// Loads the sound with the given name
         /// </summary>
@@ -286,9 +272,9 @@ namespace Commangineer
         }
 
         /// <summary>
-        /// Loads the song with the given name
+        /// Loads music with the given name
         /// </summary>
-        /// <param name="name">the song's name</param>
+        /// <param name="name">the music name</param>
         public static void LoadMusic(string name)
         {
             songs.Add(name, content.Load<Song>("audio/Music/" + name));
@@ -297,8 +283,8 @@ namespace Commangineer
         /// <summary>
         /// Gets a song
         /// </summary>
-        /// <param name="name">the requested song's name</param>
-        /// <returns>The requested song</returns>
+        /// <param name="name">the requested music name</param>
+        /// <returns>The requested music</returns>
         public static Music GetMusic(string name)
         {
             return new Music(songs[name]);

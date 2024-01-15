@@ -3,6 +3,9 @@ using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// Represents different conditions a action can use
+    /// </summary>
     public enum GameValue
     {
         GameTime,
@@ -10,6 +13,9 @@ namespace Commangineer
         AuukiUnitCount
     }
 
+    /// <summary>
+    /// Represents different comparisons a action can use
+    /// </summary>
     public enum ValueRelationship
     {
         LessThan,
@@ -74,6 +80,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns the current condition
+        /// </summary>
         public GameValue GameValue
         {
             get
@@ -82,6 +91,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns if the action is active
+        /// </summary>
         public bool Active
         {
             get
@@ -90,6 +102,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns the list of events
+        /// </summary>
         public List<Dictionary<string, string>> Events
         {
             get
@@ -98,6 +113,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Updates the action conditions, and activates the events if passed
+        /// </summary>
+        /// <param name="gameValue">The amount a value should be updated</param>
         public void Update(int gameValue)
         {
             if (activated)
@@ -118,6 +137,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Unactivated the event
+        /// </summary>
         public void Deactivate()
         {
             active = false;

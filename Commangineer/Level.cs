@@ -17,6 +17,9 @@ using RectangleF = System.Drawing.RectangleF;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// A class which handles most interactions with a level
+    /// </summary>
     public class Level
     {
         private Tile[,] tiles;
@@ -221,6 +224,13 @@ namespace Commangineer
                 Commangineer.ExitGame();
             }
         }
+
+        /// <summary>
+        /// Gets a target to a Unit at a position within a certain range
+        /// </summary>
+        /// <param name="position">The position to search for a Unit at</param>
+        /// <param name="range">The range of how far away to search for a Unit</param>
+        /// <returns>The first Unit found</returns>
         public PlayerTarget GetUnitTarget(Vector2 position, float range)
         {
             PlayerTarget closestTarget = playerBase;
@@ -234,6 +244,12 @@ namespace Commangineer
             }
             return closestTarget;
         }
+        /// <summary>
+        /// Gets a target to a Auuki at a position within a certain range
+        /// </summary>
+        /// <param name="position">The position to search for a Auuki at</param>
+        /// <param name="range">The range of how far away to search for a Auuki</param>
+        /// <returns>The first Auuki found</returns>
         public AuukiTarget GetAuukiTarget(Vector2 position, float range)
         {
             for (int i = 0; i < auukiCreatures.Count; i++)
@@ -287,7 +303,7 @@ namespace Commangineer
         }
 
         /// <summary>
-        /// Gets the tile map fo the level
+        /// Gets the tile map for the level
         /// </summary>
         /// <returns>an array of the level's tiles</returns>
         public Tile[,] GetTileMap()
@@ -295,6 +311,10 @@ namespace Commangineer
             return tiles;
         }
 
+        /// <summary>
+        /// Selects units with a boundary
+        /// </summary>
+        /// <param name="unprojectedSelectionRange">The boundary to check for units</param>
         private void SelectNewUnits(RectangleF unprojectedSelectionRange)
         {
             RectangleF projectedSelection = Camera.Deproject(unprojectedSelectionRange);
@@ -446,6 +466,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Updates the player's units
+        /// </summary>
+        /// <param name="deltaTime">The amount of time passed since last update</param>
         private void UpdatePlayerUnits(float deltaTime)
         {
             for (int i = 0; i < playerUnits.Count; i++)
@@ -458,6 +482,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns a rectangle used for unit selection boundaries
+        /// </summary>
         private Rectangle SelectionRectangle
         {
             get
@@ -475,6 +502,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Returns a rectangleF used for unit selection boundaries
+        /// </summary>
         private RectangleF SelectionRectangleF
         {
             get
@@ -494,11 +524,10 @@ namespace Commangineer
         }
 
         /// <summary>
-        /// Handle all click events corresponding to the level
+        /// Handles left click interactions within the level
         /// </summary>
-        /// <param name="clickPosition">The mouse position</param>
-        /// <param name="shiftEnabled">If shift is enabled</param>
-
+        /// <param name="clickPosition">The position the user is clicking</param>
+        /// <param name="shiftEnabled">If the shift key is being held down</param>
         public void HandleClick(Point clickPosition, bool shiftEnabled)
         {
             if (unitEditor.Enabled)
@@ -523,6 +552,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Handles all right click interactions with the level
+        /// </summary>
+        /// <param name="clickPosition">The position the player is clicking</param>
         public void HandleRightClick(Point clickPosition)
         {
             Vector2 adjustedClickPosition = Camera.Deproject(new Vector2(clickPosition.X, clickPosition.Y));
@@ -570,6 +603,7 @@ namespace Commangineer
         {
             for (int i = 0; i < gameActions.Length; i++)
             {
+                // Updates action requirements
                 switch (gameActions[i].GameValue)
                 {
                     case GameValue.GameTime:
@@ -584,6 +618,7 @@ namespace Commangineer
                         gameActions[i].Update(auukiCreatures.Count);
                         break;
                 }
+                // If a action is activated, call it's respected event
                 if (gameActions[i].Active)
                 {
                     // Loads in events like dialogue popups
@@ -707,6 +742,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Destroys any Auuki tiles underneath a player unit
+        /// </summary>
+        /// <param name="playerUnit">The unit to destroy tiles under</param>
         public void DestroyTilesUnderUnit(Unit playerUnit)
         {
             Point topLeft = new Point(
@@ -730,6 +769,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Spawns a unit at the player base position
+        /// </summary>
         public void SpawnUnit(int unitIndex)
         {
             UnitTemplate newUnit = unitEditor.GetUnit(unitIndex);
@@ -792,6 +834,11 @@ namespace Commangineer
             return colliding;
         }
 
+        /// <summary>
+        /// Checks if a player unit is colliding with anything it shouldn't be
+        /// </summary>
+        /// <param name="playerUnit">The player's unit</param>
+        /// <returns>If a player unit is colliding with anything it shouldn't be</returns>
         public bool Collides(Unit playerUnit)
         {
             bool colliding = false;
@@ -838,6 +885,9 @@ namespace Commangineer
             return colliding;
         }
 
+        /// <summary>
+        /// Exits the unit editor
+        /// </summary>
         public void ExitUnitEditor()
         {
             unitEditor.Enabled = false;

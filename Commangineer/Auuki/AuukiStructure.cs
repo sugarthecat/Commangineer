@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer.Auuki
 {
+    /// <summary>
+    /// A structure belonging to Auuki
+    /// </summary>
     public class AuukiStructure : TexturedObject, AuukiTarget
     {
         private Point position;
@@ -15,6 +18,7 @@ namespace Commangineer.Auuki
         private int tileOn = 0;
         private int health = 0;
 
+        // Creates a new Auuki Structure
         protected AuukiStructure(Point position, Point size, Texture2D texture, int minFloorTier, int health)
         {
             this.minFloorTier = minFloorTier;
@@ -25,6 +29,10 @@ namespace Commangineer.Auuki
             tilesUnder = new Tile[size.X * size.Y];
         }
 
+        /// <summary>
+        /// Updates the Auuki Structure
+        /// </summary>
+        /// <param name="deltaTime">The time since the last update</param>
         public virtual void Update(float deltaTime)
         {
             if (!alive)
@@ -46,6 +54,10 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Damages the Auuki Structure
+        /// </summary>
+        /// <param name="damage">The amount of damage to deal to the Auuki Structure</param>
         public void Damage(int damage)
         {
             health -= damage;
@@ -54,11 +66,19 @@ namespace Commangineer.Auuki
                 Die();
             }
         }
+        /// <summary>
+        /// Damages the Auuki Structure from a attacker
+        /// </summary>
+        /// <param name="damage">The amount of damage</param>
+        /// <param name="attackingUnit">The attacker</param>
         public void Damage(int damage, Unit attackingUnit)
         {
             Damage(damage);
         }
 
+        /// <summary>
+        /// Destroys the Auuki Structure
+        /// </summary>
         private void Die()
         {
             alive = false;
@@ -68,6 +88,9 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets if the structure is alive
+        /// </summary>
         public bool Alive
         {
             get { return alive; }
@@ -87,6 +110,9 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets the structures size
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -95,6 +121,9 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets the structures position
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -103,6 +132,9 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets the structures center position
+        /// </summary>
         public Vector2 CenterPosition
         {
             get
@@ -111,6 +143,10 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets the structures texture
+        /// </summary>
+        /// <returns>The structures texture</returns>
         public Texture2D GetTexture()
         {
             return texture;

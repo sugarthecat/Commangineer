@@ -2,16 +2,24 @@
 
 namespace Commangineer.Auuki.AuukiStructures
 {
+    /// <summary>
+    /// A Auuki Structure which can spawn Auuki Creatures
+    /// </summary>
     public class Spawner : AuukiStructure
     {
         private float animalSpawnTime = 0;
         private float animalSpawnProgress = 0;
 
+        // Creates a new spawner
         public Spawner(Point spawnPosition, Point size, int minFloorTier, float animalSpawnTime, int health) : base(spawnPosition, size, Assets.GetTexture("auukiDen"), minFloorTier, health)
         {
             this.animalSpawnTime = animalSpawnTime;
         }
 
+        /// <summary>
+        /// Updates the spawner
+        /// </summary>
+        /// <param name="deltaTime">The time since the last update</param>
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
@@ -21,6 +29,9 @@ namespace Commangineer.Auuki.AuukiStructures
             }
         }
 
+        /// <summary>
+        /// Gets if the structure can spawn a creature
+        /// </summary>
         public bool CanSpawnAnimal
         {
             get
@@ -29,6 +40,9 @@ namespace Commangineer.Auuki.AuukiStructures
             }
         }
 
+        /// <summary>
+        /// Gets a new Auuki creature
+        /// </summary>
         public AuukiCreature Animal
         {
             get
@@ -37,6 +51,9 @@ namespace Commangineer.Auuki.AuukiStructures
             }
         }
 
+        /// <summary>
+        /// Gets the spawner's spawn position
+        /// </summary>
         protected Vector2 SpawnPosition
         {
             get
@@ -45,11 +62,18 @@ namespace Commangineer.Auuki.AuukiStructures
             }
         }
 
+        /// <summary>
+        /// Removes all progress towards spawning a creature
+        /// </summary>
         protected void ClearSpawnProgress()
         {
             animalSpawnProgress = 0;
         }
 
+        /// <summary>
+        /// Creates a new Auuki creature
+        /// </summary>
+        /// <returns>A new Auuki creature at it's spawn position</returns>
         protected virtual AuukiCreature CreateNewAnimal()
         {
             ClearSpawnProgress();

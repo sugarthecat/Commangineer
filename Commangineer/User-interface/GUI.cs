@@ -19,6 +19,9 @@ namespace Commangineer.User_Interface
         protected List<GUI> subGUIs;
         private bool enabled;
 
+        /// <summary>
+        /// Constructs a GUI
+        /// </summary>
         public GUI()
         {
             elements = new List<GUIElement>();
@@ -98,6 +101,9 @@ namespace Commangineer.User_Interface
             subGUIs.Clear();
         }
 
+        /// <summary>
+        /// Gets and sets if the gui is enabled
+        /// </summary>
         public bool Enabled
         {
             get
@@ -108,11 +114,6 @@ namespace Commangineer.User_Interface
             {
                 enabled = value;
             }
-        }
-
-        public bool GetEnabled()
-        {
-            return enabled;
         }
 
         /// <summary>

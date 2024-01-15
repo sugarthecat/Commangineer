@@ -4,8 +4,14 @@ using System;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// A template for a unit
+    /// </summary>
     public class UnitTemplate
     {
+        /// <summary>
+        /// The size of a unit's turret
+        /// </summary>
         public enum turretSize
         {
             small,
@@ -20,6 +26,7 @@ namespace Commangineer.Units
         private Chassis chassis;
         private Engine engine;
 
+        // Creates a new unit template
         public UnitTemplate(Chassis chassis, Engine engine)
         {
             int weight = chassis.Weight + engine.Weight;
@@ -42,6 +49,9 @@ namespace Commangineer.Units
             this.armour = chassis.Armour;
         }
 
+        /// <summary>
+        /// Gets the cost for a material
+        /// </summary>
         public MaterialBalance MaterialCost
         {
             get
@@ -53,6 +63,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the size
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -61,6 +74,7 @@ namespace Commangineer.Units
             }
         }
 
+        // Getters for the unit
         public int Health
         { get { return health; } }
         public int MaxHealth
@@ -72,6 +86,9 @@ namespace Commangineer.Units
         public Slot[] Weapons
         { get { return chassis.Weapons; } }
 
+        /// <summary>
+        /// Gets the Chassis
+        /// </summary>
         public Chassis Chassis
         {
             get
@@ -80,6 +97,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the Engine
+        /// </summary>
         public Engine Engine
         {
             get
@@ -88,6 +108,10 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Damages health
+        /// </summary>
+        /// <param name="d">Amount of damage</param>
         public void Damage(int d)
         {
             d -= armour;
@@ -98,6 +122,10 @@ namespace Commangineer.Units
             health -= d;
         }
 
+        /// <summary>
+        /// Gets the current texture
+        /// </summary>
+        /// <returns>The current texture</returns>
         public Texture2D GetTexture()
         {
             return Assets.GetTexture("wood");

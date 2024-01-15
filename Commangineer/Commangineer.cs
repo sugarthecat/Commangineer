@@ -29,6 +29,9 @@ namespace Commangineer
         private Level currentLevel;
         private string lastError;
 
+        /// <summary>
+        /// Sets up basic values of the game
+        /// </summary>
         public Commangineer()
         {
             instance = this;
@@ -46,6 +49,11 @@ namespace Commangineer
             this.Deactivated += WindowClosed;
         }
 
+        /// <summary>
+        /// Ran when the window is resized, updates corresponding values and GUI's
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnResize(object sender, EventArgs e)
         {
             _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
@@ -54,41 +62,72 @@ namespace Commangineer
             currentGUI.Update();
         }
 
+        /// <summary>
+        /// Ran when the window is opened, updates corresponding values
+        /// </summary>
+        /// <param name="sendet"></param>
+        /// <param name="args"></param>
         public void WindowOpened(object sendet, EventArgs args)
         {
             windowActive = true;
         }
 
+        /// <summary>
+        /// Ran when the window is closed/minimized, updates corresponding values
+        /// </summary>
+        /// <param name="sendet"></param>
+        /// <param name="args"></param>
         public void WindowClosed(object sendet, EventArgs args)
         {
             windowActive = false;
         }
 
+        /// <summary>
+        /// Gets the current level the user is in if any
+        /// </summary>
+        /// <returns></returns>
         public static Level GetLevel()
         {
             return instance.currentLevel;
         }
 
+        /// <summary>
+        /// Activates/deactivates the setting GUI
+        /// </summary>
         public void ToggleSettings()
         {
             settingsGUI.Enabled = !settingsGUI.Enabled;
         }
 
+        /// <summary>
+        /// Gets the current screen width
+        /// </summary>
+        /// <returns>The screen's width</returns>
         public static int GetScreenWidth()
         {
             return instance._graphics.PreferredBackBufferWidth;
         }
 
+        /// <summary>
+        /// Gets the current screen height
+        /// </summary>
+        /// <returns>The screen's height</returns>
         public static int GetScreenHeight()
         {
             return instance._graphics.PreferredBackBufferHeight;
         }
 
+        /// <summary>
+        /// Switches full screen on or off
+        /// </summary>
         public void ToggleFullscreen()
         {
             _graphics.ToggleFullScreen();
         }
 
+        /// <summary>
+        /// Allows retrieval of the current level
+        /// </summary>
         public static Level Level
         {
             get
@@ -97,6 +136,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Switches the current main GUI to a different one
+        /// </summary>
+        /// <param name="newMenu">The new GUI to go to</param>
         public void NavigateToMenu(string newMenu)
         {
             if (newMenu == "level")
@@ -125,6 +168,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Ran when the game is initializing, sets up additional values
+        /// </summary>
         protected override void Initialize()
         {
             base.Initialize();
@@ -148,6 +194,9 @@ namespace Commangineer
             Log.LogText("Game Initialized");
         }
 
+        /// <summary>
+        /// Ran when the game first loads in its content, sets up all assets
+        /// </summary>
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -155,19 +204,30 @@ namespace Commangineer
             Assets.Setup(Content);
         }
 
+        /// <summary>
+        /// Ran when the program is exiting, cleans up the game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         protected override void OnExiting(Object sender, EventArgs args)
         {
             base.OnExiting(sender, args);
 
             Settings.SaveSettings();
-            // Stop the threads
         }
 
+        /// <summary>
+        /// Exits the game
+        /// </summary>
         public static void ExitGame()
         {
             instance.Exit();
         }
 
+        /// <summary>
+        /// Opens a link in the user's default browser
+        /// </summary>
+        /// <param name="url">The link to be opened</param>
         private void OpenUrl(string url)
         {
             try
@@ -196,6 +256,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Ran when the game updates, handles all interactions between classes while the game is running
+        /// </summary>
+        /// <param name="gameTime">The amount of time since the last update in ms</param>
         protected override void Update(GameTime gameTime)
         {
             try
@@ -257,12 +321,20 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Opens a email link intended for when the program crashes
+        /// </summary>
         public void EmailCrash()
         {
             OpenUrl("mailto:tnickerson2024@jpkeefehs.org?subject=Commangineer%20Crash%20Report&body=" + lastError);
             ExitGame();
         }
 
+        /// <summary>
+        /// Raises a critical error screen when the application can not continue
+        /// </summary>
+        /// <param name="msg">The message of the error</param>
+        /// <param name="trace">The callstack of where the error happened</param>
         private void RaiseError(string msg, string trace)
         {
             string informationString = DateTime.Now.ToString("MM/dd/yyyy h:mm tt") + " " + msg + " at " + trace;
@@ -271,6 +343,9 @@ namespace Commangineer
             currentGUI = new ErrorGUI(msg, informationString);
         }
 
+        /// <summary>
+        /// Toggles the sprite batch to begin or end drawing
+        /// </summary>
         private void ToggleSpriteBatch()
         {
             spriteBatchBegun = !spriteBatchBegun;
@@ -284,6 +359,10 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Ran when the game draws to the screen, tells all objects to draw
+        /// </summary>
+        /// <param name="gameTime">The time since that game last drew in ms</param>
         protected override void Draw(GameTime gameTime)
         {
             try
