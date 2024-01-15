@@ -13,14 +13,6 @@
       "size": [ 100, 50 ],
       "actionName": "NavigateToMenu",
       "actionValue": "titleScreen"
-    },
-    "levelButton": {
-      "name": "start",
-      "type": "Button",
-      "position": [ 250, 150 ],
-      "size": [ 100, 50 ],
-      "actionName": "NavigateToMenu",
-      "actionValue": "level"
     }
   }
 }

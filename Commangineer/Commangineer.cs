@@ -28,6 +28,7 @@ namespace Commangineer
         private bool spriteBatchBegun;
         private Level currentLevel;
         private string lastError;
+        private int highestLevel;
 
         /// <summary>
         /// Sets up basic values of the game
@@ -169,6 +170,19 @@ namespace Commangineer
         }
 
         /// <summary>
+        /// Starts a specified level if available
+        /// </summary>
+        /// <param name="level"></param>
+        public void BeginLevel(int level)
+        {
+            if (level <= highestLevel+1)
+            {
+                currentLevel = new Level(level, levelGUI);
+                NavigateToMenu("level");
+            }
+        }
+
+        /// <summary>
         /// Ran when the game is initializing, sets up additional values
         /// </summary>
         protected override void Initialize()
@@ -182,9 +196,10 @@ namespace Commangineer
             titleScreenGUI = new TitleScreenGUI();
             levelGUI = new LevelGUI();
             currentLevel = new Level(1, levelGUI);
+            highestLevel = 0;
             settingsGUI = new SettingsGUI();
             settingsGUI.Enabled = false;
-            levelSelectGUI = new LevelSelectGUI();
+            levelSelectGUI = new LevelSelectGUI(highestLevel);
             currentGUI = titleScreenGUI;
             //initialize interface values
             previousKeyboardState = Keyboard.GetState();
