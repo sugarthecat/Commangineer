@@ -11,6 +11,7 @@
 		"music",
 		"nomusic",
 		"terneicon",
+		"electrumicon",
 		"selectedUnit",
 		"selectZone"
 	],
@@ -32,6 +33,10 @@
 		[ "leaves", "leaves" ],
 		[ "tree", "tree1" ],
 		[ "tree", "tree2" ],
+		[ "auukiDen", "auukiDen1" ],
+		[ "auukiDen", "auukiDen2" ],
+		[ "auukiDen", "auukiDen3" ],
+		[ "auukiDen", "auukiDen4" ],
 		[ "water", "water1" ],
 		[ "water", "water2" ],
 		[ "water", "water3" ],
@@ -46,7 +51,8 @@
 		[ "mountain", "mountain2" ],
 		[ "mountain", "mountain3" ],
 		[ "rat", "rat" ],
-		[ "scrap", "scrap" ]
+		[ "scrap", "scrap" ],
+		[ "boltShooter", "boltShooter" ]
 	],
 	"buttons": [
 		"generic",

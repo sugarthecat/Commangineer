@@ -221,6 +221,18 @@ namespace Commangineer
             }
         }
 
+        public AuukiTarget GetTarget(Vector2 position, float range)
+        {
+            for(int i = 0; i < auukiCreatures.Count; i++)
+            {
+                if ((position - auukiCreatures[i].CenterPosition).Length() < range)
+                {
+                    return auukiCreatures[i];
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Retreives how many tiles wide the level is
         /// </summary>
@@ -601,6 +613,29 @@ namespace Commangineer
             }
         }
 
+        internal void DestroyTilesUnderUnit(Unit playerUnit)
+        {
+
+            Point topLeft = new Point(
+                 (int)Math.Floor(playerUnit.Position.X),
+                 (int)Math.Floor(playerUnit.Position.Y)
+                 );
+            Point bottomRight = new Point(
+             (int)Math.Ceiling(playerUnit.Position.X + playerUnit.Size.X),
+             (int)Math.Ceiling(playerUnit.Position.Y + playerUnit.Size.Y)
+                );
+            //if any section is on an auukitile, remove the auukitile
+            for (int i = topLeft.X; i < bottomRight.X; i++)
+            {
+                for (int j = topLeft.Y; j < bottomRight.Y; j++)
+                {
+                    if (tiles[i, j].HasAuukiTile)
+                    {
+                        tiles[i, j].RemoveAuuki();
+                    }
+                }
+            }
+        }
         public void SpawnUnit()
         {
             UnitTemplate newUnit = unitEditor.currentUnit;
@@ -683,7 +718,7 @@ namespace Commangineer
             {
                 for (int j = topLeft.Y; j < bottomRight.Y; j++)
                 {
-                    if (tiles[i, j].IsSolid)
+                    if (tiles[i, j].IsSolid || tiles[i,j].HasAuukiStructure)
                     {
                         colliding = true;
                         goto Collided;

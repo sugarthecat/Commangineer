@@ -9,7 +9,7 @@ namespace Commangineer.Auuki.AuukiCreatures
 {
     internal class Bear : AuukiCreature
     {
-        public Bear(Vector2 position) : base(position, new Vector2(0.5f, 0.5f), Assets.GetTexture("rat"))
+        public Bear(Vector2 position) : base(position, new Vector2(3,3), Assets.GetTexture("rat"), 20)
         {
 
         }

@@ -10,7 +10,7 @@ namespace Commangineer.Auuki.AuukiStructures.Spawners
 {
     internal class DeerSpawner : Spawner
     {
-        public DeerSpawner(Point spawnPosition) : base(spawnPosition, new Point(2, 2), 1, 120)
+        public DeerSpawner(Point spawnPosition) : base(spawnPosition, new Point(2, 2), 1, 120, 5)
         {
 
         }

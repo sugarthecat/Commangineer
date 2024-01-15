@@ -11,7 +11,7 @@ namespace Commangineer.Auuki.AuukiStructures.Spawners
 {
     internal class RatSpawner : Spawner
     {
-        public RatSpawner(Point spawnPosition) : base(spawnPosition, new Point(1, 1), 0, 5)
+        public RatSpawner(Point spawnPosition) : base(spawnPosition, new Point(1, 1), 0,5,  5)
         {
 
         }

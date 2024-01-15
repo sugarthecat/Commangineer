@@ -11,7 +11,7 @@ namespace Commangineer.Auuki.AuukiStructures
     {
         float animalSpawnTime = 0;
         float animalSpawnProgress = 0;
-        public Spawner(Point spawnPosition, Point size, int minFloorTier, float animalSpawnTime) : base(spawnPosition, size, Assets.GetTexture("default"), minFloorTier)
+        public Spawner(Point spawnPosition, Point size, int minFloorTier, float animalSpawnTime, int health) : base(spawnPosition, size, Assets.GetTexture("auukiDen"), minFloorTier, health)
         {
             this.animalSpawnTime = animalSpawnTime;
         }

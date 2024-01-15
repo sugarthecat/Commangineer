@@ -33,6 +33,10 @@ namespace Commangineer.Units
         {
             get
             {
+                if(weapon != null)
+                {
+                    return weapon.Angle;
+                }
                 return 0;
             }
         }
@@ -64,7 +68,7 @@ namespace Commangineer.Units
         {
             return weapon.GetTexture();
         }
-        public void Update(float time, Vector2 unitPosition, float rotationAngle) 
+        public void Update(float time, Vector2 unitPosition, float rotationAngle, Level level) 
         {
             Vector2 rotatedOffset = new Vector2(
                 (float)(offsetPosition.X * Math.Cos(rotationAngle) - offsetPosition.Y * Math.Sin(rotationAngle)),
@@ -73,7 +77,11 @@ namespace Commangineer.Units
             position = unitPosition + rotatedOffset;
             if (weapon != null)
             {
-                weapon.Update(time);
+                if (!weapon.HasTarget)
+                {
+                    weapon.Target = level.GetTarget(position, weapon.Range);
+                }
+                weapon.Update(time, position);
             }           
         }
         public Vector2 Position

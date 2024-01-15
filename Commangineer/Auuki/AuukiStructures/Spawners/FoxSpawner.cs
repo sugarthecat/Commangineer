@@ -10,7 +10,7 @@ namespace Commangineer.Auuki.AuukiStructures.Spawners
 {
     internal class FoxSpawner : Spawner
     {
-        public FoxSpawner(Point spawnPosition) : base(spawnPosition, new Point(3, 3), 2, 180)
+        public FoxSpawner(Point spawnPosition) : base(spawnPosition, new Point(3, 3), 2, 180, 5)
         {
 
         }

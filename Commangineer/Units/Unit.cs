@@ -70,7 +70,7 @@ namespace Commangineer.Units
         {
             foreach (Slot w in weapons)
             {
-                w.Update(deltaTime, position+Size/2, Angle);
+                w.Update(deltaTime, position+Size/2, Angle, level);
             }
             Vector2 deltaPosition = position - goal;
             angle = (float)Math.Atan2(deltaPosition.Y, deltaPosition.X);

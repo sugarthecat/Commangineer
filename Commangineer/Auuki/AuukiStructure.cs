@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Commangineer.Auuki
 {
-    internal class AuukiStructure : TexturedObject
+    internal class AuukiStructure : TexturedObject, AuukiTarget
     {
         private Point position;
         private Point size;
@@ -12,12 +12,14 @@ namespace Commangineer.Auuki
         private int minFloorTier = 0;
         private bool alive = false;
         private int tileOn = 0;
-        protected AuukiStructure(Point position, Point size, Texture2D texture, int minFloorTier)
+        private int health = 0;
+        protected AuukiStructure(Point position, Point size, Texture2D texture, int minFloorTier, int health)
         {
             this.minFloorTier = minFloorTier;
             this.position = position;
             this.size = size;
             this.texture = texture;
+            this.health = health;
             tilesUnder = new Tile[size.X * size.Y];
         }
 
@@ -41,7 +43,22 @@ namespace Commangineer.Auuki
                 }
             }
         }
-
+        public void Damage(int damage)
+        {
+            health -= damage;
+            if(health <= 0)
+            {
+                Die();
+            }
+        }
+        private void Die()
+        {
+            alive = false;
+            for (int i = 0; i < tilesUnder.Length; i++)
+            {
+                tilesUnder[i].RemoveAuuki();
+            }
+        }
         public bool Alive
         {
             get { return alive; }
@@ -56,6 +73,7 @@ namespace Commangineer.Auuki
             if (tileOn < tilesUnder.Length)
             {
                 tilesUnder[tileOn] = newTile;
+                newTile.AuukiStructure = this;
                 tileOn++;
             }
         }
@@ -75,7 +93,14 @@ namespace Commangineer.Auuki
                 return new Vector2(position.X, position.Y);
             }
         }
+        public Vector2 CenterPosition
+        {
 
+            get
+            {
+                return Position + Size / 2;
+            }
+        }
         public Texture2D GetTexture()
         {
             return texture;

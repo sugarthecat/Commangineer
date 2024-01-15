@@ -25,7 +25,7 @@ namespace Commangineer.Units
         private int range;
         private int steamCost;
         private bool shooting;
-        private AuukiCreature target;
+        private AuukiTarget target;
         private Texture2D texture;
         public string Name { get => name; set => name = value; }
         internal Unit.turretSize TurretSize { get => turretSize; set => turretSize = value; }
@@ -68,6 +68,30 @@ namespace Commangineer.Units
             this.range = w.Range;
             this.steamCost = w.SteamCost;
         }
+        private float angle = (float)Math.PI/2;
+        public float Angle
+        {
+            get
+            {
+                return angle;
+            }
+        }
+        public bool HasTarget
+        {
+            get
+            {
+                return this.target != null;
+            }
+        }
+        public AuukiTarget Target
+        {
+            set
+            {
+                if(target == null) {
+                    target = value;
+                }
+            }
+        }
         public Texture2D GetTexture()
         {
             return texture;
@@ -77,8 +101,18 @@ namespace Commangineer.Units
             return turretSize;
         }
 
-        public void Update(float time)
+        public void Update(float time, Vector2 weaponPoint)
         {
+            if(target != null)
+            {
+
+                Vector2 deltaPosition = weaponPoint - target.CenterPosition;
+                angle = (float)Math.Atan2(deltaPosition.Y, deltaPosition.X);
+                if(deltaPosition.Length() > range)
+                {
+                    target = null;
+                }
+            }
             if (attackProgress > 0.0d)
             {
                 attackProgress -= time;

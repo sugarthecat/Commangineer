@@ -14,21 +14,23 @@ namespace Commangineer.Auuki
         Wander
 
     }
-    public class AuukiCreature : RotatableTexturedObject
+    public class AuukiCreature : RotatableTexturedObject, AuukiTarget
     {
         protected float speed = 1f;
         protected float direction = 0f;
         private float wanderDistanceLeft = 0f;
+        private int health;
         Vector2 position;
         AuukiAiMode behavior = AuukiAiMode.Wander;
         Texture2D texture;
         Vector2 size;
-        public AuukiCreature(Vector2 position, Vector2 size, Texture2D texture)
+        public AuukiCreature(Vector2 position, Vector2 size, Texture2D texture, int health)
         {
             Random genRandom = new Random();
             direction = (float)(genRandom.NextDouble() * 2 * Math.PI);
             wanderDistanceLeft = (float)genRandom.NextDouble() * 10;
             this.position = new Vector2(position.X - size.X / 2, position.Y - size.Y / 2);
+            this.health = health;
             this.size = size;
             this.texture = texture;
         }
@@ -38,7 +40,10 @@ namespace Commangineer.Auuki
             size = new Vector2(1f, 1f);
             texture = Assets.GetTexture("default");
         }
-
+        public void Damage(int damage)
+        {
+            health -= damage;
+        }
         public void Update(float deltaTime, Level level)
         {
             float prevX = position.X;
@@ -83,6 +88,13 @@ namespace Commangineer.Auuki
                 return size;
             }
         }
+        public bool Alive
+        {
+            get
+            {
+                return health >= 0;
+            }
+        }
         public AuukiAiMode Behavior
         {
             get
@@ -100,6 +112,14 @@ namespace Commangineer.Auuki
             get
             {
                 return position;
+            }
+        }
+        public Vector2 CenterPosition
+        {
+
+            get
+            {
+                return position+size/2;
             }
         }
     }

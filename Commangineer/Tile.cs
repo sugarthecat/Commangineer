@@ -32,7 +32,20 @@ namespace Commangineer
                 return AuukiTile != null;
             }
         }
-
+        public bool HasAuukiStructure
+        {
+            get
+            {
+                return (occupyingAuukiStructure != null && occupyingAuukiStructure.Alive);
+            }
+        }
+        public AuukiStructure AuukiStructure
+        {
+            set
+            {
+                occupyingAuukiStructure = value;
+            }
+        }
         /// <summary>
         ///
         /// </summary>
@@ -51,7 +64,10 @@ namespace Commangineer
         public virtual void InfectWithAuuki()
         {
         }
-
+        public void RemoveAuuki()
+        {
+            AuukiTile = null;
+        }
         /// <summary>
         /// Attempts to get infected with Auuki
         /// </summary>

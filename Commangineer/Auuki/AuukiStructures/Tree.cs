@@ -9,7 +9,7 @@ namespace Commangineer.Auuki.AuukiStructures
 {
     internal class Tree : AuukiStructure
     {
-        public Tree(Point spawnPosition) : base(spawnPosition, new Point(2, 2), Assets.GetTexture("tree"), 1)
+        public Tree(Point spawnPosition) : base(spawnPosition, new Point(2, 2), Assets.GetTexture("tree"), 1, 5)
         {
 
         }
