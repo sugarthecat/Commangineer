@@ -885,8 +885,8 @@ namespace Commangineer
                  (int)Math.Floor(playerUnit.Position.Y)
                  );
             Point bottomRight = new Point(
-             (int)Math.Ceiling(playerUnit.Position.X + playerUnit.Size.X),
-             (int)Math.Ceiling(playerUnit.Position.Y + playerUnit.Size.Y)
+             (int)Math.Floor(playerUnit.Position.X + playerUnit.Size.X),
+             (int)Math.Floor(playerUnit.Position.Y + playerUnit.Size.Y)
                 );
             //if any bit is out of bounds, it collides
             if (playerUnit.Position.X < 0
