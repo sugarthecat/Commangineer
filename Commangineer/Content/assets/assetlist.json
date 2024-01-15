@@ -32,7 +32,8 @@
     [ "deepwater", "deepwater2" ],
     [ "deepwater", "deepwater3" ],
     [ "deepwater", "deepwater4" ],
-    [ "weeds", "grassOverlay" ],
+    [ "weeds", "lightgrass1" ],
+    [ "weeds", "lightgrass2" ],
     [ "grass", "grassTemp" ],
     [ "leaves", "leaves" ],
     [ "tree", "tree1" ],
@@ -49,6 +50,12 @@
     [ "algae", "algae2" ],
     [ "algae", "algae3" ],
     [ "algae", "algae4" ],
+    [ "vine", "vine1" ],
+    [ "vine", "vine2" ],
+    [ "vine", "vine3" ],
+    [ "flowervine", "flowervine1" ],
+    [ "flowervine", "flowervine2" ],
+    [ "flowervine", "flowervine3" ],
     [ "lilypads", "lilypads1" ],
     [ "lilypads", "lilypads2" ],
     [ "mountain", "mountain3" ],
@@ -84,7 +91,8 @@
     "prev",
     "next",
     "forge",
-    "defaultButton"
+    "defaultButton",
+    "toggle-fullscreen"
   ],
   "sounds": [
     "test"

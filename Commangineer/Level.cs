@@ -460,6 +460,10 @@ namespace Commangineer
                     UpdateAuukiStructures(deltaTime);
                     UpdatePlayerUnits(deltaTime);
                 }
+                else
+                {
+                    dialogueGUIs[0].Update();
+                }
                 if (mouseState.ScrollWheelValue != previousMouseState.ScrollWheelValue)
                 {
                     Camera.UpdateScale(mouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);

@@ -18,7 +18,7 @@ namespace Commangineer.GUI_Types
         /// <summary>
         /// Loads in the GUI's elements
         /// </summary>
-        public DialogueGUI() : base(600, 400)
+        public DialogueGUI() : base(800, 500)
         {
             textAreas = new List<TextArea>();
             Enabled = false;

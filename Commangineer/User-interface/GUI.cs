@@ -208,10 +208,6 @@ namespace Commangineer.User_Interface
                     res = delegate { Commangineer.instance.ToggleSettings(); };
                     break;
 
-                case "ToggleFullscreen":
-                    res = delegate { Commangineer.instance.ToggleFullscreen(); };
-                    break;
-
                 case "ToggleMusic":
                     res = delegate { Settings.MusicEnabled = !Settings.MusicEnabled; };
                     break;

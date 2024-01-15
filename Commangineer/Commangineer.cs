@@ -37,7 +37,9 @@ namespace Commangineer
         public Commangineer()
         {
             instance = this;
-            Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize);
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize); 
+
             _graphics = new GraphicsDeviceManager(this);
             _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
@@ -62,6 +64,10 @@ namespace Commangineer
             _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             _graphics.ApplyChanges();
             currentGUI.Update();
+            if(currentGUI == levelGUI)
+            {
+                Camera.UpdateScale(0);
+            }
         }
 
         /// <summary>
@@ -122,9 +128,9 @@ namespace Commangineer
         /// <summary>
         /// Switches full screen on or off
         /// </summary>
-        public void ToggleFullscreen()
+        public static void ToggleFullscreen()
         {
-            _graphics.ToggleFullScreen();
+            instance._graphics.ToggleFullScreen();
         }
 
         /// <summary>
