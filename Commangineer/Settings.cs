@@ -13,7 +13,7 @@ namespace Commangineer
     /// </summary>
     public static class Settings
     {
-        private static bool musicEnabled = true;
+        private static bool musicEnabled = false;
         private static int levelOn = 1;
         private static string username = "Recruit";
         private static string settingsFile = Assembly.GetExecutingAssembly().Location + "/../Content/settings.json";
@@ -41,6 +41,7 @@ namespace Commangineer
             }
             else
             {
+                MusicEnabled = true;
                 getNewUserId();
                 Log.LogText("No settings file found. Defaulted.");
             }

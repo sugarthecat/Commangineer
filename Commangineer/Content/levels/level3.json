@@ -225,7 +225,7 @@
       "type": 2
     }
   ],
-  "events": [
+  "gameActions": [
     {
       "comparator": ">",
       "gameValue": "time",

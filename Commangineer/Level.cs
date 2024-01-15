@@ -231,7 +231,7 @@ namespace Commangineer
             }
             catch (Exception ex)
             {
-                Log.LogText("Error Loading Level: " + ex.Message);
+                Log.LogText("Error Loading Level: " + ex.Message + "," + ex.InnerException);
                 //TODO log exceptions
                 Commangineer.ExitGame();
             }
@@ -885,14 +885,14 @@ namespace Commangineer
                  (int)Math.Floor(playerUnit.Position.Y)
                  );
             Point bottomRight = new Point(
-             (int)Math.Floor(playerUnit.Position.X + playerUnit.Size.X),
-             (int)Math.Floor(playerUnit.Position.Y + playerUnit.Size.Y)
+             (int)Math.Ceiling(playerUnit.Position.X + playerUnit.Size.X),
+             (int)Math.Ceiling(playerUnit.Position.Y + playerUnit.Size.Y)
                 );
             //if any bit is out of bounds, it collides
             if (playerUnit.Position.X < 0
                 || playerUnit.Position.Y < 0
-                || playerUnit.Position.X + playerUnit.Size.X > tiles.GetLength(0) - 1
-                || playerUnit.Position.Y + playerUnit.Size.Y > tiles.GetLength(1) - 1)
+                || playerUnit.Position.X + playerUnit.Size.X > tiles.GetLength(0)
+                || playerUnit.Position.Y + playerUnit.Size.Y > tiles.GetLength(1))
             {
                 colliding = true;
                 goto Collided;
