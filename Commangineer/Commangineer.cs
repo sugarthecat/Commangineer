@@ -145,6 +145,7 @@ namespace Commangineer
             previousMouseState = Mouse.GetState();
             //initialize camera
             Camera.UpdateScale(0);
+            Log.LogText("Game Initialized");
         }
 
         protected override void LoadContent()

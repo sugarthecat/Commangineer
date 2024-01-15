@@ -111,6 +111,11 @@ namespace Commangineer.User_Interface
             }
         }
 
+        public bool GetEnabled()
+        {
+            return enabled;
+        }
+
         /// <summary>
         /// Draws all elements within the GUI
         /// </summary>

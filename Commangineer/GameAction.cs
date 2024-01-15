@@ -17,11 +17,10 @@ namespace Commangineer
         LessThan,
         GreaterThan    
     }
-    internal enum EventType
-    {
-        dialogue
-    }
 
+    /// <summary>
+    /// A class representing a action event when in levels, which can be triggered by a variety of trackers and is used to trigger events such as dialogue popups
+    /// </summary>
     internal class GameAction
     {
         private bool activated = false;
@@ -31,6 +30,10 @@ namespace Commangineer
         private List<Dictionary<string,string>> eventList;
         private int threshold;
 
+        /// <summary>
+        /// Inlitializes the action
+        /// </summary>
+        /// <param name="actionJSON">A JSON containing details of the action</param>
         public GameAction(JsonObject actionJSON)
         {
             gameValue = GameValue.GameTime;
@@ -58,6 +61,7 @@ namespace Commangineer
                     break;
             }
             threshold = (int)actionJSON["compareValue"];
+            // Loads in the action events that can get triggered
             foreach (JsonObject node in actionJSON["events"].AsArray())
             {
                 Dictionary<string, string> foundEvent = new Dictionary<string, string>();
