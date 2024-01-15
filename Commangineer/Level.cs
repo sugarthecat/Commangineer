@@ -76,12 +76,13 @@ namespace Commangineer
 
                 //load tiles
                 tiles = new Tile[width, height];
+
                 for (int i = 0; i < width; i++)
                 {
                     for (int j = 0; j < height; j++)
                     {
                         Point tilePoint = new Point(i, j);
-                        switch (tileMapString[i * width + j])
+                        switch (tileMapString[i * height + j])
                         {
                             case '0':
                                 tiles[i, j] = new DirtTile(tilePoint);
@@ -107,7 +108,7 @@ namespace Commangineer
                                 tiles[i, j] = new DirtTile(tilePoint);
                                 break;
                         }
-                        switch (auukiMapString[i * width + j])
+                        switch (auukiMapString[i * height + j])
                         {
                             case '1':
                                 //creates spotty grass
@@ -164,7 +165,7 @@ namespace Commangineer
                 JsonArray structures = levelJSON["structures"].AsArray();
                 auukiStructures = new AuukiStructure[structures.Count];
                 //Loop through and create an array for all structures
-                for (int i = 0; i < structures.Count; i++)
+                for (int i = 0; i < auukiStructures.Length; i++)
                 {
                     JsonNode structure = structures[i];
                     int xPos = (int)structure["x"];
