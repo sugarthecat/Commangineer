@@ -91,8 +91,7 @@
     "prev",
     "next",
     "forge",
-    "defaultButton",
-    "toggle-fullscreen"
+    "defaultButton"
   ],
   "sounds": [
     "test"

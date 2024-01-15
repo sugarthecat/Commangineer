@@ -194,12 +194,13 @@ namespace Commangineer
         /// <param name="level">The level beaten</param>
         public static void WinLevel(int level)
         {
-            if (level >= Settings.LevelOn)
+            if (level == Settings.LevelOn)
             {
                 Settings.LevelOn = level+1;
             }
             // Now next time we update we navigate back to level select, can't do it here as it's static
             completedLevel = true;
+            instance.levelSelectGUI = new LevelSelectGUI();
         }
 
         /// <summary>

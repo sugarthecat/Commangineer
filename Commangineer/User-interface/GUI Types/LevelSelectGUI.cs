@@ -23,7 +23,7 @@ namespace Commangineer.GUI_Types
                     Button nb;
                     Rectangle dimensions = new Rectangle(j * 100 + 60, i * 50 + 125, 75, 75);
                     int level = i * 5 + j + 1;
-                    if (level <= Settings.LevelOn+1)
+                    if (level <= Settings.LevelOn)
                     {
                         nb = new Button("defaultButton", dimensions, GetAction("BeginLevel", level.ToString()));
                     }

@@ -41,7 +41,7 @@ namespace Commangineer
             }
             else
             {
-                MusicEnabled = true;
+                musicEnabled = true;
                 getNewUserId();
                 Log.LogText("No settings file found. Defaulted.");
             }
