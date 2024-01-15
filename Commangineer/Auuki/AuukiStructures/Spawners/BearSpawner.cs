@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Auuki.AuukiCreatures;
+using Microsoft.Xna.Framework;
 
 namespace Commangineer.Auuki.AuukiStructures.Spawners
 {
@@ -19,7 +20,7 @@ namespace Commangineer.Auuki.AuukiStructures.Spawners
         protected override AuukiCreature CreateNewAnimal()
         {
             ClearSpawnProgress();
-            return new AuukiCreature(SpawnPosition);
+            return new Bear(SpawnPosition);
         }
     }
 }
