@@ -92,6 +92,11 @@
           "actionType": "dialogue",
           "character": "terne",
           "speech": "Here he comes!"
+        },
+
+        {
+          "actionType": "ai",
+          "behavior": "attack"
         }
       ]
     }

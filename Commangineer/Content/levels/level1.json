@@ -1,1 +1,73 @@
-{"width":20,"height":20,"tileMap":"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111000111111111111111110001111111111111110000011111111111110000000111111111111100000001111111111111000000011111111111110000000111111111111000000001111111111100000000011111111110000000000","floorAuukiMap":"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111100000000000000011111000000000000000111110000000000000001111100000000000000011111","structures":[],"events":[{"comparator":">","gameValue":"time","compareValue":5,"actions":[{"actionType":"dialogue","character":"terne","speech":"Please! Please!"},{"actionType":"dialogue","character":"electrum","speech":"Boy!"},{"actionType":"dialogue","character":"terne","speech":"Just teach me to be a Commangineer!"},{"actionType":"dialogue","character":"electrum","speech":"Sure! Cut some grass."},{"actionType":"dialogue","character":"terne","speech":"I dont know how!"},{"actionType":"dialogue","character":"electrum","speech":"Use my tool shop, right click to select it and forge something"}]},{"comparator":"==","gameValue":"units","compareValue":1,"actions":[{"actionType":"dialogue","character":"terne","speech":"I made one!"},{"actionType":"dialogue","character":"electrum","speech":"Great! Now just select with shift-click and send it towards that Auuki"}]}],"playerBase":{"x":1,"y":15},"resources":{"scrap":5,"iron":0,"tungsten":0}}
+{
+  "width": 20,
+  "height": 20,
+  "tileMap": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111000111111111111111110001111111111111110000011111111111110000000111111111111100000001111111111111000000011111111111110000000111111111111000000001111111111100000000011111111110000000000",
+  "floorAuukiMap": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111100000000000000011111000000000000000111110000000000000001111100000000000000011111",
+  "structures": [
+  ],
+  "events": [
+    {
+      "comparator": ">",
+      "gameValue": "time",
+      "compareValue": 5,
+      "actions": [
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "Please! Please!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "Boy!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "Just teach me to be a Commangineer!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "Sure! Cut some grass."
+        },
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "I dont know how!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "Use my tool shop, right click to select it and forge something"
+        }
+      ]
+    },
+    {
+      "comparator": "==",
+      "gameValue": "units",
+      "compareValue": 1,
+      "actions": [
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "I made one!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "Great! Now just select with shift-click and send it towards that Auuki"
+        }
+      ]
+    }
+  ],
+  "playerBase": {
+    "x": 1,
+    "y": 15
+  },
+  "resources": {
+    "scrap": 5,
+    "iron": 0,
+    "tungsten": 0
+  }
+}
