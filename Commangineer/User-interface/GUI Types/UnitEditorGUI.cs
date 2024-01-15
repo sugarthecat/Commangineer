@@ -11,9 +11,6 @@ namespace Commangineer.GUI_Types
     /// </summary>
     public class UnitEditorGUI : ScalingGUI
     {
-        private Weapon[] weapons;
-        private Chassis[] unitBases;
-        private Engine[] engines;
         private UnitTemplate[] templates;
 
         /// <summary>
@@ -47,8 +44,6 @@ namespace Commangineer.GUI_Types
             //lots of this remains unimplemented, but can be expanded in a future update.
             //time constraints limited unit editor implementation, unit spawn select created instead
 
-            unitBases = new Chassis[] {
-            };
             Engine engine1 = new Engine("engine1",
                     new MaterialBalance(20), 
                     2, 50, 20);
