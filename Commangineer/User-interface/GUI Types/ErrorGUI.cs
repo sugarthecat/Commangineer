@@ -6,10 +6,13 @@ using System.Text.RegularExpressions;
 namespace Commangineer.GUI_Types
 {
     /// <summary>
-    /// The GUI object for the title screen
+    /// The GUI object for any critical errors
     /// </summary>`
     public class ErrorGUI : ScalingGUI
     {
+        /// <summary>
+        /// Creates a new error screen, loading in its elements
+        /// </summary>
         public ErrorGUI(string msg, string info) : base(600, 400)
         {
             LoadElements("ErrorGUI");

@@ -5,6 +5,9 @@ using System;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// A class representing a tile, a square space in a level
+    /// </summary>
     public class Tile : TexturedObject
     {
         private Texture2D texture;
@@ -22,6 +25,9 @@ namespace Commangineer
             this.transmissionChance = transmissionChance;
         }
 
+        /// <summary>
+        /// Checks if the tile has Auuki on it
+        /// </summary>
         public bool HasAuukiTile
         {
             get
@@ -30,6 +36,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Checks if the tile has a Auuki Structure on it
+        /// </summary>
         public bool HasAuukiStructure
         {
             get
@@ -38,6 +47,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the current Auuki structure
+        /// </summary>
         public AuukiStructure AuukiStructure
         {
             set
@@ -51,9 +63,8 @@ namespace Commangineer
         }
 
         /// <summary>
-        ///
+        /// Gets the Auuki object of the tile
         /// </summary>
-        /// <returns></returns>
         public AuukiFloor Auuki
         {
             get
@@ -69,6 +80,9 @@ namespace Commangineer
         {
         }
 
+        /// <summary>
+        /// Removes Auuki from the tile
+        /// </summary>
         public void RemoveAuuki()
         {
             AuukiTile = null;
@@ -144,6 +158,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Gets if the tile is solid
+        /// </summary>
         public bool IsSolid
         {
             get

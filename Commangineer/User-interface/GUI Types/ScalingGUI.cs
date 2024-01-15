@@ -2,11 +2,19 @@
 
 namespace Commangineer.GUI_Types
 {
+    /// <summary>
+    /// A type of GUI which can be scaled
+    /// </summary>
     public class ScalingGUI : GUI
     {
         private int originalWidth;
         private int originalHeight;
 
+        /// <summary>
+        /// Creates a new Scaling GUI
+        /// </summary>
+        /// <param name="width">The width of the GUI</param>
+        /// <param name="height">The height of the GUI</param>
         public ScalingGUI(int width, int height) : base()
         {
             originalWidth = width;
@@ -29,6 +37,9 @@ namespace Commangineer.GUI_Types
             }
         }
 
+        /// <summary>
+        /// Updates the current GUI
+        /// </summary>
         public override void Update()
         {
             base.Update();

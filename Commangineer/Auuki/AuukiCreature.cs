@@ -6,12 +6,18 @@ using System.Collections.Generic;
 
 namespace Commangineer.Auuki
 {
+    /// <summary>
+    /// Different modes the Auuki AI can be in
+    /// </summary>
     public enum AuukiAiMode
     {
         Wander,
         Attack
     }
 
+    /// <summary>
+    /// A Auuki Creature
+    /// </summary>
     public class AuukiCreature : RotatableTexturedObject, AuukiTarget
     {
         protected float speed = 1f;
@@ -29,6 +35,7 @@ namespace Commangineer.Auuki
         private List<Point> path = new List<Point>();
         private PlayerTarget aggroUnit;
 
+        // Creates a new Auuki creature
         public AuukiCreature(Vector2 position, Vector2 size, Texture2D texture, int health)
         {
             Random genRandom = new Random();
@@ -40,6 +47,7 @@ namespace Commangineer.Auuki
             this.texture = texture;
         }
 
+        // Creates a new Auuki creature with just a position
         public AuukiCreature(Vector2 position)
         {
             this.position = new Vector2(position.X - 0.5f, position.Y - 0.5f);
@@ -47,11 +55,20 @@ namespace Commangineer.Auuki
             texture = Assets.GetTexture("default");
         }
 
+        /// <summary>
+        /// Damages the Auuki Creature
+        /// </summary>
+        /// <param name="damage">The amount of damage to deal</param>
         public void Damage(int damage)
         {
             health -= damage;
         }
 
+        /// <summary>
+        /// Damages the Auuki Creature from a attacking unit
+        /// </summary>
+        /// <param name="damage">The amount of damage to deal</param>
+        /// <param name="damageDealer">The unit attacking</param>
         public void Damage(int damage, Unit damageDealer)
         {
             health -= damage;
@@ -62,6 +79,11 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Updates the Auuki Creature
+        /// </summary>
+        /// <param name="deltaTime">The time since the last update</param>
+        /// <param name="level">The current level</param>
         public void Update(float deltaTime, Level level)
         {
             Random decisionRandom = new Random();
@@ -140,15 +162,26 @@ namespace Commangineer.Auuki
                 }
             }
         }
+        
+        /// <summary>
+        /// Makes the Auuki creature attack a player's unit
+        /// </summary>
+        /// <param name="target">The target to attack</param>
         private void Attack(PlayerTarget target)
         {
             target.Damage(damage);
         }
+        /// <summary>
+        /// Gets the Auuki creature's texture
+        /// </summary>
+        /// <returns>Auuki creature's texture</returns>
         public Texture2D GetTexture()
         {
             return texture;
         }
-
+        /// <summary>
+        /// Gets the Auuki creature's angle
+        /// </summary>
         public float Angle
         {
             get
@@ -156,13 +189,9 @@ namespace Commangineer.Auuki
                 return direction;
             }
         }
-        public AuukiAiMode AiMode
-        {
-            set
-            {
-                behavior = value;
-            }
-        }
+        /// <summary>
+        /// Gets the Auuki creature's size
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -170,7 +199,9 @@ namespace Commangineer.Auuki
                 return size;
             }
         }
-
+        /// <summary>
+        /// Checks if the Auuki creature is alive
+        /// </summary>
         public bool Alive
         {
             get
@@ -179,6 +210,9 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets/Sets the Auuki creature's ai mode
+        /// </summary>
         public AuukiAiMode Behavior
         {
             get
@@ -191,6 +225,9 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets the position of the Auuki creature
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -199,6 +236,9 @@ namespace Commangineer.Auuki
             }
         }
 
+        /// <summary>
+        /// Gets the center position of the Auuki creature
+        /// </summary>
         public Vector2 CenterPosition
         {
             get

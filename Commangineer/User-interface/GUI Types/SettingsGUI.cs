@@ -2,13 +2,17 @@
 {
     public class SettingsGUI : ScalingGUI
     {
-        private bool active = false;
-
+        /// <summary>
+        /// Loads in the GUI's elements
+        /// </summary>
         public SettingsGUI() : base(600, 400)
         {
             LoadElements("SettingsGUI");
         }
 
+        /// <summary>
+        /// Updates the Settings GUI
+        /// </summary>
         public override void Update()
         {
             base.Update();

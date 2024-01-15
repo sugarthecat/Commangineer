@@ -5,6 +5,9 @@ using System.Drawing;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// A unit in game
+    /// </summary>
     public class Unit : RotatableTexturedObject, PlayerTarget
     {
         private float angle = 0;
@@ -17,6 +20,9 @@ namespace Commangineer.Units
         private Vector2 position;
         private Vector2 goal;
 
+        /// <summary>
+        /// Gets the angle of the unit
+        /// </summary>
         public float Angle
         {
             get
@@ -25,6 +31,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets if the unit is alive
+        /// </summary>
         public bool Alive
         {
             get
@@ -33,6 +42,7 @@ namespace Commangineer.Units
             }
         }
 
+        // Constructs a new unit
         public Unit(UnitTemplate template, Vector2 spawnPosition)
         {
             health = template.Health;
@@ -48,6 +58,11 @@ namespace Commangineer.Units
             position = spawnPosition;
         }
 
+        /// <summary>
+        /// Updates the unit
+        /// </summary>
+        /// <param name="deltaTime">Time since last update</param>
+        /// <param name="level">The current level</param>
         public void Update(float deltaTime, Level level)
         {
             level.DestroyTilesUnderUnit(this);
@@ -77,17 +92,30 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Checks if the unit is within a boundary
+        /// </summary>
+        /// <param name="other">The boundary</param>
+        /// <returns>If the unit is withing a boundary</returns>
         public bool Intersects(RectangleF other)
         {
             return Bounds.IntersectsWith(other);
         }
 
+        /// <summary>
+        /// Checks if the unit is colliding with another unit
+        /// </summary>
+        /// <param name="other">The other unit</param>
+        /// <returns>If the unit is colliding</returns>
         public bool Collides(Unit other)
         {
             Vector2 deltaPosition = CenterPosition - other.CenterPosition;
             return (Size.X + other.Size.X) / 2 > deltaPosition.Length();
         }
 
+        /// <summary>
+        /// Gets the bounds of the unit
+        /// </summary>
         public RectangleF Bounds
         {
             get
@@ -96,6 +124,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Sets the unit's goal
+        /// </summary>
         public Vector2 Goal
         {
             set
@@ -104,6 +135,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the unit's size
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -112,6 +146,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the unit's position
+        /// </summary>
         public Vector2 Position
         {
             get
@@ -120,6 +157,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the unit's center position
+        /// </summary>
         public Vector2 CenterPosition
         {
             get
@@ -128,6 +168,10 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Damages the unit
+        /// </summary>
+        /// <param name="damage">The amount of damage to deal</param>
         public void Damage(int damage)
         {
             damage -= armour;
@@ -138,11 +182,19 @@ namespace Commangineer.Units
             health -= damage;
         }
 
+        /// <summary>
+        /// Gets the unit's texture
+        /// </summary>
+        /// <returns>The unit's texture</returns>
         public Texture2D GetTexture()
         {
             return chassis.Texture;
         }
 
+        /// <summary>
+        /// Draws the unit
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             Camera.Draw(spriteBatch, this);
@@ -152,6 +204,10 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Draws the bullet frames of the unit
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void DrawBulletFrames(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < weapons.Length; i++)
@@ -160,6 +216,10 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Draws the selected unit
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void DrawSelection(SpriteBatch spriteBatch)
         {
             Camera.DrawProjected(spriteBatch, Position, Size, Assets.GetImage("selectedUnit"));

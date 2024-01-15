@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// A weapon of a unit
+    /// </summary>
     public class Weapon
     {
         private string name;
@@ -19,6 +22,7 @@ namespace Commangineer.Units
         private AuukiTarget target;
         private Texture2D texture;
         private List<BulletFrame> bulletFrames = new List<BulletFrame>();
+        // Getters and setter for the properties
         public string Name { get => name; set => name = value; }
         public double ReloadTime { get => reloadTime; set => reloadTime = value; }
         public double ReloadProgress { get => reloadProgress; set => reloadProgress = value; }
@@ -27,6 +31,9 @@ namespace Commangineer.Units
         public MaterialBalance Cost { get => cost; }
         public bool Shooting { get => shooting; set => shooting = value; }
 
+        /// <summary>
+        /// Gets the bullet frames of the weapon
+        /// </summary>
         public BulletFrame[] BulletFrames
         {
             get
@@ -36,6 +43,7 @@ namespace Commangineer.Units
             }
         }
 
+        // Creates a new weapon
         public Weapon(string name, double reloadTime, int damage, int range, MaterialBalance cost, float size = 1f)
         {
             this.name = name;
@@ -46,6 +54,7 @@ namespace Commangineer.Units
             this.size = size;
         }
 
+        // Creates a new weapon from a preexisting weapon as a template
         public Weapon(Weapon w)
         {
             texture = Assets.GetTexture(w.name);
@@ -59,6 +68,9 @@ namespace Commangineer.Units
 
         private float angle = (float)Math.PI / 2;
 
+        /// <summary>
+        /// Gets the angle to be used
+        /// </summary>
         public float Angle
         {
             get
@@ -67,6 +79,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Checks if the weapon has a target
+        /// </summary>
         public bool HasTarget
         {
             get
@@ -75,6 +90,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the weapon's target
+        /// </summary>
         public AuukiTarget Target
         {
             set
@@ -94,11 +112,22 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Gets the weapon's texture
+        /// </summary>
+        /// <returns>The texture of the weapon</returns>
         public Texture2D GetTexture()
         {
             return texture;
         }
 
+        /// <summary>
+        /// Updates the weapon
+        /// </summary>
+        /// <param name="time">Time passed since the last update</param>
+        /// <param name="weaponPoint">The new weapon's point</param>
+        /// <param name="level">The current level</param>
+        /// <param name="firingUnit">The unit firing</param>
         public void Update(float time, Vector2 weaponPoint, Level level, Unit firingUnit)
         {
             for (int i = 0; i < bulletFrames.Count; i++)
@@ -139,6 +168,9 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Attacks with a weapon
+        /// </summary>
         private void Attack(Vector2 weaponPoint, Unit firingUnit)
         {
             target.Damage(damage, firingUnit);

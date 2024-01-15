@@ -7,12 +7,18 @@ using System.Text.Json.Nodes;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// Handles current user settings
+    /// </summary>
     public static class Settings
     {
         private static bool musicEnabled = true;
         private static int levelOn = 1;
         private static string settingsFile = Assembly.GetExecutingAssembly().Location + "/../Content/settings.json";
 
+        /// <summary>
+        /// Loads in settings from a JSON file in storage
+        /// </summary>
         public static void LoadSettings()
         {
             if (File.Exists(settingsFile))
@@ -35,6 +41,9 @@ namespace Commangineer
             }
         }
 
+        /// <summary>
+        /// Saves settings to a JSON file in storage
+        /// </summary>
         public static void SaveSettings()
         {
             Object settingsObject = new { musicEnabled = musicEnabled, levelOn = levelOn };
@@ -42,6 +51,9 @@ namespace Commangineer
             File.WriteAllText(settingsFile, JsonSerializer.Serialize<Object>(settingsObject));
         }
 
+        /// <summary>
+        /// If the music is enabled
+        /// </summary>
         public static bool MusicEnabled
         {
             get

@@ -3,6 +3,9 @@ using System.Numerics;
 
 namespace Commangineer.Units
 {
+    /// <summary>
+    /// The chassis of a unit
+    /// </summary>
     public class Chassis
     {
         private string name;
@@ -15,6 +18,7 @@ namespace Commangineer.Units
         private MaterialBalance cost;
         private Texture2D texture;
 
+        // Constructs a new Chassis
         public Chassis(string name, int armour, int weight, int health, float size, Slot[] turretSizes, MaterialBalance cost)
         {
             texture = Assets.GetTexture(name);
@@ -26,7 +30,7 @@ namespace Commangineer.Units
             this.turretSizes = turretSizes;
             this.cost = cost;
         }
-
+        // Getters for the Chassis
         public string Name
         { get { return name; } }
         public int Armour
@@ -40,6 +44,9 @@ namespace Commangineer.Units
         public MaterialBalance Cost
         { get { return cost; } }
 
+        /// <summary>
+        /// Gets the slots of the chassis
+        /// </summary>
         public Slot[] Weapons
         {
             get
@@ -48,11 +55,19 @@ namespace Commangineer.Units
             }
         }
 
+        /// <summary>
+        /// Sets the weapon of a chassis
+        /// </summary>
+        /// <param name="index">Which weapon slot to use</param>
+        /// <param name="weapon">Which weapon to use</param>
         public void SetWeapon(int index, Weapon weapon)
         {
             turretSizes[index].AddWeapon(weapon);
         }
 
+        /// <summary>
+        /// Gets the size of the chassis
+        /// </summary>
         public Vector2 Size
         {
             get
@@ -61,11 +76,10 @@ namespace Commangineer.Units
             }
         }
 
-        public Slot[] GetTurrets()
-        {
-            return turretSizes;
-        }
-
+        /// <summary>
+        /// Clones the chassis
+        /// </summary>
+        /// <returns>A clone of the chassis</returns>
         public Chassis Clone()
         {
             Chassis newChassis = new Chassis(name, armour, weight, health, size, new Slot[turretSizes.Length], cost);

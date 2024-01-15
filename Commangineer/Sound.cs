@@ -4,12 +4,16 @@ using System;
 
 namespace Commangineer
 {
+    /// <summary>
+    /// Represents a in game sound
+    /// </summary>
     public class Sound
     {
         private SoundEffect effect;
         private Vector2 position;
         private SoundEffectInstance instance;
 
+        // Constructors for the sound
         public Sound(String name)
         {
             createSound(name, Vector2.Zero);
@@ -20,6 +24,11 @@ namespace Commangineer
             createSound(name, emitterPosition);
         }
 
+        /// <summary>
+        /// Called by constructures to set up sound
+        /// </summary>
+        /// <param name="name">Asset name of the sound</param>
+        /// <param name="emitterPosition">The 2D position of the sound</param>
         private void createSound(String name, Vector2 emitterPosition)
         {
             effect = Assets.GetSound(name);
@@ -27,14 +36,25 @@ namespace Commangineer
             instance = null;
         }
 
+        /// <summary>
+        /// Changes the sound's position
+        /// </summary>
+        /// <param name="newPosition">The new position of the sound</param>
         public void MoveTo(Vector2 newPosition)
         {
             position = newPosition;
         }
 
+        /// <summary>
+        /// Neccessary method to set a default value for the listenerPosition
+        /// </summary>
         public void Play()
         { Play(Vector2.Zero); }
 
+        /// <summary>
+        /// Plays a sound
+        /// </summary>
+        /// <param name="listenerPosition">The location of where the user would be hearing things</param>
         public void Play(Vector2 listenerPosition)
         {
             if (instance != null) { Stop(); }
@@ -45,11 +65,18 @@ namespace Commangineer
             instance.Play();
         }
 
+        /// <summary>
+        /// Stops a sound from playing
+        /// </summary>
         public void Stop()
         {
             instance.Stop();
         }
 
+        /// <summary>
+        /// Gets the state of the Sound
+        /// </summary>
+        /// <returns>The sound state of the sound</returns>
         public SoundState GetState()
         {
             return instance.State;
