@@ -18,14 +18,21 @@ namespace Commangineer
         /// </summary>
         private static void CreateOutput()
         {
-            if (Directory.Exists(outLocation))
+            try
             {
-                File.WriteAllText(outLocation + "/" + logName, String.Empty);
+                if (Directory.Exists(outLocation))
+                {
+                    File.WriteAllText(outLocation + "/" + logName, String.Empty);
+                }
+                else
+                {
+                    Directory.CreateDirectory(outLocation);
+                    CreateOutput();
+                }
             }
-            else
+            catch
             {
-                Directory.CreateDirectory(outLocation);
-                CreateOutput();
+                Debug.WriteLine("cannot write error");
             }
         }
 
@@ -35,9 +42,16 @@ namespace Commangineer
         /// <param name="msg">The text to be added</param>
         private static void AppendOutput(string msg)
         {
-            using (StreamWriter sw = File.AppendText(outLocation + "/" + logName))
+            try
             {
-                sw.WriteLine(msg);
+                using (StreamWriter sw = File.AppendText(outLocation + "/" + logName))
+                {
+                    sw.WriteLine(msg);
+                }
+            }
+            catch
+            {
+                Debug.WriteLine("cannot write error");
             }
         }
 

@@ -236,7 +236,13 @@ namespace Commangineer
                 Commangineer.ExitGame();
             }
         }
-
+        public int LevelID
+        {
+            get
+            {
+                return levelNum;
+            }
+        }
         /// <summary>
         /// Gets a target to a Unit at a position within a certain range
         /// </summary>

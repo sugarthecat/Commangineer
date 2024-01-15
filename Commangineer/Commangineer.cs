@@ -28,7 +28,6 @@ namespace Commangineer
         private bool spriteBatchBegun;
         private Level currentLevel;
         private string lastError;
-        private static int highestLevel;
         private static bool completedLevel;
 
         /// <summary>
@@ -182,7 +181,7 @@ namespace Commangineer
         /// <param name="level"></param>
         public void BeginLevel(int level)
         {
-            if (level <= highestLevel+1)
+            if (level <= Settings.LevelOn)
             {
                 currentLevel = new Level(level, levelGUI);
                 NavigateToMenu("level");
@@ -195,9 +194,9 @@ namespace Commangineer
         /// <param name="level">The level beaten</param>
         public static void WinLevel(int level)
         {
-            if (level > highestLevel)
+            if (level >= Settings.LevelOn)
             {
-                highestLevel = level;
+                Settings.LevelOn = level+1;
             }
             // Now next time we update we navigate back to level select, can't do it here as it's static
             completedLevel = true;
@@ -217,10 +216,9 @@ namespace Commangineer
             titleScreenGUI = new TitleScreenGUI();
             levelGUI = new LevelGUI();
             currentLevel = new Level(1, levelGUI);
-            highestLevel = 0;
             settingsGUI = new SettingsGUI();
             settingsGUI.Enabled = false;
-            levelSelectGUI = new LevelSelectGUI(highestLevel);
+            levelSelectGUI = new LevelSelectGUI(Settings.LevelOn-1);
             currentGUI = titleScreenGUI;
             //initialize interface values
             previousKeyboardState = Keyboard.GetState();
@@ -300,6 +298,7 @@ namespace Commangineer
         {
             try
             {
+                
                 if (completedLevel)
                 {
                     completedLevel = false;
@@ -345,6 +344,14 @@ namespace Commangineer
                     if (currentGUI == levelGUI)
                     {
                         currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
+                        if (currentLevel.Won)
+                        {
+                            WinLevel(currentLevel.LevelID);
+                        }
+                        if(currentLevel.Lost)
+                        {
+                            completedLevel = true;
+                        }
                     }
                 }
                 else
