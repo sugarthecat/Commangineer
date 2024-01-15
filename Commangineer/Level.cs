@@ -37,6 +37,8 @@ namespace Commangineer
         private float gameTime = 0f;
         private LevelGUI currentGUI;
         private UnitEditorGUI unitEditor;
+        private int levelNum;
+        private bool winDialogueFinished;
 
         private bool selectingZone = false;
         private Vector2 zoneSelectionStart;
@@ -48,6 +50,8 @@ namespace Commangineer
         /// /// <param name="levelGUI">The gui corresponding to the level</param>
         public Level(int level, LevelGUI levelGUI)
         {
+            levelNum = level;
+            winDialogueFinished = false;
             currentGUI = levelGUI;
             unitEditor = new UnitEditorGUI();
             unitEditor.Enabled = false;
@@ -624,6 +628,12 @@ namespace Commangineer
                     case GameValue.AuukiUnitCount:
                         gameActions[i].Update(auukiCreatures.Count);
                         break;
+                    case GameValue.WonDialogue:
+                        gameActions[i].Update(Convert.ToInt32(this.Won));
+                        break;
+                    case GameValue.Won:
+                        gameActions[i].Update(Convert.ToInt32(this.Won && dialogueGUIs.Count == 0 && winDialogueFinished));
+                        break;
                 }
                 // If a action is activated, call it's respected event
                 if (gameActions[i].Active)
@@ -651,6 +661,12 @@ namespace Commangineer
                                         SpawningAuukiAiMode = AuukiAiMode.Attack;
                                         break;
                                 }
+                                break;
+                            case "win":
+                                Commangineer.WinLevel(levelNum);
+                                break;
+                            case "finishWinDialogue":
+                                winDialogueFinished = true;
                                 break;
                         }
                     }
@@ -916,7 +932,7 @@ namespace Commangineer
         public bool Won
         {
             get
-            {
+            { 
                 if(auukiCreatures.Count != 0)
                 {
                     return false;

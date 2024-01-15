@@ -1133,6 +1133,31 @@
           "behavior": "attack"
         }
       ]
+    },
+    {
+      "comparator": "==",
+      "gameValue": "wonDialogue",
+      "compareValue": 1,
+      "actions": [
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "You did it! You win!"
+        },
+        {
+          "actionType": "finishWinDialogue"
+        }
+      ]
+    },
+    {
+      "comparator": "==",
+      "gameValue": "won",
+      "compareValue": 1,
+      "actions": [
+        {
+          "actionType": "win"
+        }
+      ]
     }
   ]
 }

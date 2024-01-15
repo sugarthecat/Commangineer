@@ -10,7 +10,9 @@ namespace Commangineer
     {
         GameTime,
         PlayerUnitCount,
-        AuukiUnitCount
+        AuukiUnitCount,
+        WonDialogue,
+        Won
     }
 
     /// <summary>
@@ -19,7 +21,8 @@ namespace Commangineer
     public enum ValueRelationship
     {
         LessThan,
-        GreaterThan
+        GreaterThan,
+        Equals
     }
 
     /// <summary>
@@ -56,6 +59,12 @@ namespace Commangineer
                 case "auukiUnits":
                     gameValue = GameValue.AuukiUnitCount;
                     break;
+                case "wonDialogue":
+                    gameValue = GameValue.WonDialogue;
+                    break;
+                case "won":
+                    gameValue = GameValue.Won;
+                    break;
             }
             switch ((string)actionJSON["comparator"])
             {
@@ -65,6 +74,9 @@ namespace Commangineer
 
                 case ">":
                     comparison = ValueRelationship.GreaterThan;
+                    break;
+                case "==":
+                    comparison = ValueRelationship.Equals;
                     break;
             }
             threshold = (int)actionJSON["compareValue"];
@@ -122,7 +134,8 @@ namespace Commangineer
             if (activated)
             {
                 if ((comparison == ValueRelationship.LessThan && gameValue >= threshold)
-                    || (comparison == ValueRelationship.GreaterThan && gameValue <= threshold))
+                    || (comparison == ValueRelationship.GreaterThan && gameValue <= threshold)
+                    || (comparison == ValueRelationship.Equals && gameValue != threshold))
                 {
                     activated = false;
                 }
@@ -130,7 +143,8 @@ namespace Commangineer
             else if (!active)
             {
                 if ((comparison == ValueRelationship.LessThan && gameValue < threshold)
-                    || (comparison == ValueRelationship.GreaterThan && gameValue > threshold))
+                    || (comparison == ValueRelationship.GreaterThan && gameValue > threshold)
+                    || (comparison == ValueRelationship.Equals && gameValue == threshold))
                 {
                     active = true;
                 }
