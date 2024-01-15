@@ -221,7 +221,7 @@ namespace Commangineer
                 //load income
                 JsonNode resources = levelJSON["resources"];
                 income = new MaterialBalance(resources);
-                //Load actions
+                //Load actions=
                 JsonArray actions = levelJSON["events"].AsArray();
                 gameActions = new GameAction[actions.Count];
                 for (int i = 0; i < actions.Count; i++)
@@ -232,7 +232,7 @@ namespace Commangineer
             }
             catch (Exception ex)
             {
-                Log.LogText("Error Loading Level: " + ex.Message + "," + ex.InnerException);
+                Log.LogText("Error Loading Level: " + ex.Message + "," + ex.InnerException + "," + ex.StackTrace);
                 //TODO log exceptions
                 Commangineer.ExitGame();
             }

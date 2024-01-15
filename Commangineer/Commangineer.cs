@@ -299,7 +299,6 @@ namespace Commangineer
         {
             try
             {
-                
                 if (completedLevel)
                 {
                     completedLevel = false;
@@ -308,6 +307,7 @@ namespace Commangineer
                 MouseState mouseState = Mouse.GetState();
                 KeyboardState keyboardState = Keyboard.GetState();
                 Keys[] pressedKeys = keyboardState.GetPressedKeys();
+
                 if (windowActive)
                 {
                     //handle left click
@@ -390,6 +390,7 @@ namespace Commangineer
             lastError = informationString;
             Log.LogText(informationString);
             currentGUI = new ErrorGUI(msg, informationString);
+            Log.LogText(currentGUI.ToString());
         }
 
         /// <summary>
