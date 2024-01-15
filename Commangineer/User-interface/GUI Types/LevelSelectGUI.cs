@@ -18,7 +18,7 @@ namespace Commangineer.GUI_Types
             LoadElements("LevelSelectGUI");
             for (int i = 0; i < 1; i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     Button nb;
                     Rectangle dimensions = new Rectangle(j * 100 + 60, i * 50 + 125, 75, 75);

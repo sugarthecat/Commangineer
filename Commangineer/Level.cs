@@ -637,7 +637,7 @@ namespace Commangineer
                         break;
 
                     case GameValue.PlayerUnitCount:
-                        gameActions[i].Update(0);
+                        gameActions[i].Update(playerUnits.Count);
                         break;
 
                     case GameValue.AuukiUnitCount:
