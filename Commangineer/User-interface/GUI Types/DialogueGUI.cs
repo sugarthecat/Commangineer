@@ -44,7 +44,7 @@ namespace Commangineer.GUI_Types
         public void ChangeText(string newText)
         {
             ClearText();
-            TextArea newTextElement = new TextArea(new Rectangle(100, 300, 550, 50), Assets.GetFont("pixel"), newText);
+            TextArea newTextElement = new TextArea(new Rectangle(125, 300, 550, 50), Assets.GetFont("pixel"), newText);
             textAreas.Add(newTextElement);
             AddGuiElement(newTextElement);
         }
