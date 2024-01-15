@@ -111,11 +111,28 @@ namespace Commangineer
         /// </summary>
         private static async void SaveRuntimeSettings()
         {
-            using HttpResponseMessage response = await sharedClient.GetAsync("getSettings.php?userid=" + userID + "&rank=1&fname=1&lname="+username + "&audio=" + (musicEnabled ? 0 : 1));
+            string[] parts = username.Split(' ');
+            string rank = "Recruit";
+            if(parts.Length > 0 ) { 
+                rank = parts[0];
+            }
+            string firstName = "Cobalt";
+            if (parts.Length > 1)
+            {
+                firstName = parts[1];
+            }
+            string lastName = "Hammer";
+            if(parts.Length > 2 )
+            {
+                lastName = parts[2];
+            }
+            string getString = "setSettings.php?userid=" + userID + "&rank=" + rank + "&fname="+firstName+"&lname=" + lastName + "&audio=" + (musicEnabled ? 0 : 1);
+            Log.LogText("Requesting " + getString);
+            using HttpResponseMessage response = await sharedClient.GetAsync(getString);
 
 
             string stringResponse = await response.Content.ReadAsStringAsync();
-            Log.LogText(stringResponse);
+            Log.LogText("sent request");
         }
         /// <summary>
         /// If the music is enabled
