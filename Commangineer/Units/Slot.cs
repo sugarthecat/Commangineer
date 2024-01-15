@@ -14,6 +14,11 @@ namespace Commangineer.Units
         {
             offsetPosition = turretPosition;
         }
+        public Slot(Vector2 turretPosition, Weapon weapon)
+        {
+            offsetPosition = turretPosition;
+            this.weapon = new Weapon(weapon);
+        }
 
         public Slot(Slot oldSlot)
         {
@@ -41,17 +46,9 @@ namespace Commangineer.Units
         /// </summary>
         /// <param name="w">weapon to add to slot</param>
         /// <returns>true if weapon successfully added else false</returns>
-        public bool AddWeapon(Weapon w)
+        public void AddWeapon(Weapon w)
         {
-            if (weapon == null)
-            {
-                weapon = new Weapon(w);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            weapon = new Weapon(w);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -76,7 +73,8 @@ namespace Commangineer.Units
 
         public Texture2D GetTexture()
         {
-            return weapon.GetTexture();
+            Texture2D weaponTexture = weapon.GetTexture();
+            return weaponTexture;
         }
 
         public void Update(float time, Vector2 unitPosition, float rotationAngle, Level level, Unit firingUnit)
@@ -108,7 +106,7 @@ namespace Commangineer.Units
         {
             get
             {
-                return new Vector2(1, 1);
+                return weapon.Size;
             }
         }
     }

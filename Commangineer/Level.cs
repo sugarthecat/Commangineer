@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -418,12 +419,9 @@ namespace Commangineer
                     if (Math.Floor(gameTime + deltaTime) != Math.Floor(gameTime))
                     {
                         //if new second,give 10 scrap, 2 iron, 5 tungsten. Add to editor.
-                        resources[MaterialType.Scrap] += 10;
-                        resources[MaterialType.Iron] += 2;
-                        if (Math.Floor(gameTime) % 10 == 0)
-                        {
-                            resources[MaterialType.Tungsten] += 5;
-                        }
+                        resources[MaterialType.Scrap] += 100;
+                        resources[MaterialType.Iron] += 200;
+                        resources[MaterialType.Tungsten] += 500;
                     }
                     gameTime += deltaTime;
                     UpdateActions();
@@ -450,7 +448,16 @@ namespace Commangineer
         {
             for (int i = 0; i < playerUnits.Count; i++)
             {
-                playerUnits[i].Update(deltaTime, this);
+                if (playerUnits[i].Alive)
+                {
+                    playerUnits[i].Update(deltaTime, this);
+                }
+                else
+                {
+                    playerUnits.RemoveAt(i);
+                    i--;
+                }
+                
             }
             if (playerUnitQueue.Count > 0 && !Collides(playerUnitQueue.Peek()))
             {
@@ -733,7 +740,7 @@ namespace Commangineer
         public void SpawnUnit(int unitIndex)
         {
             UnitTemplate newUnit = unitEditor.GetUnit(unitIndex);
-            if (resources.GreaterThan(newUnit.MaterialCost))
+            if (newUnit != null && resources.GreaterThan(newUnit.MaterialCost))
             {
                 // newUnit is actually a unit template, a real position need to be given
                 Unit spawnableUnit = new Unit(newUnit, playerBase.Position);

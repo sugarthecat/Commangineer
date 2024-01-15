@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -87,7 +88,7 @@ namespace Commangineer
                         }
                         catch (Exception e)
                         {
-                            Log.LogText("Error loading image " + s + e.Message);
+                            Log.LogText("Error loading image " + s +","+ e.Message);
                         }
                     }
                     foreach (JsonNode node in res["textures"].AsArray())
@@ -96,9 +97,9 @@ namespace Commangineer
                         {
                             LoadTexture((string)node[0], (string)node[1]);
                         }
-                        catch
+                        catch(Exception exception)
                         {
-                            Log.LogText("Error loading texture " + node.ToJsonString());
+                            Log.LogText("Error loading texture " + node.ToJsonString() + ", " + exception.Message);
                         }
                     }
                     foreach (string s in res["buttons"].AsArray())
@@ -212,11 +213,11 @@ namespace Commangineer
         /// <returns>The requested 2d texture</returns>
         public static Texture2D GetTexture(string name)
         {
-            if (textures.ContainsKey(name))
+            try
             {
+
                 return textures[name][accessRandom.Next(textures[name].Count)];
-            }
-            else
+            }catch
             {
                 Log.LogText("Texture grab error: " + name);
                 return images["default"];

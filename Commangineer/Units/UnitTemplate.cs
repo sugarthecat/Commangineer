@@ -41,6 +41,31 @@ namespace Commangineer.Units
             this.health = this.maxHealth;
             this.armour = chassis.Armour;
         }
+        public UnitTemplate(Chassis chassis, Engine engine, Weapon[] weapons)
+        {
+            int weight = chassis.Weight + engine.Weight;
+            double speed;
+
+            this.chassis = chassis.Clone();
+            this.engine = engine.Clone();
+            int horse = engine.Horsepower;
+
+            speed = Math.Pow((double)horse / weight, 0.3d);
+
+            if (speed > engine.Speed)
+            {
+                speed = engine.Speed;
+            }
+            for(int i = 0;  i < Math.Min(weapons.Length,this.chassis.Weapons.Length); i++)
+            {
+                this.chassis.SetWeapon(i, new Weapon(weapons[i]));
+            }
+
+            this.speed = speed;
+            this.maxHealth = chassis.Health;
+            this.health = this.maxHealth;
+            this.armour = chassis.Armour;
+        }
 
         public MaterialBalance MaterialCost
         {

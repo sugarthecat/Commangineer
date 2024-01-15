@@ -68,7 +68,7 @@ namespace Commangineer.Units
 
         public Chassis Clone()
         {
-            Chassis newChassis = new Chassis(name, armour, weight, health, size, new Slot[turretSizes.Length], new MaterialBalance());
+            Chassis newChassis = new Chassis(name, armour, weight, health, size, new Slot[turretSizes.Length], cost);
             for (int i = 0; i < turretSizes.Length; i++)
             {
                 newChassis.turretSizes[i] = new Slot(turretSizes[i]);

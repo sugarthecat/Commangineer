@@ -13,14 +13,6 @@
       "size": [ 25, 25 ],
       "actionName": "ExitUnitEditor",
       "actionValue": ""
-    },
-    "spawnUnitButton": {
-      "name": "spawnUnit",
-      "type": "Button",
-      "position": [ 100, 310 ],
-      "size": [ 100, 25 ],
-      "actionName": "SpawnUnit",
-      "actionValue": ""
     }
   }
 }

@@ -59,7 +59,13 @@
     [ "iron", "iron" ],
     [ "tungsten", "tungsten" ],
     [ "model1", "model1" ],
-    [ "boltShooter", "boltShooter" ]
+    [ "model2", "model2" ],
+    [ "model3", "model3" ],
+    [ "boltShooter", "boltShooter" ],
+    [ "musket", "musket" ],
+    [ "machineGun", "machineGun" ],
+    [ "revolver", "revolver" ],
+    [ "cannon", "cannon" ]
   ],
   "buttons": [
     "generic",
@@ -72,7 +78,8 @@
     "settings",
     "x",
     "prev",
-    "next"
+    "next",
+    "forge"
   ],
   "sounds": [
     "test"

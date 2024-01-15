@@ -39,7 +39,7 @@ namespace Commangineer
     public static class Pathfinding
     {
         private static Tile[,] map;
-        private static bool[,] validPath;
+        private static bool[,] blockedPath;
         private static float[,] pathStart;
         private static float[,] pathGoal;
         private static float[,] pathTotal;
@@ -158,7 +158,7 @@ namespace Commangineer
             pathTotal = new float[width, height];
             search = new bool[width, height];
             enter = new Point[width, height];
-            validPath = new bool[width, height];
+            blockedPath = new bool[width, height];
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
@@ -176,7 +176,7 @@ namespace Commangineer
                             {
                                 if(i-i2 >= 0 && j-j2 >= 0)
                                 {
-                                    validPath[i - i2, j - j2] = false;
+                                    blockedPath[i - i2, j - j2] = true;
                                 }
                             }
                         }
@@ -190,7 +190,7 @@ namespace Commangineer
         {
             if (p.X != 0)
             {
-                if (validPath[p.X - 1, p.Y])
+                if (!blockedPath[p.X - 1, p.Y])
                 {
                     if (pathTotal[p.X - 1, p.Y] == 0 || pathStart[p.X - 1, p.Y] > pathStart[p.X, p.Y] + 1)
                     {
@@ -217,7 +217,7 @@ namespace Commangineer
 
             if (p.Y != 0)
             {
-                if (validPath[p.X, p.Y - 1])
+                if (!blockedPath[p.X, p.Y - 1])
                 {
                     if (pathTotal[p.X, p.Y - 1] == 0 || pathStart[p.X, p.Y - 1] > pathStart[p.X, p.Y] + 1)
                     {
@@ -244,7 +244,7 @@ namespace Commangineer
 
             if (p.X != map.GetLength(0) - 1)
             {
-                if (validPath[p.X + 1, p.Y])
+                if (!blockedPath[p.X + 1, p.Y])
                 {
                     if (pathTotal[p.X + 1, p.Y] == 0 || pathStart[p.X + 1, p.Y] > pathStart[p.X, p.Y] + 1)
                     {
@@ -271,7 +271,7 @@ namespace Commangineer
 
             if (p.Y != map.GetLength(1) - 1)
             {
-                if (validPath[p.X, p.Y + 1])
+                if (!blockedPath[p.X, p.Y + 1])
                 {
                     if (pathTotal[p.X, p.Y + 1] == 0 || pathStart[p.X, p.Y + 1] > pathStart[p.X, p.Y] + 1)
                     {

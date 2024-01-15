@@ -12,6 +12,7 @@ namespace Commangineer.Units
         private double reloadTime;
         private double reloadProgress;
         private int damage;
+        private float size;
         private int range;
         private MaterialBalance cost;
         private bool shooting;
@@ -35,13 +36,14 @@ namespace Commangineer.Units
             }
         }
 
-        public Weapon(string name, double reloadTime, int damage, int range, MaterialBalance cost)
+        public Weapon(string name, double reloadTime, int damage, int range, MaterialBalance cost, float size = 1f)
         {
             this.name = name;
             this.reloadTime = reloadTime;
             this.damage = damage;
             this.range = range;
             this.cost = cost;
+            this.size = size;
         }
 
         public Weapon(Weapon w)
@@ -52,6 +54,7 @@ namespace Commangineer.Units
             this.damage = w.Damage;
             this.range = w.Range;
             this.cost = w.Cost;
+            this.size = w.size;
         }
 
         private float angle = (float)Math.PI / 2;
@@ -80,6 +83,14 @@ namespace Commangineer.Units
                 {
                     target = value;
                 }
+            }
+        }
+
+        public Vector2 Size
+        {
+            get
+            {
+                return new Vector2(size, size);
             }
         }
 
@@ -130,7 +141,7 @@ namespace Commangineer.Units
 
         private void Attack(Vector2 weaponPoint, Unit firingUnit)
         {
-                 target.Damage(damage, firingUnit);
+            target.Damage(damage, firingUnit);
             bulletFrames.Add(new BulletFrame(weaponPoint, target.CenterPosition));
         }
     }

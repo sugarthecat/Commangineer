@@ -55,14 +55,16 @@ namespace Commangineer.Auuki
         public void Damage(int damage, Unit damageDealer)
         {
             health -= damage;
-            if (aggroUnit == null)
+            if (aggroUnit == null || (CenterPosition-damageDealer.CenterPosition).Length() < (CenterPosition-aggroUnit.CenterPosition).Length() )
             {
                 aggroUnit = damageDealer;
+                path = new List<Point>();
             }
         }
 
         public void Update(float deltaTime, Level level)
         {
+            Random decisionRandom = new Random();
             attackProgress += deltaTime;
             if (attackProgress > attackTime)
             {
@@ -74,11 +76,11 @@ namespace Commangineer.Auuki
             }
             if (behavior == AuukiAiMode.Attack || aggroUnit != null)
             {
-                if (aggroUnit == null)
+                if (aggroUnit == null || decisionRandom.NextDouble() < 0.005)
                 {
                     aggroUnit = level.GetUnitTarget(position, 20);
                 }
-                if (path.Count == 0)
+                if (path.Count == 0 || decisionRandom.NextDouble() < 0.001)
                 {
                     path = Pathfinding.FindPath(position.ToPoint(), aggroUnit.CenterPosition.ToPoint(), new Point((int)Math.Ceiling(Size.X), (int)Math.Ceiling(Size.Y)));
                 }
@@ -103,7 +105,7 @@ namespace Commangineer.Auuki
                         {
                             path.RemoveAt(0);
                         }
-                        if(attackProgress == attackTime)
+                        if(attackProgress == attackTime && nextDestination == aggroUnit.CenterPosition)
                         {
                             Attack(aggroUnit);
                         }

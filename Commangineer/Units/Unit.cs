@@ -38,8 +38,12 @@ namespace Commangineer.Units
             health = template.Health;
             armour = template.Armour;
             speed = template.Speed;
-            chassis = template.Chassis;
-            weapons = template.Weapons;
+            chassis = template.Chassis.Clone();
+            weapons = new Slot[template.Weapons.Length];
+            for(int i = 0; i < template.Weapons.Length; i++)
+            {
+                weapons[i] = new Slot(template.Weapons[i]);
+            }
             goal = spawnPosition - new Vector2(0, Size.Y);
             position = spawnPosition;
         }
