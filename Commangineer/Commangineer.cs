@@ -218,7 +218,7 @@ namespace Commangineer
             currentLevel = new Level(1, levelGUI);
             settingsGUI = new SettingsGUI();
             settingsGUI.Enabled = false;
-            levelSelectGUI = new LevelSelectGUI(Settings.LevelOn-1);
+            levelSelectGUI = new LevelSelectGUI();
             currentGUI = titleScreenGUI;
             //initialize interface values
             previousKeyboardState = Keyboard.GetState();

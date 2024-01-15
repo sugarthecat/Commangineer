@@ -13,7 +13,7 @@ namespace Commangineer.GUI_Types
         /// <summary>
         /// Loads in the GUI's elements
         /// </summary>
-        public LevelSelectGUI(int maxLevel) : base(600, 400)
+        public LevelSelectGUI() : base(600, 400)
         {
             LoadElements("LevelSelectGUI");
             for (int i = 0; i < 1; i++)
@@ -23,13 +23,13 @@ namespace Commangineer.GUI_Types
                     Button nb;
                     Rectangle dimensions = new Rectangle(j * 100 + 60, i * 50 + 125, 75, 75);
                     int level = i * 5 + j + 1;
-                    if (level <= maxLevel+1)
+                    if (level <= Settings.LevelOn+1)
                     {
                         nb = new Button("defaultButton", dimensions, GetAction("BeginLevel", level.ToString()));
                     }
                     else
                     {
-                        nb = new Button("x", dimensions, GetAction("BeginLevel", level.ToString())) ;
+                        nb = new Button("x", dimensions);
                     }
                     AddGuiElement(nb);
                 }
