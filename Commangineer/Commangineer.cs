@@ -28,7 +28,8 @@ namespace Commangineer
         private bool spriteBatchBegun;
         private Level currentLevel;
         private string lastError;
-        private int highestLevel;
+        private static int highestLevel;
+        private static bool completedLevel;
 
         /// <summary>
         /// Sets up basic values of the game
@@ -183,6 +184,20 @@ namespace Commangineer
         }
 
         /// <summary>
+        /// Called when a level is won
+        /// </summary>
+        /// <param name="level">The level beaten</param>
+        public static void WinLevel(int level)
+        {
+            if (level > highestLevel)
+            {
+                highestLevel = level;
+            }
+            // Now next time we update we navigate back to level select, can't do it here as it's static
+            completedLevel = true;
+        }
+
+        /// <summary>
         /// Ran when the game is initializing, sets up additional values
         /// </summary>
         protected override void Initialize()
@@ -279,6 +294,11 @@ namespace Commangineer
         {
             try
             {
+                if (completedLevel)
+                {
+                    completedLevel = false;
+                    NavigateToMenu("levelSelect");
+                }
                 MouseState mouseState = Mouse.GetState();
                 KeyboardState keyboardState = Keyboard.GetState();
                 Keys[] pressedKeys = keyboardState.GetPressedKeys();
