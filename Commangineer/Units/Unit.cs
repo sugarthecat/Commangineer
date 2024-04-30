@@ -19,7 +19,6 @@ namespace Commangineer.Units
 
         private Vector2 position;
         private Vector2 goal;
-
         /// <summary>
         /// Gets the angle of the unit
         /// </summary>
@@ -50,7 +49,7 @@ namespace Commangineer.Units
             speed = template.Speed;
             chassis = template.Chassis.Clone();
             weapons = new Slot[template.Weapons.Length];
-            for(int i = 0; i < template.Weapons.Length; i++)
+            for (int i = 0; i < template.Weapons.Length; i++)
             {
                 weapons[i] = new Slot(template.Weapons[i]);
             }
@@ -68,28 +67,31 @@ namespace Commangineer.Units
             level.DestroyTilesUnderUnit(this);
             foreach (Slot w in weapons)
             {
-                w.Update(deltaTime, position + Size / 2, Angle, level,this);
+                w.Update(deltaTime, position + Size / 2, Angle, level, this);
             }
-            Vector2 deltaPosition = position - goal;
-            if (deltaPosition.Length() > deltaTime * (float)speed)
-            {
-                angle = (float)Math.Atan2(deltaPosition.Y, deltaPosition.X);
-            }
-            Vector2 previousPosition = position;
-            float length = deltaPosition.Length();
-            if (length < deltaTime * (float)speed)
-            {
-                position = goal;
-            }
-            else
-            {
-                deltaPosition *= deltaTime * (float)speed / length;
-                position = position - deltaPosition;
-            }
-            if (level.Collides(this))
-            {
-                position = previousPosition;
-            }
+                Vector2 deltaPosition = position - goal;
+                if (deltaPosition.Length() > deltaTime * (float)speed)
+                {
+                    angle = (float)Math.Atan2(deltaPosition.Y, deltaPosition.X);
+                }
+                Vector2 previousPosition = position;
+                float length = deltaPosition.Length();
+                if (length < deltaTime * (float)speed)
+                {
+                    position = goal;
+                }
+                else
+                {
+                    deltaPosition *= deltaTime * (float)speed / length;
+                    position = position - deltaPosition;
+                }
+                
+                if (level.Collides(this))
+                {
+                    position = previousPosition;
+                }
+               
+            
         }
 
         /// <summary>
@@ -164,7 +166,7 @@ namespace Commangineer.Units
         {
             get
             {
-                return position + Size / 2;
+                return position + (Size / 2);
             }
         }
 

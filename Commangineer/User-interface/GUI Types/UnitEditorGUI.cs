@@ -46,7 +46,7 @@ namespace Commangineer.GUI_Types
 
             Engine engine1 = new Engine("engine1",
                     new MaterialBalance(20), 
-                    2, 50, 20);
+                    15, 250, 20);
             Engine engine2 = new Engine("engine2",
                     new MaterialBalance(5, 20),
                     5, 800, 50);
