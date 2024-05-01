@@ -47,7 +47,7 @@ namespace Commangineer.Units
         /// <summary>
         /// Gets the slots of the chassis
         /// </summary>
-        public Slot[] Weapons
+        public Slot[] Slots
         {
             get
             {

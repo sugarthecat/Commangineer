@@ -177,6 +177,10 @@ namespace Commangineer.User_Interface
         /// </summary>
         public virtual void Update()
         {
+            for(int i = 0; i<subGUIs.Count; i++)
+            {
+                subGUIs[i].Update();
+            }
         }
 
         /// <summary>
@@ -217,7 +221,7 @@ namespace Commangineer.User_Interface
                     break;
 
                 case "SpawnUnit":
-                    res = delegate { Commangineer.Level.SpawnUnit(0); };
+                    res = delegate { Commangineer.Level.SpawnUnit(); };
                     break;
 
                 default:

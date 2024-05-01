@@ -25,29 +25,7 @@ namespace Commangineer.Units
         private double speed;
         private Chassis chassis;
         private Engine engine;
-
-        // Creates a new unit template
-        public UnitTemplate(Chassis chassis, Engine engine)
-        {
-            int weight = chassis.Weight + engine.Weight;
-            double speed;
-
-            this.chassis = chassis;
-            this.engine = engine;
-            int horse = engine.Horsepower;
-
-            speed = Math.Pow((double)horse / weight, 0.3d);
-
-            if (speed > engine.Speed)
-            {
-                speed = engine.Speed;
-            }
-
-            this.speed = speed;
-            this.maxHealth = chassis.Health;
-            this.health = this.maxHealth;
-            this.armour = chassis.Armour;
-        }
+        private Weapon[] weapons;
         public UnitTemplate(Chassis chassis, Engine engine, Weapon[] weapons)
         {
             int weight = chassis.Weight + engine.Weight;
@@ -63,15 +41,23 @@ namespace Commangineer.Units
             {
                 speed = engine.Speed;
             }
-            for(int i = 0;  i < Math.Min(weapons.Length,this.chassis.Weapons.Length); i++)
+            weapons = new Weapon[chassis.Slots.Length];
+            for (int i = 0;  i < Math.Min(weapons.Length,this.chassis.Slots.Length); i++)
             {
-                this.chassis.SetWeapon(i, new Weapon(weapons[i]));
+                weapons[i]= new Weapon(weapons[i]);
             }
 
             this.speed = speed;
-            this.maxHealth = chassis.Health;
-            this.health = this.maxHealth;
-            this.armour = chassis.Armour;
+            maxHealth = chassis.Health;
+            health = maxHealth;
+            armour = chassis.Armour;
+        }
+        public Slot[] Slots
+        {
+            get
+            {
+                return chassis.Slots;
+            }
         }
 
         /// <summary>
@@ -109,7 +95,17 @@ namespace Commangineer.Units
         public double Speed
         { get { return speed; } }
         public Slot[] Weapons
-        { get { return chassis.Weapons; } }
+        {
+            get {
+                Slot[] slots = new Slot[weapons.Length];
+                for(int i = 0; i<chassis.Slots.Length; i++)
+                {
+                    slots[i] = new Slot(chassis.Slots[i]);
+                    slots[i].AddWeapon(weapons[i]);
+                }
+                return chassis.Slots; 
+            } 
+        }
 
         /// <summary>
         /// Gets the Chassis
@@ -118,7 +114,12 @@ namespace Commangineer.Units
         {
             get
             {
-                return chassis.Clone();
+                Chassis outChassis = chassis.Clone();
+                for(int i = 0; i < weapons.Length;i++)
+                {
+                    outChassis.SetWeapon(i, weapons[i]);
+                }
+                return outChassis;
             }
         }
 
