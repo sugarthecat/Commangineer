@@ -142,6 +142,11 @@ namespace Commangineer
                 this[materialTypes[i]] -= other[materialTypes[i]];
             }
         }
+
+        public override string ToString()
+        {
+            return this[MaterialType.Scrap] + " Scrap," + this[MaterialType.Iron] + " Iron," + this[MaterialType.Tungsten] + " Tungsten";
+        }
     }
 
     /// <summary>
@@ -155,7 +160,7 @@ namespace Commangineer
         {
             // The default materials
             AddMaterial(MaterialType.Scrap, 50, 50, 400);
-            AddMaterial(MaterialType.Iron,100, 100, 300);
+            AddMaterial(MaterialType.Iron, 100, 100, 300);
             AddMaterial(MaterialType.Tungsten, 500, 50, 800);
         }
 

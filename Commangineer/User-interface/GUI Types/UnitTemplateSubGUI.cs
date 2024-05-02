@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Commangineer.GUI_Types
 {
@@ -17,7 +18,7 @@ namespace Commangineer.GUI_Types
         /// <summary>
         /// Loads in the GUI's elements
         /// </summary>
-        public UnitTemplateSubGUI( UnitTemplate template) : base(600, 400)
+        public UnitTemplateSubGUI( UnitTemplate template, Action<int> changeTurretFunc) : base(600, 400)
         {
             MaterialType[] materialTypes = Enum.GetValues<MaterialType>();
             AddGuiElement(new GUIElement(Assets.GetImage("basicFrame"), new Rectangle(180, 50, materialTypes.Length * 80, 40)));
@@ -28,18 +29,21 @@ namespace Commangineer.GUI_Types
             }
 
             //size x and y are the same, so this is okay.
-            double scaleFactor = 115d/Math.Sqrt(template.Chassis.Size.X);
+            int turretSize =(int)( 80d/Math.Sqrt(template.Chassis.Size.X));
             int size = (int)(Math.Sqrt(template.Chassis.Size.X) * 115);
             AddGuiElement(new GUIElement(template.Chassis.Texture, new Rectangle(300 -size/2,200 - size/2,size,size)));
 
             for(int i = 0; i < template.Slots.Length; i++)
             {
-                Debug.WriteLine("Slot " + i);
-                Debug.WriteLine(template.Slots[i]);
+                int turretIndex = i;
                 AddGuiElement(new GUIElement(template.Weapons[i].GetTexture(), new Rectangle(
-                    (int)(300 + 115d * template.Slots[i].OffsetPosition.X)-25,
-                    (int)(200 + 115d* template.Slots[i].OffsetPosition.Y)-25,
-                    50, 50)));
+                    (int)(300 + 115d * template.Slots[i].OffsetPosition.X)-turretSize/2,
+                    (int)(200 + 115d* template.Slots[i].OffsetPosition.Y)-turretSize/2,
+                    turretSize, turretSize),
+                    delegate
+                    {
+                        changeTurretFunc(turretIndex);
+                    }));
             }
         }
     }

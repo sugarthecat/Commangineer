@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 
 namespace Commangineer.Units
 {
@@ -49,7 +50,20 @@ namespace Commangineer.Units
                 return 0;
             }
         }
-
+        public MaterialBalance Cost
+        {
+            get
+            {
+                if(weapon != null)
+                {
+                    return weapon.Cost;
+                }
+                else
+                {
+                    return new MaterialBalance(0);
+                }
+            }
+        }
         /// <summary>
         /// atempts to add weapon to slot and returns a bool
         /// </summary>

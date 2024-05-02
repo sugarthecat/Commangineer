@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Diagnostics;
 
 namespace Commangineer.Units
 {
@@ -27,9 +26,9 @@ namespace Commangineer.Units
         private Chassis chassis;
         private Engine engine;
         private Weapon[] weapons;
+
         public UnitTemplate(Chassis chassis, Engine engine, Weapon[] weapons)
         {
-            Debug.WriteLine(chassis.Slots.Length == weapons.Length);
             int weight = chassis.Weight + engine.Weight;
             double speed;
 
@@ -44,9 +43,9 @@ namespace Commangineer.Units
                 speed = engine.Speed;
             }
             this.weapons = new Weapon[chassis.Slots.Length];
-            for (int i = 0;  i < weapons.Length; i++)
+            for (int i = 0; i < weapons.Length; i++)
             {
-                this.weapons[i]= new Weapon(weapons[i]);
+                this.weapons[i] = new Weapon(weapons[i]);
             }
 
             this.speed = speed;
@@ -54,6 +53,7 @@ namespace Commangineer.Units
             health = maxHealth;
             armour = chassis.Armour;
         }
+
         public Slot[] Slots
         {
             get
@@ -72,6 +72,10 @@ namespace Commangineer.Units
                 MaterialBalance materialBalance = new MaterialBalance();
                 materialBalance += engine.Cost;
                 materialBalance += chassis.Cost;
+                for (int i = 0; i < weapons.Length; i++)
+                {
+                    materialBalance += weapons[i].Cost;
+                }
                 return materialBalance;
             }
         }
@@ -90,24 +94,28 @@ namespace Commangineer.Units
         // Getters for the unit
         public int Health
         { get { return health; } }
+
         public int MaxHealth
         { get { return maxHealth; } }
+
         public int Armour
         { get { return armour; } }
+
         public double Speed
         { get { return speed; } }
+
         public Slot[] Weapons
         {
-            get {
+            get
+            {
                 Slot[] slots = new Slot[weapons.Length];
-                for(int i = 0; i<chassis.Slots.Length; i++)
+                for (int i = 0; i < chassis.Slots.Length; i++)
                 {
                     slots[i] = new Slot(chassis.Slots[i]);
                     slots[i].AddWeapon(weapons[i]);
-                    Debug.WriteLine(i + " - " + slots[i].GetTexture());
                 }
-                return slots; 
-            } 
+                return slots;
+            }
         }
 
         /// <summary>
@@ -118,7 +126,7 @@ namespace Commangineer.Units
             get
             {
                 Chassis outChassis = chassis.Clone();
-                for(int i = 0; i < weapons.Length;i++)
+                for (int i = 0; i < weapons.Length; i++)
                 {
                     outChassis.SetWeapon(i, weapons[i]);
                 }

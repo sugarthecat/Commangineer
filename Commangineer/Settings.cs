@@ -75,26 +75,33 @@ namespace Commangineer
         /// </summary>
         private static async void LoadRuntimeSettings()
         {
-            using HttpResponseMessage response = await sharedClient.GetAsync("getSettings.php?userid=" + userID);
+            try
+            {
+                using HttpResponseMessage response = await sharedClient.GetAsync("getSettings.php?userid=" + userID);
 
 
-            string stringResponse = await response.Content.ReadAsStringAsync();
-            JsonNode jsonResponse = JsonObject.Parse(stringResponse);
-            JsonObject objectResponse = jsonResponse.AsObject();
-            Log.LogText(stringResponse);
-            if (objectResponse.ContainsKey("audio"))
-            {
-                musicEnabled = (int)objectResponse["audio"] == 0;
-                GameMusic.Update();
-            }
-            if (objectResponse.ContainsKey("name"))
-            {
-                username = (string)objectResponse["name"];
-                while (username != username.Replace("1 ", " "))
+                string stringResponse = await response.Content.ReadAsStringAsync();
+                JsonNode jsonResponse = JsonObject.Parse(stringResponse);
+                JsonObject objectResponse = jsonResponse.AsObject();
+                Log.LogText(stringResponse);
+                if (objectResponse.ContainsKey("audio"))
                 {
-                    username = username.Replace("  ", " ");
+                    musicEnabled = (int)objectResponse["audio"] == 0;
+                    GameMusic.Update();
                 }
-                Log.LogText("Username: " + username);
+                if (objectResponse.ContainsKey("name"))
+                {
+                    username = (string)objectResponse["name"];
+                    while (username != username.Replace("1 ", " "))
+                    {
+                        username = username.Replace("  ", " ");
+                    }
+                    Log.LogText("Username: " + username);
+                }
+            }
+            catch
+            {
+                //no
             }
         }
 
