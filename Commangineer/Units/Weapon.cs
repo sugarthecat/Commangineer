@@ -58,12 +58,12 @@ namespace Commangineer.Units
         public Weapon(Weapon w)
         {
             texture = Assets.GetTexture(w.name);
-            this.name = w.Name;
-            this.reloadTime = w.ReloadTime;
-            this.damage = w.Damage;
-            this.range = w.Range;
-            this.cost = w.Cost;
-            this.size = w.size;
+            name = w.Name;
+            reloadTime = w.ReloadTime;
+            damage = w.Damage;
+            range = w.Range;
+            cost = w.Cost;
+            size = w.size;
         }
 
         private float angle = (float)Math.PI / 2;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 
 namespace Commangineer.Units
 {
@@ -28,6 +29,7 @@ namespace Commangineer.Units
         private Weapon[] weapons;
         public UnitTemplate(Chassis chassis, Engine engine, Weapon[] weapons)
         {
+            Debug.WriteLine(chassis.Slots.Length == weapons.Length);
             int weight = chassis.Weight + engine.Weight;
             double speed;
 
@@ -41,10 +43,10 @@ namespace Commangineer.Units
             {
                 speed = engine.Speed;
             }
-            weapons = new Weapon[chassis.Slots.Length];
-            for (int i = 0;  i < Math.Min(weapons.Length,this.chassis.Slots.Length); i++)
+            this.weapons = new Weapon[chassis.Slots.Length];
+            for (int i = 0;  i < weapons.Length; i++)
             {
-                weapons[i]= new Weapon(weapons[i]);
+                this.weapons[i]= new Weapon(weapons[i]);
             }
 
             this.speed = speed;
@@ -102,8 +104,9 @@ namespace Commangineer.Units
                 {
                     slots[i] = new Slot(chassis.Slots[i]);
                     slots[i].AddWeapon(weapons[i]);
+                    Debug.WriteLine(i + " - " + slots[i].GetTexture());
                 }
-                return chassis.Slots; 
+                return slots; 
             } 
         }
 

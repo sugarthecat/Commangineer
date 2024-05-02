@@ -34,9 +34,12 @@ namespace Commangineer.GUI_Types
 
             for(int i = 0; i < template.Slots.Length; i++)
             {
-                AddGuiElement(new GUIElement(template.Chassis.Texture, new Rectangle(
-                    (int)(300 + scaleFactor * template.Slots[i].Position.X),
-                    200, 50, 50)));
+                Debug.WriteLine("Slot " + i);
+                Debug.WriteLine(template.Slots[i]);
+                AddGuiElement(new GUIElement(template.Weapons[i].GetTexture(), new Rectangle(
+                    (int)(300 + 115d * template.Slots[i].OffsetPosition.X)-25,
+                    (int)(200 + 115d* template.Slots[i].OffsetPosition.Y)-25,
+                    50, 50)));
             }
         }
     }

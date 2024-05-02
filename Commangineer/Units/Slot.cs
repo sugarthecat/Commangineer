@@ -28,6 +28,7 @@ namespace Commangineer.Units
         public Slot(Slot oldSlot)
         {
             position = oldSlot.position;
+            offsetPosition = oldSlot.offsetPosition;
             if (oldSlot.weapon != null)
             {
                 weapon = new Weapon(oldSlot.weapon);
@@ -140,7 +141,18 @@ namespace Commangineer.Units
         {
             get
             {
-                return weapon.Size;
+                if (weapon != null)
+                {
+                    return weapon.Size;
+                }
+                return new Vector2(0, 0);
+            }
+        }
+        public Vector2 OffsetPosition
+        {
+            get
+            {
+                return offsetPosition;
             }
         }
     }
