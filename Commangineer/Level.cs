@@ -833,10 +833,12 @@ namespace Commangineer
             if (newUnit != null && resources.GreaterThan(newUnit.MaterialCost))
             {
                 // newUnit is actually a unit template, a real position need to be given
-                Unit spawnableUnit = new Unit(newUnit, playerBase.Position);
+                Unit spawnableUnit = new Unit(newUnit, playerBase.CenterPosition);
+                spawnableUnit.Goal = playerBase.SpawnPosition;
                 if (Collides(spawnableUnit))
                 {
-                    playerUnitQueue.Enqueue(spawnableUnit);
+
+                        playerUnitQueue.Enqueue(spawnableUnit);
                 }
                 else
                 {

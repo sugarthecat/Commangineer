@@ -1,6 +1,7 @@
 ﻿using Commangineer.Units;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Commangineer
 {
@@ -12,13 +13,14 @@ namespace Commangineer
         private Vector2 position;
         private int health;
         private Texture2D texture;
-
+        private int spawnPosition;
         public PlayerBase(Point position)
         {
             this.position = new Vector2(position.X, position.Y);
             texture = Assets.GetTexture("playerBase");
             health = 400;
         }
+
         /// <summary>
         /// Damages the player base
         /// </summary>
@@ -27,6 +29,7 @@ namespace Commangineer
         {
             health -= damage;
         }
+
         /// <summary>
         /// Gets if the player base is alive
         /// </summary>
@@ -37,12 +40,27 @@ namespace Commangineer
                 return this.health > 0;
             }
         }
+
         /// <summary>
         /// Gets the player base size
         /// </summary>
         public Vector2 Size
         {
             get { return new Vector2(4f, 4f); }
+        }
+        /// <summary>
+        /// The position at which to spawn a new unit
+        /// </summary>
+        public Vector2 SpawnPosition
+        {
+            get
+            {
+                double angle = spawnPosition * Math.PI * 2d / 8d;
+                Vector2 spawnPos = CenterPosition + (new Vector2((float)Math.Cos(angle),(float)Math.Sin(angle)) * Size/1.5f);
+                spawnPosition++;
+                spawnPosition = spawnPosition % 8;
+                return spawnPos;
+            }
         }
 
         /// <summary>
@@ -58,7 +76,7 @@ namespace Commangineer
         /// </summary>
         public Vector2 CenterPosition
         {
-            get { return position+Size/2; }
+            get { return position + Size / 2; }
         }
 
         /// <summary>
