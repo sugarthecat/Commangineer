@@ -13,16 +13,12 @@ namespace Commangineer.Units
         private Weapon weapon;
         private Vector2 position;
         private Vector2 offsetPosition;
-
+        private TurretSize turretSize;
         // Constructs a slot
-        public Slot(Vector2 turretPosition)
+        public Slot(Vector2 turretPosition, TurretSize turretSize)
         {
             offsetPosition = turretPosition;
-        }
-        public Slot(Vector2 turretPosition, Weapon weapon)
-        {
-            offsetPosition = turretPosition;
-            this.weapon = new Weapon(weapon);
+            this.turretSize = turretSize;
         }
 
         // Constructs a slot based off a old slot
@@ -62,6 +58,13 @@ namespace Commangineer.Units
                 {
                     return new MaterialBalance(0);
                 }
+            }
+        }
+        public TurretSize TurretSize
+        {
+            get
+            {
+                return turretSize;
             }
         }
         /// <summary>

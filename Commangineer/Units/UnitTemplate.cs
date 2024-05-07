@@ -4,6 +4,12 @@ using System;
 
 namespace Commangineer.Units
 {
+    public enum TurretSize
+    {
+        Small,
+        Medium,
+        Big
+    }
     /// <summary>
     /// A template for a unit
     /// </summary>
@@ -12,12 +18,6 @@ namespace Commangineer.Units
         /// <summary>
         /// The size of a unit's turret
         /// </summary>
-        public enum turretSize
-        {
-            small,
-            medium,
-            big
-        }
 
         private int health;
         private int maxHealth;

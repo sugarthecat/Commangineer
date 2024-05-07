@@ -29,12 +29,12 @@ namespace Commangineer.GUI_Types
             }
 
             //size x and y are the same, so this is okay.
-            int turretSize =(int)( 80d/Math.Sqrt(template.Chassis.Size.X));
             int size = (int)(Math.Sqrt(template.Chassis.Size.X) * 115);
             AddGuiElement(new GUIElement(template.Chassis.Texture, new Rectangle(300 -size/2,200 - size/2,size,size)));
 
             for(int i = 0; i < template.Slots.Length; i++)
             {
+                int turretSize = (int)(80d / Math.Sqrt(template.Chassis.Size.X) * template.Weapons[i].Size.X);
                 int turretIndex = i;
                 AddGuiElement(new GUIElement(template.Weapons[i].GetTexture(), new Rectangle(
                     (int)(300 + 115d * template.Slots[i].OffsetPosition.X)-turretSize/2,
