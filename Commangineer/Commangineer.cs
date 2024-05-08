@@ -174,7 +174,13 @@ namespace Commangineer
                 settingsGUI.Update();
             }
         }
-
+        public bool IsInLevel
+        {
+            get
+            {
+                return !completedLevel;
+            }
+        }
         /// <summary>
         /// Starts a specified level if available
         /// </summary>
@@ -369,7 +375,10 @@ namespace Commangineer
                 RaiseError("A exception has occured while trying to update the game " + exc.Message, exc.StackTrace);
             }
         }
-
+        public void QuitLevel()
+        {
+            completedLevel = true;
+        }
         /// <summary>
         /// Opens a email link intended for when the program crashes
         /// </summary>

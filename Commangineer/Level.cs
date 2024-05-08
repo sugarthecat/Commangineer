@@ -40,7 +40,6 @@ namespace Commangineer
         private int levelNum;
         private bool winDialogueFinished;
 
-        private MaterialBalance income = new MaterialBalance();
         private bool selectingZone = false;
         private Vector2 zoneSelectionStart;
 
@@ -218,9 +217,9 @@ namespace Commangineer
                         }
                     }
                 }
-                //load income
+                //load balance
                 JsonNode resources = levelJSON["resources"];
-                income = new MaterialBalance(resources);
+                this.resources = new MaterialBalance(resources);
                 //Load actions=
                 JsonArray actions = levelJSON["events"].AsArray();
                 gameActions = new GameAction[actions.Count];
@@ -430,6 +429,10 @@ namespace Commangineer
             {
                 playerUnits[i].DrawBulletFrames(spriteBatch);
             }
+            for (int i = 0; i < playerUnits.Count; i++)
+            {
+                playerUnits[i].DrawTurrets(spriteBatch);
+            }
             for (int i = 0; i < selectedUnits.Count; i++)
             {
                 if (selectedUnits[i].Alive)
@@ -462,11 +465,6 @@ namespace Commangineer
                 //only continue game if dialogue is over
                 if (dialogueGUIs.Count == 0)
                 {
-                    if (Math.Floor(gameTime + deltaTime) != Math.Floor(gameTime))
-                    {
-                        //if new second,give 10 scrap, 2 iron, 5 tungsten. Add to editor.
-                        resources += income;
-                    }
                     gameTime += deltaTime;
                     UpdateActions();
                     GrowFloorAuuki(deltaTime);

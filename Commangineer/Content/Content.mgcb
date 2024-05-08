@@ -148,6 +148,18 @@
 /processorParam:TextureFormat=Color
 /build:assets/buttons/left.png
 
+#begin assets/buttons/left.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/left.png
+
 #begin assets/buttons/Next.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -219,6 +231,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/buttons/prev.png
+
+#begin assets/buttons/quit-level.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/quit-level.png
 
 #begin assets/buttons/quitBtn.png
 /importer:TextureImporter
@@ -280,6 +304,18 @@
 /processorParam:TextureFormat=Color
 /build:assets/buttons/right.png
 
+#begin assets/buttons/right.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/right.png
+
 #begin assets/buttons/settings.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -327,6 +363,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/buttons/start.png
+
+#begin assets/buttons/toggle-fullscreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/buttons/toggle-fullscreen.png
 
 #begin assets/buttons/toggle-fullscreen.png
 /importer:TextureImporter
@@ -1480,6 +1528,18 @@
 /processorParam:TextureFormat=Color
 /build:assets/textures/algae4.png
 
+#begin assets/textures/arcProjector.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/arcProjector.png
+
 #begin assets/textures/auukiDen1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1684,6 +1744,18 @@
 /processorParam:TextureFormat=Color
 /build:assets/textures/dirtystone.png
 
+#begin assets/textures/flamethrower.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/flamethrower.png
+
 #begin assets/textures/flowervine1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1780,6 +1852,18 @@
 /processorParam:TextureFormat=Color
 /build:assets/textures/leaves.png
 
+#begin assets/textures/lighgrass2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/lighgrass2.png
+
 #begin assets/textures/lightgrass1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1840,6 +1924,18 @@
 /processorParam:TextureFormat=Color
 /build:assets/textures/machineGun.png
 
+#begin assets/textures/miniFlamethrower.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/miniFlamethrower.png
+
 #begin assets/textures/model1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1875,6 +1971,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/textures/model3.png
+
+#begin assets/textures/model4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/model4.png
+
+#begin assets/textures/model5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/textures/model5.png
 
 #begin assets/textures/mountain1.png
 /importer:TextureImporter

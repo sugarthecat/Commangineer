@@ -212,7 +212,7 @@ namespace Commangineer
                 (int)Math.Abs(deltaPosition.Length() * scaleFactor),
                 (int)(bulletFrame.size * scaleFactor)
                 );
-            spriteBatch.Draw(texture, visualRectangle, null, Color.White, bulletAngle, new Vector2(texture.Width / 2f, texture.Height / 2f), SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, visualRectangle, null, bulletFrame.color, bulletAngle, new Vector2(texture.Width / 2f, texture.Height / 2f), SpriteEffects.None, 0f);
         }
 
         /// <summary>

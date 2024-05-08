@@ -193,18 +193,24 @@ namespace Commangineer.Units
         }
 
         /// <summary>
-        /// Draws the unit
+        /// Draws the unit body
         /// </summary>
         /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             Camera.Draw(spriteBatch, this);
+        }
+        /// <summary>
+        /// Draws the turrets on top of the unit body
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public void DrawTurrets(SpriteBatch spriteBatch)
+        {
             for (int i = 0; i < weapons.Length; i++)
             {
                 weapons[i].Draw(spriteBatch);
             }
         }
-
         /// <summary>
         /// Draws the bullet frames of the unit
         /// </summary>

@@ -42,9 +42,9 @@ namespace Commangineer.Units
                 return bulletFrameArr;
             }
         }
-
+        Color bulletColor;
         // Creates a new weapon
-        public Weapon(string name, double reloadTime, int damage, int range, MaterialBalance cost,TurretSize turretSize, float size = 1f)
+        public Weapon(string name, double reloadTime, int damage, int range, MaterialBalance cost,TurretSize turretSize, Color bulletColor,float size = 1f)
         {
             this.name = name;
             this.reloadTime = reloadTime;
@@ -53,6 +53,7 @@ namespace Commangineer.Units
             this.cost = cost;
             this.size = size;
             this.turretSize = turretSize;
+            this.bulletColor = bulletColor;
         }
 
         // Creates a new weapon from a preexisting weapon as a template
@@ -65,6 +66,7 @@ namespace Commangineer.Units
             range = w.Range;
             cost = w.Cost;
             size = w.size;
+            bulletColor = w.bulletColor;
         }
 
         private float angle = (float)Math.PI / 2;
@@ -146,6 +148,10 @@ namespace Commangineer.Units
                     i--;
                 }
             }
+            if(target != null && !target.Alive)
+            {
+                target = null;
+            }
             if (target != null)
             {
                 Vector2 deltaPosition = weaponPoint - target.CenterPosition;
@@ -181,7 +187,7 @@ namespace Commangineer.Units
         private void Attack(Vector2 weaponPoint, Unit firingUnit)
         {
             target.Damage(damage, firingUnit);
-            bulletFrames.Add(new BulletFrame(weaponPoint, target.CenterPosition));
+            bulletFrames.Add(new BulletFrame(weaponPoint, target.CenterPosition,bulletColor ));
         }
     }
 }

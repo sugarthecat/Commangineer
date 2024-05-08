@@ -105,8 +105,8 @@
     "y": 18
   },
   "resources": {
-    "scrap": 8,
-    "iron": 0,
-    "tungsten": 0
+    "scrap": 8020,
+    "iron": 4200,
+    "tungsten": 5220
   }
 }

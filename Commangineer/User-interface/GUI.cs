@@ -214,6 +214,9 @@ namespace Commangineer.User_Interface
                 case "Quit":
                     res = delegate { Commangineer.ExitGame(); };
                     break;
+                case "QuitLevel":
+                    res = delegate { Commangineer.instance.QuitLevel(); Commangineer.instance.ToggleSettings(); };
+                    break;
 
                 case "ToggleSettings":
                     res = delegate { Commangineer.instance.ToggleSettings(); };

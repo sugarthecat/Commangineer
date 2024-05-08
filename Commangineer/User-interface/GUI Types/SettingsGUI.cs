@@ -18,6 +18,7 @@
             base.Update();
             GetElement(3).Visible = Settings.MusicEnabled;
             GetElement(4).Visible = !Settings.MusicEnabled;
+            GetElement(5).Visible = Commangineer.instance.IsInLevel;
         }
     }
 }

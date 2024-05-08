@@ -71,7 +71,13 @@
     [ "model1", "model1" ],
     [ "model2", "model2" ],
     [ "model3", "model3" ],
+    [ "model4", "model4" ],
+    [ "model5", "model5" ],
     [ "boltShooter", "boltShooter" ],
+    [ "miniFlamethrower", "miniFlamethrower" ],
+    [ "flamethrower", "flamethrower" ],
+    [ "peppergun", "peppergun" ],
+    [ "arcProjector", "arcProjector" ],
     [ "musket", "musket" ],
     [ "machineGun", "machineGun" ],
     [ "revolver", "revolver" ],
@@ -93,6 +99,7 @@
     "left",
     "right",
     "forge",
+    "quit-level",
     "defaultButton"
   ],
   "sounds": [

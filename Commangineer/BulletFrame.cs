@@ -11,14 +11,15 @@ namespace Commangineer
         public Vector2 destination;
         public float size;
         public float duration;
-
+        public Color color;
         // Creates a new bullet frame
-        public BulletFrame(Vector2 origin, Vector2 destination, float size = 0.2f, float duration = 0.4f)
+        public BulletFrame(Vector2 origin, Vector2 destination, Color color,float size = 0.2f, float duration = 0.4f )
         {
             this.origin = origin;
             this.destination = destination;
             this.size = size;
             this.duration = duration;
+            this.color = color;
         }
     }
 }
