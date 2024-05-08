@@ -104,7 +104,7 @@ namespace Commangineer.Auuki
                 }
                 if (path.Count == 0 || decisionRandom.NextDouble() < 0.001)
                 {
-                    path = Pathfinding.FindPath(position.ToPoint(), aggroUnit.CenterPosition.ToPoint(), new Point((int)Math.Ceiling(Size.X), (int)Math.Ceiling(Size.Y)));
+                    path = Pathfinding.FindPath(position.ToPoint(), aggroUnit.CenterPosition.ToPoint(), new Point((int)Math.Round(Size.X), (int)Math.Round(Size.Y)));
                 }
 
                 if (path.Count > 0 || aggroUnit != null)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace Commangineer.Units
@@ -30,24 +31,36 @@ namespace Commangineer.Units
             this.turretSizes = turretSizes;
             this.cost = cost;
         }
+
         // Getters for the Chassis
         public string Name
         { get { return name; } }
+
         public int Armour
         { get { return armour; } }
+
         public int Health
         { get { return health; } }
+
         public int Weight
         { get { return weight; } }
+
         public Texture2D Texture
         { get { return texture; } }
+
         public MaterialBalance Cost
-        { get { return cost; } }
+        {
+            get
+            {
+                MaterialBalance totalCost = cost;
+                return totalCost;
+            }
+        }
 
         /// <summary>
         /// Gets the slots of the chassis
         /// </summary>
-        public Slot[] Weapons
+        public Slot[] Slots
         {
             get
             {

@@ -30,7 +30,7 @@ namespace Commangineer.Units
         public int Range { get => range; set => range = value; }
         public MaterialBalance Cost { get => cost; }
         public bool Shooting { get => shooting; set => shooting = value; }
-
+        public TurretSize turretSize;
         /// <summary>
         /// Gets the bullet frames of the weapon
         /// </summary>
@@ -44,7 +44,7 @@ namespace Commangineer.Units
         }
 
         // Creates a new weapon
-        public Weapon(string name, double reloadTime, int damage, int range, MaterialBalance cost, float size = 1f)
+        public Weapon(string name, double reloadTime, int damage, int range, MaterialBalance cost,TurretSize turretSize, float size = 1f)
         {
             this.name = name;
             this.reloadTime = reloadTime;
@@ -52,22 +52,29 @@ namespace Commangineer.Units
             this.range = range;
             this.cost = cost;
             this.size = size;
+            this.turretSize = turretSize;
         }
 
         // Creates a new weapon from a preexisting weapon as a template
         public Weapon(Weapon w)
         {
             texture = Assets.GetTexture(w.name);
-            this.name = w.Name;
-            this.reloadTime = w.ReloadTime;
-            this.damage = w.Damage;
-            this.range = w.Range;
-            this.cost = w.Cost;
-            this.size = w.size;
+            name = w.Name;
+            reloadTime = w.ReloadTime;
+            damage = w.Damage;
+            range = w.Range;
+            cost = w.Cost;
+            size = w.size;
         }
 
         private float angle = (float)Math.PI / 2;
-
+        public TurretSize TurretSize
+        {
+            get
+            {
+                return turretSize;
+            }
+        }
         /// <summary>
         /// Gets the angle to be used
         /// </summary>

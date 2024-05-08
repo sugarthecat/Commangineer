@@ -50,12 +50,12 @@ namespace Commangineer.Units
             speed = template.Speed;
             chassis = template.Chassis.Clone();
             weapons = new Slot[template.Weapons.Length];
-            for(int i = 0; i < template.Weapons.Length; i++)
+            for (int i = 0; i < template.Weapons.Length; i++)
             {
                 weapons[i] = new Slot(template.Weapons[i]);
             }
-            goal = spawnPosition - new Vector2(0, Size.Y);
-            position = spawnPosition;
+            goal = spawnPosition;
+            position = spawnPosition - Size / 2;
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Commangineer.Units
             level.DestroyTilesUnderUnit(this);
             foreach (Slot w in weapons)
             {
-                w.Update(deltaTime, position + Size / 2, Angle, level,this);
+                w.Update(deltaTime, position + Size / 2, Angle, level, this);
             }
             Vector2 deltaPosition = position - goal;
             if (deltaPosition.Length() > deltaTime * (float)speed)
@@ -86,6 +86,7 @@ namespace Commangineer.Units
                 deltaPosition *= deltaTime * (float)speed / length;
                 position = position - deltaPosition;
             }
+
             if (level.Collides(this))
             {
                 position = previousPosition;
@@ -131,7 +132,7 @@ namespace Commangineer.Units
         {
             set
             {
-                goal = value;
+                goal = value - Size/2;
             }
         }
 
@@ -164,7 +165,7 @@ namespace Commangineer.Units
         {
             get
             {
-                return position + Size / 2;
+                return position + (Size / 2);
             }
         }
 

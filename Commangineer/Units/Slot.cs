@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics;
 
 namespace Commangineer.Units
 {
@@ -12,22 +13,19 @@ namespace Commangineer.Units
         private Weapon weapon;
         private Vector2 position;
         private Vector2 offsetPosition;
-
+        private TurretSize turretSize;
         // Constructs a slot
-        public Slot(Vector2 turretPosition)
+        public Slot(Vector2 turretPosition, TurretSize turretSize)
         {
             offsetPosition = turretPosition;
-        }
-        public Slot(Vector2 turretPosition, Weapon weapon)
-        {
-            offsetPosition = turretPosition;
-            this.weapon = new Weapon(weapon);
+            this.turretSize = turretSize;
         }
 
         // Constructs a slot based off a old slot
         public Slot(Slot oldSlot)
         {
             position = oldSlot.position;
+            offsetPosition = oldSlot.offsetPosition;
             if (oldSlot.weapon != null)
             {
                 weapon = new Weapon(oldSlot.weapon);
@@ -48,7 +46,27 @@ namespace Commangineer.Units
                 return 0;
             }
         }
-
+        public MaterialBalance Cost
+        {
+            get
+            {
+                if(weapon != null)
+                {
+                    return weapon.Cost;
+                }
+                else
+                {
+                    return new MaterialBalance(0);
+                }
+            }
+        }
+        public TurretSize TurretSize
+        {
+            get
+            {
+                return turretSize;
+            }
+        }
         /// <summary>
         /// atempts to add weapon to slot and returns a bool
         /// </summary>
@@ -140,7 +158,18 @@ namespace Commangineer.Units
         {
             get
             {
-                return weapon.Size;
+                if (weapon != null)
+                {
+                    return weapon.Size;
+                }
+                return new Vector2(0, 0);
+            }
+        }
+        public Vector2 OffsetPosition
+        {
+            get
+            {
+                return offsetPosition;
             }
         }
     }

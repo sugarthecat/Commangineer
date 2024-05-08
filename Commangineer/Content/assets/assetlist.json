@@ -90,6 +90,8 @@
     "x",
     "prev",
     "next",
+    "left",
+    "right",
     "forge",
     "defaultButton"
   ],

@@ -432,7 +432,15 @@ namespace Commangineer
             }
             for (int i = 0; i < selectedUnits.Count; i++)
             {
-                selectedUnits[i].DrawSelection(spriteBatch);
+                if (selectedUnits[i].Alive)
+                {
+                    selectedUnits[i].DrawSelection(spriteBatch);
+                }
+                else
+                {
+                    selectedUnits.RemoveAt(i);
+                    i--;
+                }
             }
         }
 
@@ -592,9 +600,17 @@ namespace Commangineer
             }
             else
             {
+                //find average position
+                Vector2 averagePosition = new Vector2(0, 0);
+                
                 for (int i = 0; i < selectedUnits.Count; i++)
                 {
-                    selectedUnits[i].Goal = adjustedClickPosition;
+                    averagePosition += selectedUnits[i].Position;
+                }
+                averagePosition /= selectedUnits.Count;
+                for(int i = 0; i<selectedUnits.Count; i++)
+                {
+                    selectedUnits[i].Goal = adjustedClickPosition + ((selectedUnits[i].CenterPosition - averagePosition) * new Vector2(0.7f)) - selectedUnits[i].Size/2;
                 }
             }
         }
@@ -811,16 +827,18 @@ namespace Commangineer
         /// <summary>
         /// Spawns a unit at the player base position
         /// </summary>
-        public void SpawnUnit(int unitIndex)
+        public void SpawnUnit()
         {
-            UnitTemplate newUnit = unitEditor.GetUnit(unitIndex);
+            UnitTemplate newUnit = unitEditor.GetUnit();
             if (newUnit != null && resources.GreaterThan(newUnit.MaterialCost))
             {
                 // newUnit is actually a unit template, a real position need to be given
-                Unit spawnableUnit = new Unit(newUnit, playerBase.Position);
+                Unit spawnableUnit = new Unit(newUnit, playerBase.CenterPosition);
+                spawnableUnit.Goal = playerBase.SpawnPosition;
                 if (Collides(spawnableUnit))
                 {
-                    playerUnitQueue.Enqueue(spawnableUnit);
+
+                        playerUnitQueue.Enqueue(spawnableUnit);
                 }
                 else
                 {

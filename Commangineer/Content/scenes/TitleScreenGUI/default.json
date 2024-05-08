@@ -15,7 +15,7 @@
     "startGameButton": {
       "name": "start",
       "type": "Button",
-      "position": [ 200, 225 ],
+      "position": [ 200, 230 ],
       "size": [ 200, 50 ],
       "actionName": "NavigateToMenu",
       "actionValue": "levelSelect"
@@ -23,7 +23,7 @@
     "settingsButton": {
       "name": "settings",
       "type": "Button",
-      "position": [ 240, 275 ],
+      "position": [ 240, 280 ],
       "size": [ 120, 50 ],
       "actionName": "ToggleSettings",
       "actionValue": ""
@@ -31,7 +31,7 @@
     "exitGameButton": {
       "name": "exit-game",
       "type": "Button",
-      "position": [ 220, 325 ],
+      "position": [ 220, 330 ],
       "size": [ 160, 50 ],
       "actionName": "Quit",
       "actionValue": ""

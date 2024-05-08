@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
@@ -140,7 +142,14 @@ namespace Commangineer
             bool goalReach = false;
             pos = origin;
             goal = destination;
-
+            if (blockedPath[goal.X, goal.Y])
+            {
+                goal.X--;
+                if (blockedPath[goal.X,goal.Y])
+                {
+                    return new List<Point>();
+                }
+            }
             if (pos != goal)
             {
                 pathStart[pos.X, pos.Y] = 0;

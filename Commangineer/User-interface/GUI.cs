@@ -143,6 +143,13 @@ namespace Commangineer.User_Interface
         public virtual bool HandleClick(Point clickPoint)
         {
             bool activated = false;
+            for(int i = 0; i<subGUIs.Count; i++)
+            {
+                if (subGUIs[i].HandleClick(clickPoint))
+                {
+                    activated = true;
+                }
+            }
             for (int i = 0; i < elements.Count; i++)
             {
                 if (elements[i].HandleClick(clickPoint))
@@ -177,6 +184,10 @@ namespace Commangineer.User_Interface
         /// </summary>
         public virtual void Update()
         {
+            for(int i = 0; i<subGUIs.Count; i++)
+            {
+                subGUIs[i].Update();
+            }
         }
 
         /// <summary>
@@ -217,7 +228,7 @@ namespace Commangineer.User_Interface
                     break;
 
                 case "SpawnUnit":
-                    res = delegate { Commangineer.Level.SpawnUnit(0); };
+                    res = delegate { Commangineer.Level.SpawnUnit(); };
                     break;
 
                 default:

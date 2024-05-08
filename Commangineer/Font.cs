@@ -35,6 +35,7 @@ namespace Commangineer
             loadCharacter(':', "colon", content);
             loadCharacter('/', "slash", content);
             loadCharacter('!', "exclamationPoint", content);
+            loadCharacter('.', "period", content);
         }
         /// <summary>
         /// Loads a charcter 

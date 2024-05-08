@@ -4,6 +4,12 @@ using System;
 
 namespace Commangineer.Units
 {
+    public enum TurretSize
+    {
+        Small,
+        Medium,
+        Big
+    }
     /// <summary>
     /// A template for a unit
     /// </summary>
@@ -12,12 +18,6 @@ namespace Commangineer.Units
         /// <summary>
         /// The size of a unit's turret
         /// </summary>
-        public enum turretSize
-        {
-            small,
-            medium,
-            big
-        }
 
         private int health;
         private int maxHealth;
@@ -25,29 +25,8 @@ namespace Commangineer.Units
         private double speed;
         private Chassis chassis;
         private Engine engine;
+        private Weapon[] weapons;
 
-        // Creates a new unit template
-        public UnitTemplate(Chassis chassis, Engine engine)
-        {
-            int weight = chassis.Weight + engine.Weight;
-            double speed;
-
-            this.chassis = chassis;
-            this.engine = engine;
-            int horse = engine.Horsepower;
-
-            speed = Math.Pow((double)horse / weight, 0.3d);
-
-            if (speed > engine.Speed)
-            {
-                speed = engine.Speed;
-            }
-
-            this.speed = speed;
-            this.maxHealth = chassis.Health;
-            this.health = this.maxHealth;
-            this.armour = chassis.Armour;
-        }
         public UnitTemplate(Chassis chassis, Engine engine, Weapon[] weapons)
         {
             int weight = chassis.Weight + engine.Weight;
@@ -63,15 +42,24 @@ namespace Commangineer.Units
             {
                 speed = engine.Speed;
             }
-            for(int i = 0;  i < Math.Min(weapons.Length,this.chassis.Weapons.Length); i++)
+            this.weapons = new Weapon[chassis.Slots.Length];
+            for (int i = 0; i < weapons.Length; i++)
             {
-                this.chassis.SetWeapon(i, new Weapon(weapons[i]));
+                this.weapons[i] = new Weapon(weapons[i]);
             }
 
             this.speed = speed;
-            this.maxHealth = chassis.Health;
-            this.health = this.maxHealth;
-            this.armour = chassis.Armour;
+            maxHealth = chassis.Health;
+            health = maxHealth;
+            armour = chassis.Armour;
+        }
+
+        public Slot[] Slots
+        {
+            get
+            {
+                return chassis.Slots;
+            }
         }
 
         /// <summary>
@@ -84,6 +72,10 @@ namespace Commangineer.Units
                 MaterialBalance materialBalance = new MaterialBalance();
                 materialBalance += engine.Cost;
                 materialBalance += chassis.Cost;
+                for (int i = 0; i < weapons.Length; i++)
+                {
+                    materialBalance += weapons[i].Cost;
+                }
                 return materialBalance;
             }
         }
@@ -102,14 +94,29 @@ namespace Commangineer.Units
         // Getters for the unit
         public int Health
         { get { return health; } }
+
         public int MaxHealth
         { get { return maxHealth; } }
+
         public int Armour
         { get { return armour; } }
+
         public double Speed
         { get { return speed; } }
+
         public Slot[] Weapons
-        { get { return chassis.Weapons; } }
+        {
+            get
+            {
+                Slot[] slots = new Slot[weapons.Length];
+                for (int i = 0; i < chassis.Slots.Length; i++)
+                {
+                    slots[i] = new Slot(chassis.Slots[i]);
+                    slots[i].AddWeapon(weapons[i]);
+                }
+                return slots;
+            }
+        }
 
         /// <summary>
         /// Gets the Chassis
@@ -118,7 +125,12 @@ namespace Commangineer.Units
         {
             get
             {
-                return chassis.Clone();
+                Chassis outChassis = chassis.Clone();
+                for (int i = 0; i < weapons.Length; i++)
+                {
+                    outChassis.SetWeapon(i, weapons[i]);
+                }
+                return outChassis;
             }
         }
 
