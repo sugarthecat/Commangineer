@@ -1,6 +1,8 @@
 ﻿using Commangineer.GUI_Element_Types;
 using Commangineer.User_Interface;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Color = Microsoft.Xna.Framework.Color;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
@@ -44,9 +46,35 @@ namespace Commangineer.GUI_Types
         public void ChangeText(string newText)
         {
             ClearText();
-            TextArea newTextElement = new TextArea(new Rectangle(125, 300, 550, 50), Assets.GetFont("pixel"), newText);
-            textAreas.Add(newTextElement);
-            AddGuiElement(newTextElement);
+            // Scale text properly
+            int textSize = 50;
+            int maxLineSize = 25;
+            int lineSpacing = 30;
+            string[] words = newText.Split(' ');
+            int curSentenceLength = 0;
+            string curSentence = "";
+            int lineNumber = 0;
+            foreach (string word in words)
+            {
+                int wordLength = word.Length + 1;
+                curSentenceLength += wordLength;
+                if (curSentenceLength > maxLineSize)
+                {
+                    TextArea newTextElement = new TextArea(new Rectangle(150, 300 + (lineSpacing*lineNumber), textSize * 11, textSize), Assets.GetFont("pixel"), curSentence + new string(' ', maxLineSize - (curSentenceLength - wordLength)));
+                    textAreas.Add(newTextElement);
+                    AddGuiElement(newTextElement);
+                    curSentenceLength = 0;
+                    curSentence = word + " ";
+                    lineNumber++;
+                }
+                else
+                {
+                    curSentence += word + " ";
+                }
+            }
+            TextArea lastTextElement = new TextArea(new Rectangle(150, 300 + (lineSpacing * lineNumber), textSize * 11, textSize), Assets.GetFont("pixel"), curSentence + new string(' ',maxLineSize-curSentenceLength));
+            textAreas.Add(lastTextElement);
+            AddGuiElement(lastTextElement);
         }
 
         /// <summary>
