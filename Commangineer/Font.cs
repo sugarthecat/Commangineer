@@ -54,7 +54,28 @@ namespace Commangineer
                 characterTextures.Add(character, defaultCharacter);
             }
         }
+        /// <summary>
+        /// Gets the text width
+        /// </summary>
+        /// <param name="text">The text which to determine the width of</param>
+        /// <returns>The width, assuming a height of 100</returns>
+        public int GetTextWidth(string text)
+        {
+            int width = 0;
 
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (characterTextures.ContainsKey(text[i]))
+                {
+                    width += characterTextures[text[i]].Width;
+                }
+                else
+                {
+                    width += 100;
+                }
+            }
+            return width;
+        }
         /// <summary>
         /// Draws text with a font
         /// </summary>

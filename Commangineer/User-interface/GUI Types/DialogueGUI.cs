@@ -47,32 +47,32 @@ namespace Commangineer.GUI_Types
         {
             ClearText();
             // Scale text properly
-            int textSize = 50;
-            int maxLineSize = 25;
-            int lineSpacing = 30;
+            int textSize = 35;
+            int maxLineSize = 600;
+            int lineSpacing = 35;
             string[] words = newText.Split(' ');
             int curSentenceLength = 0;
             string curSentence = "";
             int lineNumber = 0;
+            Font font = Assets.GetFont("pixel");
             foreach (string word in words)
             {
-                int wordLength = word.Length + 1;
-                curSentenceLength += wordLength;
+                curSentenceLength = (int)(font.GetTextWidth(curSentence + word + " ")/100f*textSize);
                 if (curSentenceLength > maxLineSize)
                 {
-                    TextArea newTextElement = new TextArea(new Rectangle(150, 300 + (lineSpacing*lineNumber), textSize * 11, textSize), Assets.GetFont("pixel"), curSentence + new string(' ', maxLineSize - (curSentenceLength - wordLength)));
+                    curSentenceLength = (int)(font.GetTextWidth(curSentence) / 100f * textSize);
+                    TextArea newTextElement = new TextArea(new Rectangle(150, 315 + (lineSpacing * lineNumber), curSentenceLength , textSize), font, curSentence);
                     textAreas.Add(newTextElement);
                     AddGuiElement(newTextElement);
                     curSentenceLength = 0;
-                    curSentence = word + " ";
+                    curSentence = "";
                     lineNumber++;
                 }
-                else
-                {
                     curSentence += word + " ";
-                }
+                
             }
-            TextArea lastTextElement = new TextArea(new Rectangle(150, 300 + (lineSpacing * lineNumber), textSize * 11, textSize), Assets.GetFont("pixel"), curSentence + new string(' ',maxLineSize-curSentenceLength));
+            curSentenceLength = (int)(font.GetTextWidth(curSentence) / 100f * textSize);
+            TextArea lastTextElement = new TextArea(new Rectangle(150, 315 + (lineSpacing * lineNumber), curSentenceLength, textSize), font, curSentence);
             textAreas.Add(lastTextElement);
             AddGuiElement(lastTextElement);
         }
