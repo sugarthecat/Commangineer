@@ -9,7 +9,7 @@ namespace Commangineer.Tile_Types
     public class StoneTile : Tile
     {
         // Constructs a new stone tile
-        public StoneTile(Point point) : base(Assets.GetTexture("stone"), point, 0.002f)
+        public StoneTile(Point point) : base(Assets.GetTexture("stone"), point, 0.008f)
         {
         }
 

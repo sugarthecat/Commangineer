@@ -35,7 +35,9 @@ namespace Commangineer
             loadCharacter(':', "colon", content);
             loadCharacter('/', "slash", content);
             loadCharacter('!', "exclamationPoint", content);
+            loadCharacter('\'', "apostrophe", content);
             loadCharacter('.', "period", content);
+            loadCharacter('?', "questionMark", content);
         }
         /// <summary>
         /// Loads a charcter 
@@ -82,7 +84,7 @@ namespace Commangineer
         /// <param name="spriteBatch">The SpriteBatch to use when drawing</param>
         /// <param name="textToDisplay">The text to display</param>
         /// <param name="textArea">The area of where to draw the text</param>
-        public void DrawText(SpriteBatch spriteBatch, string textToDisplay, Rectangle textArea)
+        public void DrawText(SpriteBatch spriteBatch, string textToDisplay, Rectangle textArea, Color color)
         {
             int width = textArea.Width;
             int height = textArea.Height;
@@ -131,7 +133,7 @@ namespace Commangineer
                         (int)((double)displayArea.Width / widthFactor * characterTextures[textToDisplay[i]].Width),
                         displayArea.Height
                         );
-                    spriteBatch.Draw(characterTextures[textToDisplay[i]], textRectangle, Color.White);
+                    spriteBatch.Draw(characterTextures[textToDisplay[i]], textRectangle, color);
                     widthOn += textRectangle.Width;
                 }
                 else

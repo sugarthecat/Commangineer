@@ -9,7 +9,7 @@ namespace Commangineer.Tile_Types
     public class WaterTile : Tile
     {
         // Constructs a new water tile
-        public WaterTile(Point point) : base(Assets.GetTexture("water"), point, 0.001f)
+        public WaterTile(Point point) : base(Assets.GetTexture("water"), point, 0.004f)
         {
             isSolid = true;
         }

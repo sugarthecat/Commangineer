@@ -9,7 +9,7 @@ namespace Commangineer.Auuki.AuukiStructures.Spawners
     public class DeerSpawner : Spawner
     {
         // Creates a new spawner of it's type
-        public DeerSpawner(Point spawnPosition) : base(spawnPosition, new Point(2, 2), 1, 40, 5)
+        public DeerSpawner(Point spawnPosition) : base(spawnPosition, new Point(2, 2), 1, 20, 5)
         {
         }
 

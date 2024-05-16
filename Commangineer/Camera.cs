@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Commangineer.Auuki;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -192,6 +193,49 @@ namespace Commangineer
             if (screenView.Intersects(destinationRectangle))
             {
                 spriteBatch.Draw(texture, visualRectangle, null, Color.White, toDraw.Angle, new Vector2(texture.Width / 2f, texture.Height / 2f), SpriteEffects.None, 0f);
+            }
+        }
+
+        /// <summary>
+        /// Draws a object the camera can see
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to be drawn with</param>
+        /// <param name="toDraw">The animal to be drawn</param>
+        public static void Draw(SpriteBatch spriteBatch, AuukiCreature toDraw)
+        {
+            Rectangle destinationRectangle = new Rectangle(
+                (int)Math.Floor(toDraw.Position.X * scaleFactor - x),
+                (int)Math.Floor(toDraw.Position.Y * scaleFactor - y),
+               (int)(scaleFactor * toDraw.Size.X),
+                (int)(scaleFactor * toDraw.Size.Y));
+
+            Rectangle visualRectangle = new Rectangle(
+                (int)Math.Floor((toDraw.Position.X + toDraw.Size.X / 2f) * scaleFactor - x),
+                (int)Math.Floor((toDraw.Position.Y + toDraw.Size.Y / 2f) * scaleFactor - y),
+               (int)(scaleFactor * toDraw.Size.X),
+                (int)(scaleFactor * toDraw.Size.Y));
+            Rectangle healthBar = new Rectangle(
+                (int)Math.Floor(toDraw.Position.X * scaleFactor - x),
+                (int)Math.Floor((toDraw.Position.Y - toDraw.Size.Y / 4d) * scaleFactor - y),
+               (int)(scaleFactor * toDraw.Size.X),
+                (int)(scaleFactor * toDraw.Size.Y / 5d));
+            Rectangle aliveHealth = new Rectangle(
+                (int)Math.Floor(toDraw.Position.X * scaleFactor - x),
+                (int)Math.Floor((toDraw.Position.Y - toDraw.Size.Y / 4d) * scaleFactor - y),
+               (int)(scaleFactor * toDraw.Size.X * toDraw.healthLeftFraction),
+                (int)(scaleFactor * toDraw.Size.Y / 5d ));
+
+            Texture2D texture = toDraw.GetTexture();
+            Rectangle screenView = new Rectangle(0, 0, Commangineer.GetScreenWidth(), Commangineer.GetScreenHeight());
+            if (screenView.Intersects(destinationRectangle))
+            {
+                spriteBatch.Draw(texture, visualRectangle, null, Color.White, toDraw.Angle, new Vector2(texture.Width / 2f, texture.Height / 2f), SpriteEffects.None, 0f);
+                if (toDraw.healthLeftFraction != 1)
+                {
+                    spriteBatch.Draw(Assets.GetImage("white"), healthBar, null, Color.Red);
+                    spriteBatch.Draw(Assets.GetImage("white"), aliveHealth, null, Color.Green);
+                }
+
             }
         }
 

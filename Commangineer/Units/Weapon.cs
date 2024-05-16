@@ -160,10 +160,7 @@ namespace Commangineer.Units
                 {
                     Attack(weaponPoint, firingUnit);
                     reloadProgress += reloadTime;
-                    if (!target.Alive)
-                    {
-                        target = level.GetAuukiTarget(weaponPoint, range);
-                    }
+                    target = level.GetAuukiTarget(weaponPoint, range);
                 }
 
                 if (deltaPosition.Length() > range || target == null || !target.Alive)

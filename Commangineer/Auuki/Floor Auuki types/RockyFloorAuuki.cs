@@ -14,7 +14,7 @@ namespace Commangineer.Floor_Auuki_types
                 new FloorAuukiStage[] {
                     new FloorAuukiStage(5,Assets.GetTexture("weeds"),10f), // Weeds
                     new FloorAuukiStage(10,Assets.GetTexture("vine"),100f), // Grass
-                    new FloorAuukiStage(70,Assets.GetTexture("flowervine"),200f)
+                    new FloorAuukiStage(20,Assets.GetTexture("flowervine"),200f)
                 }, position)
         {
         }

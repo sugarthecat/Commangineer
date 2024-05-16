@@ -11,12 +11,20 @@ namespace Commangineer.GUI_Element_Types
     {
         private Font font;
         private string text;
-
+        private Color color;
         // Constructs a text area
         public TextArea(Rectangle position, Font font, string text) : base(Assets.GetImage("background"), position)
         {
             this.font = font;
             this.text = text;
+            this.color = Color.White;
+        }
+        // Constructs a text area with a color
+        public TextArea(Rectangle position, Font font, string text, Color color) : base(Assets.GetImage("background"), position)
+        {
+            this.font = font;
+            this.text = text;
+            this.color = color;
         }
 
         /// <summary>
@@ -31,7 +39,7 @@ namespace Commangineer.GUI_Element_Types
         /// <param name="spriteBatch">The sprite batch to be drawn with</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            font.DrawText(spriteBatch, text, position);
+            font.DrawText(spriteBatch, text, position, color);
         }
     }
 }

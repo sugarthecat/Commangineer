@@ -51,7 +51,6 @@ namespace Commangineer
         public Level(int level, LevelGUI levelGUI)
         {
             levelNum = level;
-            winDialogueFinished = false;
             currentGUI = levelGUI;
             unitEditor = new UnitEditorGUI();
             unitEditor.Enabled = false;
@@ -270,12 +269,21 @@ namespace Commangineer
         /// <returns>The first Auuki found</returns>
         public AuukiTarget GetAuukiTarget(Vector2 position, float range)
         {
+            AuukiTarget auukiTarget = null;
             for (int i = 0; i < auukiCreatures.Count; i++)
             {
-                if ((position - auukiCreatures[i].CenterPosition).Length() < range)
+                if (auukiTarget == null && (position - auukiCreatures[i].CenterPosition).Length() < range)
                 {
-                    return auukiCreatures[i];
+                    auukiTarget = auukiCreatures[i];
                 }
+                if(auukiTarget != null && (position - auukiCreatures[i].CenterPosition).Length() < (position - auukiTarget.CenterPosition).Length())
+                {
+                    auukiTarget = auukiCreatures[i];
+                }
+            }
+            if(auukiTarget != null)
+            {
+                return auukiTarget;
             }
             Point pointPos = position.ToPoint();
             Rectangle rectRange = new Rectangle(pointPos.X - (int)range, pointPos.Y - (int)range, (int)(range * 2), (int)(range * 2));
@@ -283,23 +291,47 @@ namespace Commangineer
             {
                 for (int j = Math.Max(rectRange.Y, 0); j < Math.Min(rectRange.Bottom, GetTileHeight()); j++)
                 {
-                    if (tiles[i, j].HasAuukiStructure)
+                    if (!tiles[i, j].HasAuukiStructure)
                     {
-                        return tiles[i, j].AuukiStructure;
+                        continue;
+                    }
+                    if (auukiTarget == null && (position - tiles[i, j].AuukiStructure.CenterPosition).Length() < range)
+                    {
+                        auukiTarget = tiles[i, j].AuukiStructure;
+                    }
+                    if (auukiTarget != null && (position - tiles[i, j].AuukiStructure.CenterPosition).Length() < (position - auukiTarget.CenterPosition).Length())
+                    {
+                        auukiTarget = tiles[i, j].AuukiStructure;
                     }
                 }
+            }
+            if (auukiTarget != null)
+            {
+                return auukiTarget;
             }
             for (int i = Math.Max(rectRange.X, 0); i < Math.Min(rectRange.Right, GetTileWidth()); i++)
             {
                 for (int j = Math.Max(rectRange.Y, 0); j < Math.Min(rectRange.Bottom, GetTileHeight()); j++)
                 {
-                    if (tiles[i, j].HasAuukiTile && (position - tiles[i, j].Position).Length() < range)
+                    if(!tiles[i, j].HasAuukiTile)
                     {
-                        return tiles[i, j].Auuki;
+                        continue;
+                    }
+                    if (auukiTarget == null && (position - tiles[i, j].Position).Length() < range)
+                    {
+                        auukiTarget = tiles[i, j].Auuki;
+                    }
+                    if (auukiTarget != null && (position - tiles[i, j].Auuki.CenterPosition).Length() < (position - auukiTarget.CenterPosition).Length())
+                    {
+                        auukiTarget = tiles[i, j].Auuki;
                     }
                 }
             }
-            return null;
+            if (auukiTarget != null)
+            {
+                return auukiTarget;
+            }
+            return auukiTarget;
         }
 
         /// <summary>
@@ -412,6 +444,8 @@ namespace Commangineer
             for (int i = 0; i < auukiCreatures.Count; i++)
             {
                 Camera.Draw(spriteBatch, auukiCreatures[i]);
+                //draw 
+                
             }
         }
 
@@ -662,7 +696,7 @@ namespace Commangineer
                         gameActions[i].Update(Convert.ToInt32(this.Won));
                         break;
                     case GameValue.Won:
-                        gameActions[i].Update(Convert.ToInt32(this.Won && dialogueGUIs.Count == 0 && winDialogueFinished));
+                        gameActions[i].Update(Convert.ToInt32(this.Won));
                         break;
                 }
                 // If a action is activated, call it's respected event
@@ -702,6 +736,13 @@ namespace Commangineer
                     }
                     gameActions[i].Deactivate();
                 }
+            }
+        }
+        public bool HasNoDialogue
+        {
+            get
+            {
+                return dialogueGUIs.Count == 0;
             }
         }
 
@@ -828,21 +869,30 @@ namespace Commangineer
         public void SpawnUnit()
         {
             UnitTemplate newUnit = unitEditor.GetUnit();
-            if (newUnit != null && resources.GreaterThan(newUnit.MaterialCost))
+            if (newUnit != null)
             {
-                // newUnit is actually a unit template, a real position need to be given
-                Unit spawnableUnit = new Unit(newUnit, playerBase.CenterPosition);
-                spawnableUnit.Goal = playerBase.SpawnPosition;
-                if (Collides(spawnableUnit))
+                if (resources.GreaterThan(newUnit.MaterialCost))
                 {
+                    // newUnit is actually a unit template, a real position need to be given
+                    Unit spawnableUnit = new Unit(newUnit, playerBase.CenterPosition);
+                    spawnableUnit.Goal = playerBase.SpawnPosition;
+                    if (Collides(spawnableUnit))
+                    {
 
                         playerUnitQueue.Enqueue(spawnableUnit);
+                    }
+                    else
+                    {
+                        playerUnits.Add(spawnableUnit);
+                    }
+                    unitEditor.AddForgeAlert();
+                    resources.Remove(newUnit.MaterialCost);
                 }
                 else
                 {
-                    playerUnits.Add(spawnableUnit);
+                    //cannot afford
+                    unitEditor.AddPaymentWarning();
                 }
-                resources.Remove(newUnit.MaterialCost);
             }
         }
 

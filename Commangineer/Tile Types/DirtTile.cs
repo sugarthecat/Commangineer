@@ -9,7 +9,7 @@ namespace Commangineer.Tile_Types
     public class DirtTile : Tile
     {
         // Constructs a new dirt tile
-        public DirtTile(Point point) : base(Assets.GetTexture("dirt"), point, 0.005f)
+        public DirtTile(Point point) : base(Assets.GetTexture("dirt"), point, 0.015f)
         {
         }
 

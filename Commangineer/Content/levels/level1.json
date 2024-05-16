@@ -1,11 +1,57 @@
 {
-  "width": 20,
-  "height": 20,
-  "tileMap": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111000111111111111111110001111111111111110000011111111111110000000111111111111100000001111111111111000000011111111111110000000111111111111000000001111111111100000000011111111110000000000",
-  "floorAuukiMap": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111100000000000000011111000000000000000111110000000000000001111100000000000000011111",
+  "width": 30,
+  "height": 15,
+  "tileMap": "333333333333333333333333333333333333033333333300000000033333300000000000333300000000000033300000000000033300000000000033330000000011433333000000111433333000000114443333000001114443330000001111443330000111111143333000111111133333000111111133333300011111033333300011111033333300001111033333300001111033333100000000033333101110000033333111110000333333111100000333333111100003333333311000003333333311000003333333333333033333333333333333333333333333333333",
+  "floorAuukiMap": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000100001111000001100001111000011100000121000111100000122200112200000022222222200000032222222200000133432222200001334443322200001334444332200003334444432000003334444332200000334443330000000133333330000000133333330000000000033300000000000000100000000000000000000",
   "structures": [
+    {
+      "x": 23,
+      "y": 9,
+      "type": 5
+    },
+    {
+      "x": 20,
+      "y": 6,
+      "type": 5
+    },
+    {
+      "x": 24,
+      "y": 5,
+      "type": 5
+    }
   ],
   "events": [
+    {
+      "comparator": ">",
+      "gameValue": "time",
+      "compareValue": 2,
+      "actions": [
+        {
+          "actionType": "ai",
+          "behavior": "wander"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "Pass this final and you can join the Commangineer Corps!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "I'm really nervous! What is it?"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "oak",
+          "speech": "You need to clear this island of Auuki"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "oak",
+          "speech": "All the grass, algae, animals, everything."
+        }
+      ]
+    },
     {
       "comparator": ">",
       "gameValue": "time",
@@ -14,59 +60,109 @@
         {
           "actionType": "dialogue",
           "character": "terne",
-          "speech": "Please! Please!"
+          "speech": "How do I make units?"
         },
         {
           "actionType": "dialogue",
           "character": "electrum",
-          "speech": "Boy!"
+          "speech": "Just Right-Click on your shop on the left!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "That's where you design your Automatons."
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "Make a blueprint, forge, and there it is!"
         },
         {
           "actionType": "dialogue",
           "character": "terne",
-          "speech": "Just teach me to be a Commangineer!"
+          "speech": "That easy? Count me in!"
+        }
+      ]
+    },
+    {
+      "comparator": ">",
+      "gameValue": "units",
+      "compareValue": 0,
+      "actions": [
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "How do i use these units?"
         },
         {
           "actionType": "dialogue",
           "character": "electrum",
-          "speech": "Sure! Cut some grass."
+          "speech": "Easy! Just Shift Click and drag to select them!"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "After  that, right click to set a destination."
         },
         {
           "actionType": "dialogue",
           "character": "terne",
-          "speech": "I dont know how!"
+          "speech": "What if they get stuck?"
         },
         {
           "actionType": "dialogue",
           "character": "electrum",
-          "speech": "Use my tool shop, right click to select it and forge something"
+          "speech": "Your Automatons don't know the woods like the Auuki does."
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "If they get stuck, you have to navigate them out."
+        },
+        {
+          "actionType": "dialogue",
+          "character": "terne",
+          "speech": "What about the scrap? is this all I get?"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "Yes, but don't be shy to spend all your resources!'"
+        },
+        {
+          "actionType": "dialogue",
+          "character": "electrum",
+          "speech": "An Automaton is far more useful than a load of scrap, after all."
         }
       ]
     },
     {
       "comparator": "==",
-      "gameValue": "units",
+      "gameValue": "won",
       "compareValue": 1,
       "actions": [
         {
           "actionType": "dialogue",
           "character": "terne",
-          "speech": "I made one!"
+          "speech": "Easy Peasy!"
         },
         {
           "actionType": "dialogue",
-          "character": "electrum",
-          "speech": "Great! Now just select with shift-click and send it towards that Auuki"
+          "character": "oak",
+          "speech": "Welcome to my corps!"
+        },
+        {
+          "actionType": "win"
         }
       ]
     }
   ],
   "playerBase": {
-    "x": 1,
-    "y": 15
+    "x": 3,
+    "y": 5
   },
   "resources": {
-    "scrap": 400,
+    "scrap": 1000,
     "iron": 0,
     "tungsten": 0
   }

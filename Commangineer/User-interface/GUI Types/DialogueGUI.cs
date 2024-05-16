@@ -47,8 +47,8 @@ namespace Commangineer.GUI_Types
         {
             ClearText();
             // Scale text properly
-            int textSize = 35;
-            int maxLineSize = 600;
+            int textSize = 30;
+            int maxLineSize = 550;
             int lineSpacing = 35;
             string[] words = newText.Split(' ');
             int curSentenceLength = 0;
@@ -61,7 +61,7 @@ namespace Commangineer.GUI_Types
                 if (curSentenceLength > maxLineSize)
                 {
                     curSentenceLength = (int)(font.GetTextWidth(curSentence) / 100f * textSize);
-                    TextArea newTextElement = new TextArea(new Rectangle(150, 315 + (lineSpacing * lineNumber), curSentenceLength , textSize), font, curSentence);
+                    TextArea newTextElement = new TextArea(new Rectangle(150, 315 + (lineSpacing * lineNumber), maxLineSize, textSize), font, curSentence);
                     textAreas.Add(newTextElement);
                     AddGuiElement(newTextElement);
                     curSentenceLength = 0;

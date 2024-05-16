@@ -13,8 +13,8 @@ namespace Commangineer.Floor_Auuki_types
             : base(
                 new FloorAuukiStage[] {
                     new FloorAuukiStage(5,Assets.GetTexture("weeds"),50f), // Weeds
-                    new FloorAuukiStage(25,Assets.GetTexture("grass"),100f), // Grass
-                    new FloorAuukiStage(50,Assets.GetTexture("leaves"),800f)
+                    new FloorAuukiStage(10,Assets.GetTexture("grass"),100f), // Grass
+                    new FloorAuukiStage(20,Assets.GetTexture("leaves"),800f)
                 }, position)
         {
         }

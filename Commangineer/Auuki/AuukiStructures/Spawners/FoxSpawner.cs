@@ -9,7 +9,7 @@ namespace Commangineer.Auuki.AuukiStructures.Spawners
     public class FoxSpawner : Spawner
     {
         // Creates a new spawner of it's type
-        public FoxSpawner(Point spawnPosition) : base(spawnPosition, new Point(3, 3), 2, 120, 5)
+        public FoxSpawner(Point spawnPosition) : base(spawnPosition, new Point(3, 3), 2, 40, 5)
         {
         }
 

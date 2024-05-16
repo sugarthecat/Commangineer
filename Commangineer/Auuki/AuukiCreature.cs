@@ -23,10 +23,11 @@ namespace Commangineer.Auuki
         protected float speed = 1f;
         protected float direction = 0f;
         protected int damage = 0;
-        protected float attackTime = 1f;
+        protected float attackTime = 0.5f;
         private float attackProgress = 0;
         private float wanderDistanceLeft = 0f;
         private int health;
+        private int maxHealth;
         private Vector2 position;
         private AuukiAiMode behavior = AuukiAiMode.Wander;
         private Texture2D texture;
@@ -36,15 +37,17 @@ namespace Commangineer.Auuki
         private PlayerTarget aggroUnit;
 
         // Creates a new Auuki creature
-        public AuukiCreature(Vector2 position, Vector2 size, Texture2D texture, int health)
+        public AuukiCreature(Vector2 position, Vector2 size, Texture2D texture, int health, int damage = 20)
         {
             Random genRandom = new Random();
             direction = (float)(genRandom.NextDouble() * 2 * Math.PI);
             wanderDistanceLeft = (float)genRandom.NextDouble() * 10;
             this.position = new Vector2(position.X - size.X / 2, position.Y - size.Y / 2);
             this.health = health;
+            maxHealth = health;
             this.size = size;
             this.texture = texture;
+            this.damage = damage;
         }
 
         // Creates a new Auuki creature with just a position
@@ -179,6 +182,18 @@ namespace Commangineer.Auuki
         {
             return texture;
         }
+        public double healthLeftFraction
+        {
+            get
+            {
+                if(health == maxHealth)
+                {
+                    return 1;
+                }
+                return ((double)health) / maxHealth;
+            }
+        }
+
         /// <summary>
         /// Gets the Auuki creature's angle
         /// </summary>

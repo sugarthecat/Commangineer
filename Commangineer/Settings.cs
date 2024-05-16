@@ -119,29 +119,35 @@ namespace Commangineer
         /// </summary>
         private static async void SaveRuntimeSettings()
         {
-            string[] parts = username.Split(' ');
-            string rank = "Recruit";
-            if (parts.Length > 0)
+            try
             {
-                rank = parts[0];
-            }
-            string firstName = "Cobalt";
-            if (parts.Length > 1)
-            {
-                firstName = parts[1];
-            }
-            string lastName = "Hammer";
-            if (parts.Length > 2)
-            {
-                lastName = parts[2];
-            }
-            string getString = "setSettings.php?userid=" + userID + "&rank=" + rank + "&fname=" + firstName + "&lname=" + lastName + "&audio=" + (musicEnabled ? 0 : 1);
-            Log.LogText("Requesting " + getString);
-            using HttpResponseMessage response = await sharedClient.GetAsync(getString);
+                string[] parts = username.Split(' ');
+                string rank = "Recruit";
+                if (parts.Length > 0)
+                {
+                    rank = parts[0];
+                }
+                string firstName = "Cobalt";
+                if (parts.Length > 1)
+                {
+                    firstName = parts[1];
+                }
+                string lastName = "Hammer";
+                if (parts.Length > 2)
+                {
+                    lastName = parts[2];
+                }
+                string getString = "setSettings.php?userid=" + userID + "&rank=" + rank + "&fname=" + firstName + "&lname=" + lastName + "&audio=" + (musicEnabled ? 0 : 1);
+                Log.LogText("Requesting " + getString);
+                using HttpResponseMessage response = await sharedClient.GetAsync(getString);
 
 
-            string stringResponse = await response.Content.ReadAsStringAsync();
-            Log.LogText("sent request");
+                string stringResponse = await response.Content.ReadAsStringAsync();
+                Log.LogText("sent request");
+            }catch(Exception ex)
+            {
+                Log.LogText(ex.Message);
+            }
         }
         /// <summary>
         /// If the music is enabled
@@ -156,7 +162,14 @@ namespace Commangineer
             {
                 musicEnabled = value;
                 GameMusic.Update();
-                SaveRuntimeSettings();
+                try
+                {
+                    SaveRuntimeSettings();
+                }
+                catch (Exception ex)
+                {
+                    Log.LogText(ex.Message);
+                }
             }
         }
         public static int LevelOn
@@ -164,7 +177,13 @@ namespace Commangineer
             get { return levelOn; }
             set { 
                 levelOn = value;
-                SaveRuntimeSettings() ;
+                try
+                {
+                    SaveRuntimeSettings();
+                }catch (Exception ex)
+                {
+                    Log.LogText(ex.Message);
+                }
             }
         }
     }

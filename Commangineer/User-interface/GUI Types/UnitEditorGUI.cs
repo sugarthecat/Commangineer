@@ -29,7 +29,8 @@ namespace Commangineer.GUI_Types
             LoadElements("UnitEditorGUI");
             LoadIngredients();
             AddGuiElement(new Button("forge", new Rectangle(265, 305, 70, 30), delegate { Commangineer.Level.SpawnUnit(); }));
-            AddGuiElement(new TextArea(new Rectangle(360, 305, 140, 30), Assets.GetFont("pixel"), "0 kmph"));
+            AddGuiElement(new TextArea(new Rectangle(360, 305, 140, 30), Assets.GetFont("pixel"), "0 kmph", Color.Black));
+            AddGuiElement(new TextArea(new Rectangle(120, 305, 100, 30), Assets.GetFont("pixel"), "0 kmph", Color.Black));
             //engine switch buttons
             AddGuiElement(new Button("left", new Rectangle(80, 305, 30, 30), delegate
             {
@@ -76,21 +77,21 @@ namespace Commangineer.GUI_Types
                     7, 4000, 50);
             Color yellowBullet = new Color(255, 255, 0);
             Color redBullet = new Color(255, 50, 0);
-            Color blueBullet = new Color(0,150,255);
-            Weapon boltShooter = new Weapon("boltShooter", 5f, 15, 10, new MaterialBalance(5),TurretSize.Small,yellowBullet, 0.8f);
+            Color blueBullet = new Color(0, 150, 255);
+            Weapon boltShooter = new Weapon("boltShooter", 5f, 25, 10, new MaterialBalance(5), TurretSize.Small, yellowBullet, 0.8f);
             Weapon musket = new Weapon("musket", 8f, 40, 12, new MaterialBalance(15), TurretSize.Small, yellowBullet, 0.8f);
-            Weapon revolver = new Weapon("revolver", 1f, 5, 8, new MaterialBalance(4, 8), TurretSize.Small, yellowBullet, 0.9f);
-            Weapon miniFlame = new Weapon("miniFlamethrower", 0.2f, 2, 5, new MaterialBalance(12,20), TurretSize.Small, redBullet, 1f);
-            Weapon cannon = new Weapon("cannon", 3f, 200, 16, new MaterialBalance(40, 30,0), TurretSize.Medium, yellowBullet, 1.5f);
-            Weapon peppergun = new Weapon("peppergun", 0.2f, 5, 12, new MaterialBalance(60, 20, 0), TurretSize.Medium, yellowBullet, 1.6f);
-            Weapon flamethrower = new Weapon("flamethrower", 0.15f, 8, 7, new MaterialBalance(60, 20, 20), TurretSize.Medium, redBullet, 1.6f);
-            Weapon machineGun = new Weapon("machineGun", 0.1f, 10, 8, new MaterialBalance(50,100,0), TurretSize.Big, yellowBullet, 3f);
-            Weapon arcThrower = new Weapon("arcProjector",1.5f, 400, 14, new MaterialBalance(20, 70, 50), TurretSize.Big, blueBullet, 2.8f);
+            Weapon revolver = new Weapon("revolver", 1f, 5, 8, new MaterialBalance(6, 12), TurretSize.Small, yellowBullet, 0.9f);
+            Weapon miniFlame = new Weapon("miniFlamethrower", 0.2f, 2, 5, new MaterialBalance(12, 20), TurretSize.Small, redBullet, 1f);
+            Weapon cannon = new Weapon("cannon", 3f, 400, 16, new MaterialBalance(40, 30, 0), TurretSize.Medium, yellowBullet, 1.3f);
+            Weapon peppergun = new Weapon("peppergun", 0.4f, 2, 8, new MaterialBalance(60, 20, 0), TurretSize.Medium, yellowBullet, 1.4f);
+            Weapon flamethrower = new Weapon("flamethrower", 0.15f, 8, 7, new MaterialBalance(60, 20, 20), TurretSize.Medium, redBullet, 1.4f);
+            Weapon machineGun = new Weapon("machineGun", 0.1f, 10, 8, new MaterialBalance(50, 100, 0), TurretSize.Big, yellowBullet, 3f);
+            Weapon arcThrower = new Weapon("arcProjector", 2f, 200, 14, new MaterialBalance(20, 70, 50), TurretSize.Big, blueBullet, 2.8f);
             Chassis model1 = new Chassis("model1", 0, 100, 50, 0.9f, new Slot[] { new Slot(new Vector2(0, 0), TurretSize.Small) }, new MaterialBalance(20));
-            Chassis model4 = new Chassis("model4", 0, 100, 50, 1.3f, new Slot[] {
+            Chassis model4 = new Chassis("model4", 0, 400, 100, 1.3f, new Slot[] {
                 new Slot(new Vector2(-0.4f, 0), TurretSize.Small),
                 new Slot(new Vector2(0.35f, 0), TurretSize.Medium)
-            }, new MaterialBalance(50, 20));
+            }, new MaterialBalance(50, 40));
             Chassis model2 = new Chassis("model2", 2, 800, 400, 1.5f, new Slot[] {
                 new Slot(new Vector2(-0.35f,0.35f), TurretSize.Small),
                 new Slot(new Vector2(-0.35f, -0.35f), TurretSize.Small),
@@ -100,17 +101,12 @@ namespace Commangineer.GUI_Types
                 new Slot(new Vector2(-0.65f,-0.65f), TurretSize.Small),
                 new Slot(new Vector2(-0.65f,0.65f), TurretSize.Small),
                 new Slot(new Vector2(0.65f,-0.65f), TurretSize.Small),
-                new Slot(new Vector2(0.65f,0.65f), TurretSize.Small) }, new MaterialBalance(15, 400, 100));
-            Chassis model5 = new Chassis("model5", 5, 4000, 2000, 3.5f, new Slot[] {
-                new Slot(new Vector2(-0.45f,-0.45f), TurretSize.Medium),
-                new Slot(new Vector2(-0.45f,0.45f), TurretSize.Medium),
-                new Slot(new Vector2(0.45f,-0.45f), TurretSize.Medium),
-                new Slot(new Vector2(0.45f,0.45f), TurretSize.Medium) }, new MaterialBalance(15, 300, 200));
+                new Slot(new Vector2(0.65f,0.65f), TurretSize.Small) }, new MaterialBalance(15, 100, 100));
 
             template = new UnitTemplate(model1, engine1, new Weapon[] { boltShooter });
-            engines = new Engine[] { engine1, engine2,engine3,engine4 };
-            chasses = new Chassis[] { model1, model4, model2, model3};
-            weapons = new Weapon[] { boltShooter, musket, revolver, miniFlame, cannon, peppergun, flamethrower, machineGun ,arcThrower};
+            engines = new Engine[] { engine1, engine2, engine3, engine4 };
+            chasses = new Chassis[] { model1, model4, model2, model3 };
+            weapons = new Weapon[] { boltShooter, musket, revolver, miniFlame, cannon, peppergun, flamethrower, machineGun, arcThrower };
             selectedWeapons = new Weapon[] { boltShooter };
             selectedWeaponsIndex = new int[] { 0 };
             UpdateUnit();
@@ -122,14 +118,17 @@ namespace Commangineer.GUI_Types
         public override void Update()
         {
             ((TextArea)elements[3]).Text = Math.Round(template.Speed * 4, 2) + " kmph";
+            ((TextArea)elements[4]).Text ="Mk. " + (engineIndex + 1) + " Engine";
             base.Update();
         }
 
+        int forged = 0;
         /// <summary>
         /// Updates the display of the Unit in the GUI
         /// </summary>
         public void UpdateUnit()
         {
+            forged = 0;
             if (selectedWeapons.Length != chasses[chassisIndex].Slots.Length)
             {
                 selectedWeapons = new Weapon[chasses[chassisIndex].Slots.Length];
@@ -139,7 +138,7 @@ namespace Commangineer.GUI_Types
                     selectedWeapons[i] = weapons[0];
                     selectedWeaponsIndex[i] = 0;
                 }
-                for(int i = 0; i<selectedWeapons.Length; i++)
+                for (int i = 0; i < selectedWeapons.Length; i++)
                 {
                     if (selectedWeapons[i].TurretSize != chasses[chassisIndex].Slots[i].TurretSize)
                     {
@@ -148,7 +147,7 @@ namespace Commangineer.GUI_Types
                 }
             }
             template = new UnitTemplate(chasses[chassisIndex], engines[engineIndex], selectedWeapons);
-            subGUIs = new System.Collections.Generic.List<GUI>() { new UnitTemplateSubGUI(template, delegate(int i) { SwitchWeapon(i); UpdateUnit(); }) };
+            subGUIs = new System.Collections.Generic.List<GUI>() { new UnitTemplateSubGUI(template, delegate (int i) { SwitchWeapon(i); UpdateUnit(); }) };
         }
 
         /// <summary>
@@ -158,14 +157,16 @@ namespace Commangineer.GUI_Types
         {
             return template;
         }
+
         public void SwitchWeapon(int index)
         {
-            if(index <  0 || index >= selectedWeapons.Length)
+            if (index < 0 || index >= selectedWeapons.Length)
             {
                 //out of range
                 return;
             }
-            do {
+            do
+            {
                 selectedWeaponsIndex[index]++;
                 if (selectedWeaponsIndex[index] >= weapons.Length)
                 {
@@ -173,6 +174,15 @@ namespace Commangineer.GUI_Types
                 }
                 selectedWeapons[index] = weapons[selectedWeaponsIndex[index]];
             } while (chasses[chassisIndex].Slots[index].TurretSize != selectedWeapons[index].TurretSize);
+        }
+        public void AddPaymentWarning()
+        {
+            subGUIs.Add(new UnitEditorAlertSubGUI("Cannot Afford", Color.Red));
+        }
+        public void AddForgeAlert()
+        {
+            forged++;
+            subGUIs.Add(new UnitEditorAlertSubGUI("Forged no. " + forged + "",Color.Yellow));
         }
     }
 }

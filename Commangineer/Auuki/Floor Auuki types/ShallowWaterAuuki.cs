@@ -12,8 +12,8 @@ namespace Commangineer.Floor_Auuki_types
         public ShallowWaterAuuki(Point position)
             : base(
                 new FloorAuukiStage[] {
-                    new FloorAuukiStage(30,Assets.GetTexture("algae"),100f), // Weeds
-                    new FloorAuukiStage(100,Assets.GetTexture("lilypads"),200f)
+                    new FloorAuukiStage(10,Assets.GetTexture("algae"),100f), // Weeds
+                    new FloorAuukiStage(20,Assets.GetTexture("lilypads"),200f)
                 }, position)
         {
         }

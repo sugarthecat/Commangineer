@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 
 namespace Commangineer
@@ -48,6 +49,7 @@ namespace Commangineer
             windowActive = false;
             spriteBatchBegun = false;
             previousMouseState = Mouse.GetState();
+
             this.Activated += WindowOpened;
             this.Deactivated += WindowClosed;
         }
@@ -181,18 +183,24 @@ namespace Commangineer
                 return !completedLevel;
             }
         }
+
+        static bool levelWon = false;
         /// <summary>
         /// Starts a specified level if available
         /// </summary>
         /// <param name="level"></param>
         public void BeginLevel(int level)
         {
+            levelGUI.RemoveAllSubGuis();
+            levelWon = false;
             if (level <= Settings.LevelOn)
             {
                 currentLevel = new Level(level, levelGUI);
-                NavigateToMenu("level");
+                Camera.UpdateScale(level);
+                    NavigateToMenu("level");
             }
         }
+
 
         /// <summary>
         /// Called when a level is won
@@ -200,15 +208,19 @@ namespace Commangineer
         /// <param name="level">The level beaten</param>
         public static void WinLevel(int level)
         {
-            if (level == Settings.LevelOn)
+            levelWon = true;
+        }
+        public void EndLevelWithWin()
+        {
+
+            if (Level.LevelID == Settings.LevelOn)
             {
-                Settings.LevelOn = level+1;
+                Settings.LevelOn = Level.LevelID + 1;
             }
             // Now next time we update we navigate back to level select, can't do it here as it's static
             completedLevel = true;
             instance.levelSelectGUI = new LevelSelectGUI();
         }
-
         /// <summary>
         /// Ran when the game is initializing, sets up additional values
         /// </summary>
@@ -351,13 +363,14 @@ namespace Commangineer
                     if (currentGUI == levelGUI)
                     {
                         currentLevel.Update(gameTime.ElapsedGameTime.Milliseconds, keyboardState, previousKeyboardState, mouseState, previousMouseState);
-                        if (currentLevel.Won)
-                        {
-                            WinLevel(currentLevel.LevelID);
-                        }
+                        
                         if(currentLevel.Lost)
                         {
                             completedLevel = true;
+                        }
+                        if(levelWon && currentLevel.HasNoDialogue)
+                        {
+                            EndLevelWithWin();
                         }
                     }
                 }

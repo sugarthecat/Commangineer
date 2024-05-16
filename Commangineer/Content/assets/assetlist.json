@@ -17,7 +17,8 @@
     "naicon",
     "selectedUnit",
     "selectZone",
-    "bulletFrame"
+    "bulletFrame",
+    "white"
   ],
   "textures": [
     [ "dirt", "dirt1" ],
